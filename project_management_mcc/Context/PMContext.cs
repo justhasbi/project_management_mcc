@@ -38,6 +38,7 @@ namespace project_management_mcc.Context
         // define relationship here
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
         }
     }
 }
