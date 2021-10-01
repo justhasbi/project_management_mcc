@@ -20,20 +20,13 @@ namespace project_management_mcc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddControllers();
-
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
-
-            // Add scope here
-
-            // register my context
             services.AddDbContext<PMContext>(options =>
-                options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("ProjectManagementContext"))
+                options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("PMContext"))
             );
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
