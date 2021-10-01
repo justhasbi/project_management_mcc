@@ -7,6 +7,6 @@ namespace project_management_mcc.Repository.Interface
 {
     interface IRepository
     {
-        
+        public void coba();
     }
 }
