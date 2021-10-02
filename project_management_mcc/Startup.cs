@@ -24,7 +24,7 @@ namespace project_management_mcc
                 .AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
-            services.AddDbContext<PMContext>(options =>
+            services.AddDbContext<MyContext>(options =>
                 options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("PMContext"))
             );
         }

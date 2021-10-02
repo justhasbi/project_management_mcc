@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace project_management_mcc.Context
 {
-    public class PMContext : DbContext
+    public class MyContext : DbContext
     {
-        public PMContext(DbContextOptions<PMContext> options) : base(options)
+        public MyContext(DbContextOptions<MyContext> options) : base(options)
         {
 
         }
@@ -82,7 +82,6 @@ namespace project_management_mcc.Context
                 .WithMany(x => x.EmployeeActivities)
                 .OnDelete(DeleteBehavior.ClientCascade)
                 .HasForeignKey(x => x.EmployeeId);
-
             modelBuilder
                 .Entity<EmployeeActivity>()
                 .HasOne(x => x.Activity)
