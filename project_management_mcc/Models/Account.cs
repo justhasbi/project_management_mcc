@@ -13,6 +13,7 @@ namespace project_management_mcc.Models
     {
 
         [Key]
+        [ForeignKey("Employee")]
         public int Id { get; set; }
 
         [Required]
@@ -22,7 +23,6 @@ namespace project_management_mcc.Models
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
 
         public virtual Employee Employee { get; set; }
 
