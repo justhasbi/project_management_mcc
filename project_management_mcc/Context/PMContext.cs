@@ -47,14 +47,12 @@ namespace project_management_mcc.Context
             // many to one employee with department id
             modelBuilder.Entity<Employee>()
                 .HasOne(x => x.Department)
-                .WithMany(x => x.Employees)
-                .HasForeignKey(x => x.DepartmentId);
+                .WithMany(x => x.Employees);
 
             // many to one employee with job id
             modelBuilder.Entity<Employee>()
                 .HasOne(x => x.Job)
-                .WithMany(x => x.Employees)
-                .HasForeignKey(x => x.JobId);
+                .WithMany(x => x.Employees);
 
             // one to one employee with account
             modelBuilder.Entity<Employee>()
@@ -75,31 +73,38 @@ namespace project_management_mcc.Context
                 .HasForeignKey(x => x.RoleId);
 
             // many to many employee with activity
-            modelBuilder.Entity<EmployeeActivity>()
+            modelBuilder
+                .Entity<EmployeeActivity>()
                 .HasKey(x => new { x.EmployeeId, x.ActivityId });
-            modelBuilder.Entity<EmployeeActivity>()
+            modelBuilder
+                .Entity<EmployeeActivity>()
                 .HasOne(x => x.Employee)
                 .WithMany(x => x.EmployeeActivities)
+                .OnDelete(DeleteBehavior.ClientCascade)
                 .HasForeignKey(x => x.EmployeeId);
-            modelBuilder.Entity<EmployeeActivity>()
+
+            modelBuilder
+                .Entity<EmployeeActivity>()
                 .HasOne(x => x.Activity)
                 .WithMany(x => x.EmployeeActivities)
+                .OnDelete(DeleteBehavior.ClientCascade)
                 .HasForeignKey(x => x.ActivityId);
 
             // one to many activity with activity history
-            modelBuilder.Entity<ActivityHistory>()
+            modelBuilder
+                .Entity<ActivityHistory>()
                 .HasOne(x => x.Activity)
-                .WithMany(x => x.ActivityHistories)
-                .HasForeignKey(x => x.ActivityId);
+                .WithMany(x => x.ActivityHistories);
 
             // one to many project with activity
-            modelBuilder.Entity<Activity>()
+            modelBuilder
+                .Entity<Activity>()
                 .HasOne(x => x.Project)
-                .WithMany(x => x.Activities)
-                .HasForeignKey(x => x.ProjectId);
+                .WithMany(x => x.Activities);
 
             // one to many employee manager id with project
-            modelBuilder.Entity<Project>()
+            modelBuilder
+                .Entity<Project>()
                 .HasOne(x => x.Employee)
                 .WithMany(x => x.Projects)
                 .HasForeignKey(x => x.ManagerId);
