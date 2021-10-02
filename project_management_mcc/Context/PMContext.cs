@@ -85,6 +85,24 @@ namespace project_management_mcc.Context
                 .HasOne(x => x.Activity)
                 .WithMany(x => x.EmployeeActivities)
                 .HasForeignKey(x => x.ActivityId);
+
+            // one to many activity with activity history
+            modelBuilder.Entity<ActivityHistory>()
+                .HasOne(x => x.Activity)
+                .WithMany(x => x.ActivityHistories)
+                .HasForeignKey(x => x.ActivityId);
+
+            // one to many project with activity
+            modelBuilder.Entity<Activity>()
+                .HasOne(x => x.Project)
+                .WithMany(x => x.Activities)
+                .HasForeignKey(x => x.ProjectId);
+
+            // one to many employee manager id with project
+            modelBuilder.Entity<Project>()
+                .HasOne(x => x.Employee)
+                .WithMany(x => x.Projects)
+                .HasForeignKey(x => x.ManagerId);
         }
     }
 }
