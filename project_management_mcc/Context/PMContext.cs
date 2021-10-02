@@ -38,7 +38,53 @@ namespace project_management_mcc.Context
         // define relationship here
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // self relation manager id with employee id
+            modelBuilder.Entity<Employee>()
+                .HasOne(x => x.EmployeeParent)
+                .WithMany(x => x.Employees)
+                .HasForeignKey(x => x.ManagerId);
 
+            // many to one employee with department id
+            modelBuilder.Entity<Employee>()
+                .HasOne(x => x.Department)
+                .WithMany(x => x.Employees)
+                .HasForeignKey(x => x.DepartmentId);
+
+            // many to one employee with job id
+            modelBuilder.Entity<Employee>()
+                .HasOne(x => x.Job)
+                .WithMany(x => x.Employees)
+                .HasForeignKey(x => x.JobId);
+
+            // one to one employee with account
+            modelBuilder.Entity<Employee>()
+                .HasOne(a => a.Account)
+                .WithOne(e => e.Employee)
+                .HasForeignKey<Account>(x => x.Id);
+
+            // many to many account with role
+            modelBuilder.Entity<AccountRole>()
+                .HasKey(ar => new { ar.AccountId, ar.RoleId });
+            modelBuilder.Entity<AccountRole>()
+                .HasOne(x => x.Account)
+                .WithMany(x => x.AccountRoles)
+                .HasForeignKey(x => x.AccountId);
+            modelBuilder.Entity<AccountRole>()
+                .HasOne(x => x.Role)
+                .WithMany(x => x.AccountRoles)
+                .HasForeignKey(x => x.RoleId);
+
+            // many to many employee with activity
+            modelBuilder.Entity<EmployeeActivity>()
+                .HasKey(x => new { x.EmployeeId, x.ActivityId });
+            modelBuilder.Entity<EmployeeActivity>()
+                .HasOne(x => x.Employee)
+                .WithMany(x => x.EmployeeActivities)
+                .HasForeignKey(x => x.EmployeeId);
+            modelBuilder.Entity<EmployeeActivity>()
+                .HasOne(x => x.Activity)
+                .WithMany(x => x.EmployeeActivities)
+                .HasForeignKey(x => x.ActivityId);
         }
     }
 }
