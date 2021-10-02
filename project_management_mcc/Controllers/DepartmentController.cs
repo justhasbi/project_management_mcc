@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace project_management_mcc.Controllers
 {
-    public class DepartementController : Controller
+    public class DepartmentController : Controller
     {
         public IActionResult Index()
         {

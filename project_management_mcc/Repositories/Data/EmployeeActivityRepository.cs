@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace project_management_mcc.Repositories.Data
 {
-    public class ActivityHistoryRepository : GeneralRepository<MyContext, ActivityHistory, int>
+    public class EmployeeActivityRepository : GeneralRepository<MyContext, EmployeeActivity, int>
     {
-        public ActivityHistoryRepository(MyContext mycontext) : base(mycontext)
+        public EmployeeActivityRepository(MyContext myContext) : base(myContext)
         {
 
-        } 
+        }
     }
 }
