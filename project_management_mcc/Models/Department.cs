@@ -14,7 +14,7 @@ namespace project_management_mcc.Models
         public int Id { get; set; }
 
         [Required]
-        public int Name { get; set; }
+        public string Name { get; set; }
 
         public virtual ICollection<Employee> Employees { get; set; }
     }

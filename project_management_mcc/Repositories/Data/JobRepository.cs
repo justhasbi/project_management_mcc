@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace project_management_mcc.Repositories.Data
 {
-    public class JobRepostitory : GeneralRepository<MyContext, Job, int>
+    public class JobRepository : GeneralRepository<MyContext, Job, int>
     {
-        public JobRepostitory(MyContext context) : base(context)
+        public JobRepository(MyContext context) : base(context)
         {
         }
     }
