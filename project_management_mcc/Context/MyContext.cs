@@ -53,6 +53,13 @@ namespace project_management_mcc.Context
             modelBuilder.Entity<Employee>()
                 .HasOne(x => x.Job)
                 .WithMany(x => x.Employees);
+                // .OnDelete(DeleteBehavior.NoAction);
+
+            // one to many job with department 
+            modelBuilder
+                .Entity<Job>()
+                .HasOne(x => x.Department)
+                .WithMany(x => x.Jobs);
 
             // one to one employee with account
             modelBuilder.Entity<Employee>()
