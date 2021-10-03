@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using project_management_mcc.Context;
+using project_management_mcc.Repositories.Data;
+using project_management_mcc.Repository.Data;
 
 namespace project_management_mcc
 {
@@ -24,6 +26,16 @@ namespace project_management_mcc
                 .AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+
+            services.AddScoped<AccountRepository>();
+            services.AddScoped<ActivityRepository>();
+            services.AddScoped<ActivityHistoryRepository>();
+            services.AddScoped<EmployeeRepository>();
+            services.AddScoped<DepartmentRepository>();
+            services.AddScoped<JobRepository>();
+            services.AddScoped<ProjectRepository>();
+            services.AddScoped<RoleRepository>();
+
             services.AddDbContext<MyContext>(options =>
                 options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("PMContext"))
             );
