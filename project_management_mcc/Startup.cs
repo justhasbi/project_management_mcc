@@ -33,6 +33,17 @@ namespace project_management_mcc
                 options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("PMContext"))
             );
 
+            services.AddScoped<AccountRepository>();
+            services.AddScoped<AccountRoleRepository>();
+            services.AddScoped<ActivityRepository>();
+            services.AddScoped<ActivityHistoryRepository>();
+            services.AddScoped<DepartmentRepository>();
+            services.AddScoped<EmployeeRepository>();
+            services.AddScoped<EmployeeActivityRepository>();
+            services.AddScoped<JobRepository>();
+            services.AddScoped<ProjectRepository>();
+            services.AddScoped<RoleRepository>();
+
             services.AddSwaggerGen();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
