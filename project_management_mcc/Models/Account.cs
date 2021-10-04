@@ -21,10 +21,11 @@ namespace project_management_mcc.Models
         [StringLength(40, ErrorMessage = "Email must be between 10 and 40 characters", MinimumLength = 10)]
         [RegularExpression("^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$", ErrorMessage = "Must be a valid email")]
         public string Email { get; set; }
-        
+
         [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
-        [StringLength(50, ErrorMessage = "Password must be between 5 and 50 characters", MinimumLength = 5)]
+        [MinLength(8, ErrorMessage = "Minimum eight characters, at least one letter and one number")]
+        [RegularExpression("^(?=.*[A-Za-z])(?=.*)[A-Za-z]{8,}$")]
         public string Password { get; set; }
 
         public virtual Employee Employee { get; set; }
