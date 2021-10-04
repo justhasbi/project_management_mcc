@@ -91,6 +91,13 @@ namespace project_management_mcc.Controllers
             //    });
             //}
         }
+        [HttpPost("login")]
+        public ActionResult Login(LoginVM loginVM)
+        {
+            var loginAction = accountRepository.Login(loginVM);
+
+            return Ok(loginAction);
+        }
 
     }
 }
