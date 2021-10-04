@@ -11,9 +11,11 @@ namespace project_management_mcc.Models
     public class Role
     {
         [Key]
+        [MaxLength(2), MinLength(1)]
         public int Id { get; set; }
 
         [Required]
+        [StringLength(20, ErrorMessage = "Name must be between 5 and 20 characters", MinimumLength = 5)]
         public string Name { get; set; }
 
         public virtual ICollection<AccountRole> AccountRoles { get; set; }

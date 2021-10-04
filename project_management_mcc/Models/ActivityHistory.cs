@@ -11,10 +11,13 @@ namespace project_management_mcc.Models
     public class ActivityHistory
     {
         [Key]
+        [Required(ErrorMessage = "Id is required")]
+        [MaxLength(2, ErrorMessage = "Id must be between 1 and 2 characters"), MinLength(1)]
         public int Id { get; set; }
-
+        [Required(ErrorMessage = "Status is required")]
         public string Status { get; set; }
-        
+        [Required]
+        [DataType(DataType.DateTime)]
         public DateTime Update_date { get; set; }
 
         public int ActivityId { get; set; }

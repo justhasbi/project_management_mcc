@@ -11,12 +11,18 @@ namespace project_management_mcc.Models
     public class Project
     {
         [Key]
+        [Required(ErrorMessage = "Id is required")]
+        [MaxLength(2, ErrorMessage = "Id must be 2 characters"), MinLength(2)]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Name is required")]
+        [DataType(DataType.Text)]
+        [StringLength(50, ErrorMessage = "Name must be between 5 and 50 characters", MinimumLength = 5)]
         public string Name { get; set; }
 
         [Required]
+        [DataType(DataType.Text)]
+        [StringLength(500, ErrorMessage = "Description must be between 5 and 500 characters", MinimumLength = 5)]
         public string Description { get; set; }
 
         // Manager ID
