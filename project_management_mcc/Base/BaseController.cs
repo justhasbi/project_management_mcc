@@ -93,19 +93,11 @@ namespace project_management_mcc.Base
             try
             {
                 repository.Update(entity);
-                return Ok(new 
-                { 
-                    message = "Success Update Data", 
-                    status = HttpStatusCode.OK 
-                });
+                return Ok("Success Update Data");
             }
             catch
             {
-                return BadRequest(new 
-                { 
-                    message = "Data Not Found", 
-                    status = HttpStatusCode.BadRequest 
-                });
+                return BadRequest("Data Not Found");
             }
         }
 
@@ -115,19 +107,11 @@ namespace project_management_mcc.Base
             try
             {
                 repository.Delete(key);
-                return Ok(new 
-                { 
-                    message = "Success Delete Data", 
-                    status = HttpStatusCode.OK 
-                });
+                return Ok("Success Delete Data");
             }
             catch
             {
-                return BadRequest(new 
-                { 
-                    message = "Data Not Found", 
-                    status = HttpStatusCode.BadRequest 
-                });
+                return BadRequest("Data Not Found");
             }
         }
     }

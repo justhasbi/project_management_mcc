@@ -11,9 +11,9 @@ namespace project_management_mcc.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class JobsController : BaseController<Job, JobRepository, int>
+    public class ActivitysController : BaseController<Activity, ActivityRepository, int>
     {
-        public JobsController(JobRepository repository) : base(repository)
+        public ActivitysController(ActivityRepository repository) : base(repository)
         {
 
         }

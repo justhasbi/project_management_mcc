@@ -9,8 +9,9 @@ namespace project_management_mcc.Repositories.Data
 {
     public class JobRepository : GeneralRepository<MyContext, Job, int>
     {
-        public JobRepository(MyContext context) : base(context)
+        public JobRepository(MyContext myContext) : base(myContext)
         {
+
         }
     }
 }

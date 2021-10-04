@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace project_management_mcc.Repositories.Data
 {
-    public class DepartmentRepository : GeneralRepository<MyContext, Department, int>
+    public class EmployeeActivityRepository : GeneralRepository<MyContext, EmployeeActivity, int>
     {
-        public DepartmentRepository(MyContext context) : base(context)
+        public EmployeeActivityRepository(MyContext myContext) : base(myContext)
         {
 
         }

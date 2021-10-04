@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using project_management_mcc.Base;
 using project_management_mcc.Models;
 using project_management_mcc.Repository.Data;

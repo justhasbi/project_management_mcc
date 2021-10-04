@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using project_management_mcc.Base;
 using project_management_mcc.Models;
 using project_management_mcc.Repositories.Data;
@@ -12,10 +11,11 @@ namespace project_management_mcc.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ActivityHistoriesController : BaseController<ActivityHistory, ActivityHistoryRepository, int>
+    public class EmployeeActivitysController : BaseController<EmployeeActivity, EmployeeActivityRepository, int>
     {
-        public ActivityHistoriesController(ActivityHistoryRepository repository) : base(repository)
+        public EmployeeActivitysController(EmployeeActivityRepository repository) : base(repository)
         {
+
         }
     }
 }

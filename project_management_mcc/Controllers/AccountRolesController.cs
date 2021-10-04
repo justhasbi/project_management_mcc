@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using project_management_mcc.Base;
 using project_management_mcc.Models;
@@ -16,6 +17,7 @@ namespace project_management_mcc.Controllers
     {
         public AccountRolesController(AccountRoleRepository repository) : base(repository)
         {
+        
         }
     }
 }

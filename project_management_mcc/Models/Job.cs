@@ -16,10 +16,6 @@ namespace project_management_mcc.Models
         [Required]
         public string Name { get; set; }
 
-        // relationship with job with department
-        public int DepartmentId { get; set; }
-        public virtual Department Department { get; set; }
-        
         public virtual ICollection<Employee> Employees { get; set; }
     }
 }

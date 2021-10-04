@@ -9,8 +9,9 @@ namespace project_management_mcc.Repositories.Data
 {
     public class ActivityRepository : GeneralRepository<MyContext, Activity, int>
     {
-        public ActivityRepository(MyContext context) : base(context)
+        public ActivityRepository(MyContext myContext) : base(myContext)
         {
+
         }
     }
 }
