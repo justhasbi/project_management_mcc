@@ -17,6 +17,8 @@ namespace project_management_mcc.Models
         [StringLength(40, ErrorMessage = "Name must be between 5 and 40 characters", MinimumLength = 5)]
         public string Name { get; set; }
 
+        public virtual ICollection<Job> Jobs { get; set; }
+
         public virtual ICollection<Employee> Employees { get; set; }
     }
 }
