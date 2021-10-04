@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace project_management_mcc.Models
 {
@@ -16,19 +14,18 @@ namespace project_management_mcc.Models
         [Required(ErrorMessage = "First Name is required")]
         [DataType(DataType.Text)]
         [StringLength(40, ErrorMessage = "First name must be between 3 and 40 characters", MinimumLength = 3)]
-        [RegularExpression("^[A-Z]+$")]
+        //[RegularExpression("^[A-Z]+$")]
         public string FirstName { get; set; }
-        
+
         [Required(ErrorMessage = "Last Name is required")]
         [DataType(DataType.Text)]
         [StringLength(40, ErrorMessage = "Last name must be between 3 and 40 characters", MinimumLength = 3)]
-        [RegularExpression("^[A-Z]+$")]
+        //[RegularExpression("^[A-Z]+$")]
         public string LastName { get; set; }
 
         [Required]
         [DataType(DataType.PhoneNumber)]
         [MaxLength(12, ErrorMessage = "Phone must be 12 characters"), MinLength(12)]
-        [RegularExpression("^[0-9]+{12}+$")]
         public string Phone { get; set; }
 
         public enum Gender
@@ -39,19 +36,22 @@ namespace project_management_mcc.Models
 
         [Required]
         public Gender gender { get; set; }
-        
+
         // self referencing ManagerID
         [ForeignKey("ManagerId")]
         public int? ManagerId { get; set; }
+        [JsonIgnore]
         public virtual Employee EmployeeParent { get; set; }
         public virtual ICollection<Employee> Employees { get; set; }
 
         // department_id
         public int? DepartmentId { get; set; }
+        [JsonIgnore]
         public virtual Department Department { get; set; }
 
         // job_id
         public int? JobId { get; set; }
+        [JsonIgnore]
         public virtual Job Job { get; set; }
 
         // project_id
@@ -60,6 +60,7 @@ namespace project_management_mcc.Models
         // employee activity
         public virtual ICollection<EmployeeActivity> EmployeeActivities { get; set; }
 
+        [JsonIgnore]
         public virtual Account Account { get; set; }
     }
 }

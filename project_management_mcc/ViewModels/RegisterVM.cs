@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.ComponentModel.DataAnnotations;
 
 namespace project_management_mcc.ViewModels
 {
@@ -17,6 +19,17 @@ namespace project_management_mcc.ViewModels
         [Required]
         public string Phone { get; set; }
 
+        public enum Gender
+        {
+            Male,
+            Female
+        }
+
+        [Required]
+        [Range(0,1)]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public Gender gender { get; set; }
+
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress]
         [StringLength(40, ErrorMessage = "Email must be between 10 and 40 characters", MinimumLength = 10)]
@@ -27,9 +40,6 @@ namespace project_management_mcc.ViewModels
         [DataType(DataType.Password)]
         [StringLength(50, ErrorMessage = "Password must be between 5 and 50 characters", MinimumLength = 5)]
         public string Password { get; set; }
-
-        [Required]
-        public int Gender { get; set; }
 
         public int? DepartmentId { get; set; }
 
