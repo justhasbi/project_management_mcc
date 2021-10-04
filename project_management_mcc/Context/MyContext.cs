@@ -38,7 +38,7 @@ namespace project_management_mcc.Context
         // define relationship here
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // self relation manager id with employee id
+            // self relation employee id with manager id
             modelBuilder.Entity<Employee>()
                 .HasOne(x => x.EmployeeParent)
                 .WithMany(x => x.Employees)
