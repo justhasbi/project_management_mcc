@@ -82,7 +82,7 @@ namespace project_management_mcc.Repositories.Data
                     {
                         var getRole = (from e in myContext.Employees
                                        join a in myContext.Accounts on e.Id equals a.Id
-                                       join ar in myContext.AccountRoles on a.Id equals ar.Id
+                                       join ar in myContext.AccountRoles on a.Id equals ar.AccountId
                                        join r in myContext.Roles on ar.RoleId equals r.Id
                                        select new RoleVM
                                        {
@@ -92,7 +92,7 @@ namespace project_management_mcc.Repositories.Data
                                        }).Where(x => x.Id.Equals(emailCheck.Id)).ToList();
                         var claims = new List<Claim>
                         {
-                            new Claim("Id", passwordCheck.Id as string),
+                            new Claim("Id", passwordCheck.Id.ToString()),
                             new Claim(ClaimTypes.Email, emailCheck.Email)
                         };
                         foreach (var item in getRole)
