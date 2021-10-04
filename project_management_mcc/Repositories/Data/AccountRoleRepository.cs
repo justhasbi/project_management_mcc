@@ -9,7 +9,7 @@ namespace project_management_mcc.Repositories.Data
 {
     public class AccountRoleRepository : GeneralRepository<MyContext, AccountRole, int>
     {
-        public AccountRoleRepository(MyContext myContext) : base(myContext)
+        public AccountRoleRepository(MyContext context) : base(context)
         {
 
         }
