@@ -13,7 +13,6 @@ namespace project_management_mcc.Models
         [Key]
         public int Id { get; set; }
 
-        // relation
         public int ActivityId { get; set; }
         public virtual Activity Activity { get; set; }
 
