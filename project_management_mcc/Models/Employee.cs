@@ -11,8 +11,6 @@ namespace project_management_mcc.Models
     public class Employee
     {
         [Key]
-        [Required(ErrorMessage = "Id is required")]
-        [MaxLength(4, ErrorMessage = "Id must be between 2 and 4 characters"), MinLength(2)]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "First Name is required")]

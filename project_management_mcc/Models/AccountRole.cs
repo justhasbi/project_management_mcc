@@ -11,7 +11,6 @@ namespace project_management_mcc.Models
     public class AccountRole
     {
         [Key]
-        [MaxLength(2), MinLength(1)]
         public int Id { get; set; }
 
         // relation

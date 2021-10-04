@@ -20,6 +20,5 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
 </Project>
