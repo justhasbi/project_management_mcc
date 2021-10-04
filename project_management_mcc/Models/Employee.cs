@@ -18,16 +18,19 @@ namespace project_management_mcc.Models
         [Required(ErrorMessage = "First Name is required")]
         [DataType(DataType.Text)]
         [StringLength(40, ErrorMessage = "First name must be between 3 and 40 characters", MinimumLength = 3)]
+        [RegularExpression("^[A-Z]+$")]
         public string FirstName { get; set; }
         
         [Required(ErrorMessage = "Last Name is required")]
         [DataType(DataType.Text)]
         [StringLength(40, ErrorMessage = "Last name must be between 3 and 40 characters", MinimumLength = 3)]
+        [RegularExpression("^[A-Z]+$")]
         public string LastName { get; set; }
 
         [Required]
         [DataType(DataType.PhoneNumber)]
         [MaxLength(12, ErrorMessage = "Phone must be 12 characters"), MinLength(12)]
+        [RegularExpression("^[0-9]+{12}+$")]
         public string Phone { get; set; }
 
         public enum Gender
