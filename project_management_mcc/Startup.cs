@@ -44,7 +44,10 @@ namespace project_management_mcc
             services.AddScoped<ProjectRepository>();
             services.AddScoped<RoleRepository>();
 
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(options =>
+            {
+                options.CustomSchemaIds(type => type.ToString());
+            });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
@@ -84,7 +87,7 @@ namespace project_management_mcc
 
             app.UseSwaggerUI(x =>
             {
-                x.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                x.SwaggerEndpoint("/swagger/v1/swagger.json", "Project Timeline Management");
             });
 
             app.UseHttpsRedirection();

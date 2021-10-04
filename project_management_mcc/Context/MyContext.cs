@@ -54,6 +54,10 @@ namespace project_management_mcc.Context
                 .HasOne(x => x.Job)
                 .WithMany(x => x.Employees);
 
+            modelBuilder.Entity<Job>()
+                .HasOne(x => x.Department)
+                .WithMany(x => x.Jobs);
+
             // one to one employee with account
             modelBuilder.Entity<Employee>()
                 .HasOne(a => a.Account)

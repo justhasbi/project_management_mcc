@@ -47,11 +47,11 @@ namespace project_management_mcc.Models
         public virtual ICollection<Employee> Employees { get; set; }
 
         // department_id
-        public int DepartmentId { get; set; }
+        public int? DepartmentId { get; set; }
         public virtual Department Department { get; set; }
 
         // job_id
-        public int JobId { get; set; }
+        public int? JobId { get; set; }
         public virtual Job Job { get; set; }
 
         // project_id
