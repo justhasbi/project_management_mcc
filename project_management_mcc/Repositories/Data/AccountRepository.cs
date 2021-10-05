@@ -66,7 +66,7 @@ namespace project_management_mcc.Repositories.Data
             }
             else
             {
-                var passwordCheck = myContext.Accounts.Where(x => x.Password.Equals(loginVM.Password)).FirstOrDefault();
+                var passwordCheck = myContext.Accounts.Where(x => emailCheck.Id.Equals(x.Id)).FirstOrDefault(); // error
                 var validatePassword = HashGenerator.ValidatePassword(loginVM.Password, passwordCheck.Password);
                 if (emailCheck != null)
                 {
