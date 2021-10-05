@@ -73,5 +73,38 @@ namespace project_management_mcc.Controllers
             return Ok(loginAction);
         }
 
+        [HttpPut("changePassword")]
+        public ActionResult ChangePassword(ChangePasswordVM changePasswordVM)
+        {
+            var changePassAction = accountRepository.ChangePassword(changePasswordVM);
+
+            if (changePassAction == 0)
+            {
+                return BadRequest(new
+                {
+                    status = HttpStatusCode.BadRequest,
+                    message = "Wrong Email"
+                });
+                
+            }
+            else if (changePassAction == 1)
+            {
+                return BadRequest(new
+                {
+                    status = HttpStatusCode.BadRequest,
+                    message = "Wrong Old Password"
+                });
+            }
+            else
+            {
+                return Ok(new
+                {
+                    status = HttpStatusCode.OK,
+                    message = "Success change password"
+                });
+            }
+        }
+
+
     }
 }

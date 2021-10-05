@@ -32,7 +32,6 @@ namespace project_management_mcc.Repositories.Data
 
             var employee = new Employee()
             {
-                // pk
                 FirstName = registerVM.FirstName,
                 LastName = registerVM.LastName,
                 gender = (Employee.Gender)registerVM.gender,
@@ -121,6 +120,59 @@ namespace project_management_mcc.Repositories.Data
                 {
                     Messages = "Wrong Email!"
                 };
+            }
+        }
+
+        public void ForgotPassword(ForgotPasswordVM forgotPasswordVM)
+        {
+            var emailCheck = myContext.Accounts.Where(x => x.Email.Equals(forgotPasswordVM.Email)).FirstOrDefault();
+
+            if(emailCheck != null)
+            {
+                string guid = Guid.NewGuid().ToString();
+                DateTime dateTime = DateTime.Now;
+                string dateSend = dateTime.ToString("g");
+                string stringHtmlMessage = $"Password diubah pada: {dateSend}\nPassword Baru Anda: {guid}";
+                string hashPassword = HashGenerator.HashPassword(guid);
+                var checkEmail = myContext.Accounts.Where(e => e.Id == emailCheck.Id).FirstOrDefault();
+                checkEmail.Password = hashPassword;
+                Update(checkEmail);
+
+                MailHandler.Email(stringHtmlMessage, forgotPasswordVM.Email);
+            }
+        }
+
+        public int ChangePassword(ChangePasswordVM changePasswordVM)
+        {
+            var emailCheck = myContext.Accounts.Where(x => x.Email.Equals(changePasswordVM.Email)).FirstOrDefault();
+
+            if (emailCheck == null)
+            {
+                // email belum terdaftar
+                return 0;
+            }
+            else
+            {
+                var passwordCheck = myContext.Accounts.Where(x => emailCheck.Id.Equals(x.Id)).FirstOrDefault();
+                var validatePassword = HashGenerator.ValidatePassword(changePasswordVM.CurrentPassword, passwordCheck.Password);
+                if (emailCheck != null)
+                {
+                    if (validatePassword == false)
+                    {
+                        // password lama salah
+                        return 1;
+                    }
+                    else
+                    {
+                        // sukses update password
+                        var account = myContext.Accounts.Where(x => emailCheck.Id.Equals(x.Id)).FirstOrDefault();
+                        passwordCheck.Password = HashGenerator.HashPassword(changePasswordVM.ConfirmPassword);
+                        Update(account);
+                        return 2;
+                    }
+                }
+                // email belum terdaftar
+                return 0;
             }
         }
     }
