@@ -50,6 +50,15 @@ namespace project_management_mcc.Repositories.Data
             };
             myContext.Accounts.Add(account);
             insert = myContext.SaveChanges();
+            
+            var accountRoles = new AccountRole()
+            {
+                AccountId = account.Id,
+                RoleId = (int)registerVM.RoleId
+            };
+            myContext.AccountRoles.Add(accountRoles);
+            insert = myContext.SaveChanges();
+
             return insert;
         }
         public JwtTokenVM Login(LoginVM loginVM)
