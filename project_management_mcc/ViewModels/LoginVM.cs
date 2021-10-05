@@ -16,8 +16,8 @@ namespace project_management_mcc.ViewModels
 
         [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
-        [MinLength(8, ErrorMessage = "Minimum eight characters, at least one letter and one number")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$")]
+        [MinLength(8, ErrorMessage = "Minimum eight characters")]
+        //[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$")]
         public string Password { get; set; }
     }
 }

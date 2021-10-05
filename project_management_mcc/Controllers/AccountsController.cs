@@ -73,6 +73,28 @@ namespace project_management_mcc.Controllers
             return Ok(loginAction);
         }
 
+        [HttpPut("forgotpassword")]
+        public ActionResult ForgotPassword(ForgotPasswordVM forgotPasswordVM)
+        {
+            try
+            {
+                accountRepository.ForgotPassword(forgotPasswordVM);
+                return Ok(new
+                {
+                    message = "Success",
+                    status = HttpStatusCode.OK
+                });
+            }
+            catch
+            {
+                return BadRequest(new
+                {
+                    message = "Failed",
+                    status = HttpStatusCode.BadRequest
+                });
+            }
+        }
+
         [HttpPut("changePassword")]
         public ActionResult ChangePassword(ChangePasswordVM changePasswordVM)
         {
