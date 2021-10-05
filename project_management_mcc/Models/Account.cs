@@ -25,7 +25,7 @@ namespace project_management_mcc.Models
         [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
         [MinLength(8, ErrorMessage = "Minimum eight characters, at least one letter and one number")]
-        [RegularExpression("^(?=.*[A-Za-z])(?=.*)[A-Za-z]{8,}$")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$")]
         public string Password { get; set; }
 
         public virtual Employee Employee { get; set; }

@@ -64,32 +64,6 @@ namespace project_management_mcc.Controllers
             {
                 status = HttpStatusCode.NotFound,
             });
-
-            //if(registerResponse == 100)
-            //{
-            //    return Ok(new
-            //    {
-            //        status = HttpStatusCode.OK,
-            //        data = registerVM,
-            //        message = "Success Register Employee"
-            //    });
-            //}
-            //else if (registerResponse == 200)
-            //{
-            //    return BadRequest(new
-            //    {
-            //        status = HttpStatusCode.BadRequest,
-            //        message = "Phone number is already used"
-            //    });
-            //}
-            //else
-            //{
-            //    return BadRequest(new
-            //    {
-            //        status = HttpStatusCode.BadRequest,
-            //        message = "Phone number is already used"
-            //    });
-            //}
         }
         [HttpPost("login")]
         public ActionResult Login(LoginVM loginVM)
