@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -27,9 +28,9 @@ namespace project_management_mcc.Models
         [MinLength(8, ErrorMessage = "Minimum eight characters")]
         //[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$")]
         public string Password { get; set; }
-
+        [JsonIgnore]
         public virtual Employee Employee { get; set; }
-
+        [JsonIgnore]
         public virtual ICollection<AccountRole> AccountRoles { get; set; }
     }
 }
