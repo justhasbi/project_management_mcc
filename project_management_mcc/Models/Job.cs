@@ -20,8 +20,9 @@ namespace project_management_mcc.Models
         public string Name { get; set; }
 
         public int DepartmentId { get; set; }
-
+        [JsonIgnore]
         public virtual Department Department { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Employee> Employees { get; set; }
     }
 }
