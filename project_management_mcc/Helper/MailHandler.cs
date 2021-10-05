@@ -32,7 +32,7 @@ namespace project_management_mcc.Helper
             smtpClient.Host = "smtp.gmail.com";
             smtpClient.EnableSsl = true;
             smtpClient.UseDefaultCredentials = false;
-            smtpClient.Credentials = new NetworkCredential("**", "**");
+            smtpClient.Credentials = new NetworkCredential("justhasbi7699@gmail.com", "**");
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.Send(message);
         }
