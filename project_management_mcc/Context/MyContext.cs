@@ -111,6 +111,10 @@ namespace project_management_mcc.Context
                 .HasOne(x => x.Employee)
                 .WithMany(x => x.Projects)
                 .HasForeignKey(x => x.ManagerId);
+
+
+            // example
+            
         }
     }
 }

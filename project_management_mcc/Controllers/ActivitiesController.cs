@@ -13,17 +13,17 @@ namespace project_management_mcc.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ActivitysController : BaseController<Activity, ActivityRepository, int>
+    public class ActivitiesController : BaseController<Activity, ActivityRepository, int>
     {
 
         private readonly ActivityRepository activityRepository;
 
-        public ActivitysController(ActivityRepository activityRepository) : base(activityRepository)
+        public ActivitiesController(ActivityRepository activityRepository) : base(activityRepository)
         {
             this.activityRepository = activityRepository;
         }
 
-        [HttpPost("InsertMultipleActivity")]
+        [HttpPost("CreateMultipleActivity")]
         public ActionResult InsertMultipleActivity(CreateListActivityVM createListActivityVM)
         {
             try
@@ -41,6 +41,28 @@ namespace project_management_mcc.Controllers
                 {
                     status = HttpStatusCode.BadRequest,
                     Message = "Failed"
+                });
+            }
+        }
+
+        [HttpPut("UpdateActivityStatus")]
+        public ActionResult UpdateActivityStatus(UpdateStatusVM updateStatusVM)
+        {
+            try
+            {
+                activityRepository.UpdateActivityStatus(updateStatusVM);
+                return Ok(new
+                {
+                    status = HttpStatusCode.OK,
+                    Message = "Success"
+                });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new
+                {
+                    status = HttpStatusCode.BadRequest,
+                    Message = e
                 });
             }
         }

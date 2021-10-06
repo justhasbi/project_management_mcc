@@ -147,7 +147,7 @@ namespace project_management_mcc.Repositories.Data
                 checkEmail.Password = hashPassword;
                 Update(checkEmail);
 
-                MailHandler.Email(stringHtmlMessage, forgotPasswordVM.Email);
+                MailHandler.Email(stringHtmlMessage, forgotPasswordVM.Email, subjectMail: "Reset Password");
             }
         }
 

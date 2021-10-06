@@ -35,5 +35,25 @@ namespace project_management_mcc.Repositories.Data
             }
             return myContext.SaveChanges();
         }
+
+        // update activity status
+        public int UpdateActivityStatus(UpdateStatusVM updateStatusVM)
+        {
+            // cari activity yang ingin diubah
+            var activity = myContext.Activities.Where(x => x.Id == updateStatusVM.ActivityId).FirstOrDefault();
+
+            activity.status = (Activity.Status)updateStatusVM.status;
+
+            var actHistory = new ActivityHistory()
+            {
+                status = (ActivityHistory.Status)updateStatusVM.status,
+                // update date
+                // activity ID
+            };
+
+            myContext.Activities.Update(activity);
+            return myContext.SaveChanges();
+
+        }
     }
 }
