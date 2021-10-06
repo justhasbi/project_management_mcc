@@ -1,5 +1,6 @@
 ﻿using project_management_mcc.Context;
 using project_management_mcc.Models;
+using project_management_mcc.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,30 @@ namespace project_management_mcc.Repositories.Data
 {
     public class ActivityRepository : GeneralRepository<MyContext, Activity, int>
     {
+
+        private readonly MyContext myContext;
+
         public ActivityRepository(MyContext myContext) : base(myContext)
         {
+            this.myContext = myContext;
+        }
 
+        // insert multiple activity
+        public int CreateMultipleActivity(CreateListActivityVM createListActivityVM)
+        {
+            foreach (var item in createListActivityVM.CreateActivityVMs)
+            {
+                var activity = new Activity()
+                {
+                    Name = item.ActivityName,
+                    StartDate = item.StartDate,
+                    EndDate = item.EndDate,
+                    status = (Activity.Status)item.status,
+                    ProjectId = (int)item.ProjectId
+                };
+                myContext.Activities.Add(activity);
+            }
+            return myContext.SaveChanges();
         }
     }
 }

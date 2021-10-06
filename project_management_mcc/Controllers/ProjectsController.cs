@@ -33,14 +33,13 @@ namespace project_management_mcc.Controllers
                     message = "Success",
                 });
             }
-            catch
+            catch (Exception e)
             {
                 return BadRequest(new
                 {
-                    message = "Failed"
+                    message = e
                 });
             }
-            
         }
     }
 }
