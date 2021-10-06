@@ -13,26 +13,29 @@ namespace project_management_mcc.Helper
 
         public string destinationEmail;
 
-        public MailHandler(string stringHtmlMessage, string destinationEmail)
+        public string subjectMail;
+
+        public MailHandler(string stringHtmlMessage, string destinationEmail, string subjectMail)
         {
             this.stringHtmlMessage = stringHtmlMessage;
             this.destinationEmail = destinationEmail;
+            this.subjectMail = subjectMail;
         }
 
-        public static void Email(string stringHtmlMessage, string destinationEmail)
+        public static void Email(string stringHtmlMessage, string destinationEmail, string subjectMail)
         {
             MailMessage message = new MailMessage();
             SmtpClient smtpClient = new SmtpClient();
-            message.From = new MailAddress("justhasbi7699@gmail.com");
+            message.From = new MailAddress("uzumakijohn82@gmail.com");
             message.To.Add(new MailAddress(destinationEmail));
-            message.Subject = "Reset Password";
+            message.Subject = subjectMail;
             message.IsBodyHtml = true;
             message.Body = stringHtmlMessage;
             smtpClient.Port = 587;
             smtpClient.Host = "smtp.gmail.com";
             smtpClient.EnableSsl = true;
             smtpClient.UseDefaultCredentials = false;
-            smtpClient.Credentials = new NetworkCredential("justhasbi7699@gmail.com", "**");
+            smtpClient.Credentials = new NetworkCredential("uzumakijohn82@gmail.com", "projectmm82");
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.Send(message);
         }

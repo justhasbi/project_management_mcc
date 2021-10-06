@@ -35,7 +35,7 @@ namespace project_management_mcc.Controllers
                     Message = "Success"
                 });
             }
-            catch (Exception)
+            catch
             {
                 return BadRequest(new
                 {

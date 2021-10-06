@@ -24,7 +24,7 @@ namespace project_management_mcc.Repositories.Data
 
             var stringHtmlMessage = "<h1>Notification Activity Assignment</h1>";
 
-            foreach (var item in createListAssignEmployeeVM.createAssignEmployeeVMs)
+            foreach (var item in createListAssignEmployeeVM.CreateAssignEmployeeVMs)
             {
                 var employeeActivity = new EmployeeActivity()
                 {
@@ -32,7 +32,8 @@ namespace project_management_mcc.Repositories.Data
                     EmployeeId = item.EmployeeId
                 };
                 myContext.EmployeeActivities.Add(employeeActivity);
-                MailHandler.Email(stringHtmlMessage, item.Email);
+
+                MailHandler.Email(stringHtmlMessage, item.Email, subjectMail: "Activity Assignment");
             }
             return myContext.SaveChanges();
         }

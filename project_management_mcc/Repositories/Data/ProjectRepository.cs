@@ -32,7 +32,7 @@ namespace project_management_mcc.Repositories.Data
 
             // save to db
             myContext.Projects.Add(project);
-            var save = myContext.SaveChanges();
+            myContext.SaveChanges();
 
             if(createProjectVM.ActivityVMs != null)
             {
@@ -48,7 +48,7 @@ namespace project_management_mcc.Repositories.Data
                     };
                     //save to db
                     myContext.Activities.Add(activity);
-                    save = myContext.SaveChanges();
+                    myContext.SaveChanges();
 
                     if (item.CreateAssignEmployeeVMs != null)
                     {
@@ -61,16 +61,22 @@ namespace project_management_mcc.Repositories.Data
                             };
                             //save to db
                             myContext.EmployeeActivities.Add(employeeActivity);
-                            save = myContext.SaveChanges();
 
                             // ambil email dari create assign vm
-                            MailHandler.Email(stringHtmlMessage, x.Email);
+                            MailHandler.Email(stringHtmlMessage, x.Email, subjectMail: "Activity Assignment");
                         }
+                    } 
+                    else
+                    {
+                        return myContext.SaveChanges();
                     }
-                    return save;
                 }
             }
-            return save;
+            else
+            {
+                return myContext.SaveChanges();
+            }
+            return myContext.SaveChanges();
         }
     }
 }

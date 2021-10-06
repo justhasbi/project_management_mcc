@@ -13,17 +13,17 @@ namespace project_management_mcc.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ActivitysController : BaseController<Activity, ActivityRepository, int>
+    public class ActivitiesController : BaseController<Activity, ActivityRepository, int>
     {
 
         private readonly ActivityRepository activityRepository;
 
-        public ActivitysController(ActivityRepository activityRepository) : base(activityRepository)
+        public ActivitiesController(ActivityRepository activityRepository) : base(activityRepository)
         {
             this.activityRepository = activityRepository;
         }
 
-        [HttpPost("InsertMultipleActivity")]
+        [HttpPost("CreateMultipleActivity")]
         public ActionResult InsertMultipleActivity(CreateListActivityVM createListActivityVM)
         {
             try
