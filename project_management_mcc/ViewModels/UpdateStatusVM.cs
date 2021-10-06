@@ -3,17 +3,14 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace project_management_mcc.Models
+namespace project_management_mcc.ViewModels
 {
-    [Table("tb_m_activity_history")]
-    public class ActivityHistory
+    public class UpdateStatusVM
     {
-        [Key]
-        public int Id { get; set; }
+        public int ActivityId { get; set; }
 
         public enum Status
         {
@@ -25,13 +22,5 @@ namespace project_management_mcc.Models
         [Range(0, 2)]
         [JsonConverter(typeof(StringEnumConverter))]
         public Status status { get; set; }
-
-        [Required]
-        [DataType(DataType.DateTime)]
-        public DateTime Update_date { get; set; }
-
-        public int ActivityId { get; set; }
-        [JsonIgnore]
-        public virtual Activity Activity { get; set; }
     }
 }
