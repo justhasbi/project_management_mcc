@@ -44,5 +44,27 @@ namespace project_management_mcc.Controllers
                 });
             }
         }
+
+        [HttpPut("UpdateActivityStatus")]
+        public ActionResult UpdateActivityStatus(UpdateStatusVM updateStatusVM)
+        {
+            try
+            {
+                activityRepository.UpdateActivityStatus(updateStatusVM);
+                return Ok(new
+                {
+                    status = HttpStatusCode.OK,
+                    Message = "Success"
+                });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new
+                {
+                    status = HttpStatusCode.BadRequest,
+                    Message = e
+                });
+            }
+        }
     }
 }
