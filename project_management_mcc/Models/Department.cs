@@ -17,9 +17,9 @@ namespace project_management_mcc.Models
         [Required(ErrorMessage = "Name is required")]
         [StringLength(40, ErrorMessage = "Name must be between 5 and 40 characters", MinimumLength = 5)]
         public string Name { get; set; }
-
+        [JsonIgnore]
         public virtual ICollection<Job> Jobs { get; set; }
-
+        [JsonIgnore]
         public virtual ICollection<Employee> Employees { get; set; }
     }
 }
