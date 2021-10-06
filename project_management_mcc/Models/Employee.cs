@@ -42,6 +42,7 @@ namespace project_management_mcc.Models
         public int? ManagerId { get; set; }
         [JsonIgnore]
         public virtual Employee EmployeeParent { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Employee> Employees { get; set; }
 
         // department_id
@@ -55,9 +56,11 @@ namespace project_management_mcc.Models
         public virtual Job Job { get; set; }
 
         // project_id
+        [JsonIgnore]
         public virtual ICollection<Project> Projects { get; set; }
 
         // employee activity
+        [JsonIgnore]
         public virtual ICollection<EmployeeActivity> EmployeeActivities { get; set; }
 
         [JsonIgnore]
