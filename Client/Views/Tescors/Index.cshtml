@@ -1,0 +1,14 @@
+﻿
+@{
+    Layout = "_AdminLayout";
+}
+
+    <script src ="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $.ajax({
+        url: "https://localhost:44315/api/Jobs/",
+
+    }).done(res => { console.log(res) })
+</script>
+
+

@@ -9,3 +9,4 @@ project_management_mcc/appsettings.json
 /client/bin
 /client/appsettings.Development.json
 client/appsettings.json
+/client/wwwroot/Template
