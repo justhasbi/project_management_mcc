@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using project_management_mcc.Base;
 using project_management_mcc.Models;
 using project_management_mcc.Repositories.Data;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace project_management_mcc.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class ActivitiesController : BaseController<Activity, ActivityRepository, int>
@@ -22,7 +24,8 @@ namespace project_management_mcc.Controllers
         {
             this.activityRepository = activityRepository;
         }
-
+        
+        [Authorize(Roles = "Managers, HR")]
         [HttpPost("CreateMultipleActivity")]
         public ActionResult InsertMultipleActivity(CreateListActivityVM createListActivityVM)
         {
@@ -45,6 +48,7 @@ namespace project_management_mcc.Controllers
             }
         }
 
+        [Authorize(Roles = "Users")]
         [HttpPut("UpdateActivityStatus")]
         public ActionResult UpdateActivityStatus(UpdateStatusVM updateStatusVM)
         {
