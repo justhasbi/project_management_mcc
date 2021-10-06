@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -36,11 +37,12 @@ namespace project_management_mcc.Models
         public Status status { get; set; }
 
         public int ProjectId { get; set; }
+        [JsonIgnore]
         public virtual Project Project { get; set; }
-
+        [JsonIgnore]
         // employee activity
         public virtual ICollection<EmployeeActivity> EmployeeActivities { get; set; }
-
+        [JsonIgnore]
         // activity history
         public virtual ICollection<ActivityHistory> ActivityHistories { get; set; }
     }

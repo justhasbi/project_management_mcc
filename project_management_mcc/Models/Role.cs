@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,6 +17,7 @@ namespace project_management_mcc.Models
         [Required]
         [StringLength(20, ErrorMessage = "Name must be between 5 and 20 characters", MinimumLength = 5)]
         public string Name { get; set; }
+        [JsonIgnore]
 
         public virtual ICollection<AccountRole> AccountRoles { get; set; }
     }
