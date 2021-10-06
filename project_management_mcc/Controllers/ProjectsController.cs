@@ -41,5 +41,24 @@ namespace project_management_mcc.Controllers
                 });
             }
         }
+        [HttpPut("CloseProject")]
+        public ActionResult CloseProject(UpdateStatusVM updateStatusVM)
+        {
+            try
+            {
+                var closeProject = projectRepository.CloseProject(updateStatusVM);
+                return Ok(new
+                {
+                    message = "Success"
+                });
+            }
+            catch 
+            {
+                return BadRequest(new
+                {
+                    message = "Failed"
+                });
+            }
+        }
     }
 }
