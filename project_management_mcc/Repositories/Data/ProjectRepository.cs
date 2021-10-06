@@ -78,5 +78,13 @@ namespace project_management_mcc.Repositories.Data
             }
             return myContext.SaveChanges();
         }
+        public int CloseProject(UpdateStatusVM updateStatusVM)
+        {
+            var closeProject = myContext.Projects.Where(x => x.Id == updateStatusVM.Id).FirstOrDefault();
+            closeProject.status = (Project.Status)updateStatusVM.status;
+
+            myContext.Projects.Update(closeProject);
+            return myContext.SaveChanges();
+        }
     }
 }

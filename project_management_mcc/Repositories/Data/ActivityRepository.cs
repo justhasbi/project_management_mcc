@@ -40,15 +40,14 @@ namespace project_management_mcc.Repositories.Data
         public int UpdateActivityStatus(UpdateStatusVM updateStatusVM)
         {
             // cari activity yang ingin diubah
-            var activity = myContext.Activities.Where(x => x.Id == updateStatusVM.ActivityId).FirstOrDefault();
-
+            var activity = myContext.Activities.Where(x => x.Id == updateStatusVM.Id).FirstOrDefault();
             activity.status = (Activity.Status)updateStatusVM.status;
 
             var actHistory = new ActivityHistory()
             {
                 status = (ActivityHistory.Status)updateStatusVM.status,
-                // update date
-                // activity ID
+                Update_date = DateTime.Now,  // update date
+                ActivityId = updateStatusVM.Id  // activity ID
             };
 
             myContext.Activities.Update(activity);

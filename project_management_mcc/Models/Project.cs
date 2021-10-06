@@ -23,6 +23,14 @@ namespace project_management_mcc.Models
         [DataType(DataType.Text)]
         [StringLength(500, ErrorMessage = "Description must be between 5 and 500 characters", MinimumLength = 5)]
         public string Description { get; set; }
+        public enum Status
+        {
+            Unstarted,
+            Started,
+            Completed
+        }
+        [Required]
+        public Status status { get; set; }
 
         // Manager ID
         [JsonIgnore]

@@ -10,7 +10,7 @@ namespace project_management_mcc.ViewModels
 {
     public class UpdateStatusVM
     {
-        public int ActivityId { get; set; }
+        public int Id { get; set; }
 
         public enum Status
         {
