@@ -13,29 +13,29 @@ namespace project_management_mcc.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ActivitysController : BaseController<Activity, ActivityRepository, int>
+    public class EmployeeActivitiesController : BaseController<EmployeeActivity, EmployeeActivityRepository, int>
     {
 
-        private readonly ActivityRepository activityRepository;
+        private readonly EmployeeActivityRepository employeeActivityRepository;
 
-        public ActivitysController(ActivityRepository activityRepository) : base(activityRepository)
+        public EmployeeActivitiesController(EmployeeActivityRepository repository) : base(repository)
         {
-            this.activityRepository = activityRepository;
+            this.employeeActivityRepository = repository;
         }
 
-        [HttpPost("InsertMultipleActivity")]
-        public ActionResult InsertMultipleActivity(CreateListActivityVM createListActivityVM)
+        [HttpPost("AssignMultipleEmployee")]
+        public ActionResult AssignMultipleEmployee(CreateListAssignEmployeeVM createListAssignEmployeeVM)
         {
             try
             {
-                activityRepository.CreateMultipleActivity(createListActivityVM);
+                employeeActivityRepository.AssignMultipleEmployee(createListAssignEmployeeVM);
                 return Ok(new
                 {
                     status = HttpStatusCode.OK,
                     Message = "Success"
                 });
             }
-            catch
+            catch (Exception)
             {
                 return BadRequest(new
                 {

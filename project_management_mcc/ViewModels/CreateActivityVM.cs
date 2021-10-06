@@ -8,6 +8,8 @@ namespace project_management_mcc.ViewModels
 {
     public class CreateActivityVM
     {
+        public int? ProjectId { get; set; }
+
         public string ActivityName { get; set; }
 
         public DateTime StartDate { get; set; }
