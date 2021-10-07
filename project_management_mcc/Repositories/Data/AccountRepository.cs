@@ -94,18 +94,18 @@ namespace project_management_mcc.Repositories.Data
                                        join r in myContext.Roles on ar.RoleId equals r.Id
                                        select new RoleVM
                                        {
-                                           Id = ar.Id,
+                                           Id = a.Id,
                                            RoleId = ar.RoleId,
                                            RoleName = r.Name
-                                       }).Where(x => x.Id.Equals(emailCheck.Id)).ToList();
+                                       }).Where(x => x.Id == emailCheck.Id).ToList();
                         var claims = new List<Claim>
                         {
                             new Claim("Id", passwordCheck.Id.ToString()),
-                            new Claim(ClaimTypes.Email, emailCheck.Email)
+                            new Claim("Email", emailCheck.Email)
                         };
                         foreach (var item in getRole)
                         {
-                            claims.Add(new Claim(ClaimTypes.Role, item.RoleName));
+                            claims.Add(new Claim("roles", item.RoleName));
                         }
                         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
                         var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
