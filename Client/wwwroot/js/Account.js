@@ -80,3 +80,26 @@ $('.forgot-password').submit(e => {
         }
     })
 });
+$('.change-password').submit(e => {
+    e.preventDefault();
+    let data = new Object();
+    data.Email = $('#inputEmail').val();
+    data.CurrentPassword = $('#inputcurentpassword').val();
+    data.NewPassword = $('#inputnewpassword').val();
+    data.ConfirmPassword = $('#confirmpassword').val();
+    console.log(data);
+
+    $.ajax({
+        url: 'changePassword/',
+        type: 'put',
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+        data: data,
+        success: (data) => {
+            console.log("success")
+        },
+        error: () => {
+            console.log("error")
+        }
+    })
+})
