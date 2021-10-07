@@ -42,5 +42,11 @@ namespace Client.Controllers
         {
             return View();
         }
+
+        // sample
+        public IActionResult RegisterViews()
+        {
+            return View();
+        }
     }
 }
