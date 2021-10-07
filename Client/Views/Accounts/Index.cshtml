@@ -20,23 +20,23 @@
                             <form class="user">
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-user"
-                                           id="exampleInputEmail" aria-describedby="emailHelp"
+                                           id="InputEmail" aria-describedby="emailHelp"
                                            placeholder="Enter Email Address..." required>
                                 </div>
                                 <div class="form-group">
                                     <input type="password" class="form-control form-control-user"
-                                           id="exampleInputPassword" placeholder="Password" required>
+                                           id="InputPassword" placeholder="Password" required>
                                 </div>
-                                <a href="#" class="btn btn-primary btn-user btn-block">
+                                <button type="submit" class="btn btn-primary btn-user btn-block" id="btn-login">
                                     Login
-                                </a>
+                                </button>
                             </form>
                             <hr>
                             <div class="text-center">
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
                             </div>
                             <div class="text-center">
-                                <a class="small" asp-controller="Accounts" asp-action="Register">Create an Account!</a>
+                                <a class="small" asp-controller="Accounts" asp-action="RegisterViews">Create an Account!</a>
                             </div>
                         </div>
                     </div>
@@ -45,3 +45,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/Account.js"></script>
+}
