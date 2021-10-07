@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using project_management_mcc.Base;
 using project_management_mcc.Models;
 using project_management_mcc.Repositories.Data;
@@ -22,7 +23,7 @@ namespace project_management_mcc.Controllers
         {
             this.employeeActivityRepository = repository;
         }
-
+        [Authorize(Roles = "Managers, HR")]
         [HttpPost("AssignMultipleEmployee")]
         public ActionResult AssignMultipleEmployee(CreateListAssignEmployeeVM createListAssignEmployeeVM)
         {
