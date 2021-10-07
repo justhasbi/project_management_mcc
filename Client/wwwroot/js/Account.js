@@ -1,16 +1,22 @@
 ﻿
+//$('.user').submit((e) => {
+//    e.preventDefault();
 
-$('.user').submit((e) => {
-    e.preventDefault();
+//    let loginObj = {
+//        "Email": $('#InputEmail').val(),
+//        "Password": $('#InputPassword').val()
+//    };
 
-    let loginObj = {
-        "Email": $('#InputEmail').val(),
-        "Password": $('#InputPassword').val()
-    };
-
-    $.ajax({
-        url: '',
-        data:
-    }).done(res => console.log(res))
-        .fail(res => console.log(res))
-});
+//    $.ajax({
+//        url: 'accounts/loginuser/',
+//        method: 'POST',
+//        dataType: 'json',
+//        contentType: 'application/json; charset=utf-8',
+//        data: JSON.stringify(loginObj),
+//    }).done((res) => {
+//        console.log(res)
+//        alert("Success Login")
+//    }).fail((res) => {
+//        console.log(res)
+//    })
+//});
