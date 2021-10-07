@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using project_management_mcc.Base;
 using project_management_mcc.Context;
 using project_management_mcc.Models;
@@ -96,6 +97,7 @@ namespace project_management_mcc.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("changePassword")]
         public ActionResult ChangePassword(ChangePasswordVM changePasswordVM)
         {
