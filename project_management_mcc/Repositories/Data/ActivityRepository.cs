@@ -43,6 +43,9 @@ namespace project_management_mcc.Repositories.Data
             var activity = myContext.Activities.Where(x => x.Id == updateStatusVM.Id).FirstOrDefault();
             activity.status = (Activity.Status)updateStatusVM.status;
 
+            myContext.Activities.Update(activity);
+            myContext.SaveChanges();
+
             var actHistory = new ActivityHistory()
             {
                 status = (ActivityHistory.Status)updateStatusVM.status,
@@ -50,10 +53,9 @@ namespace project_management_mcc.Repositories.Data
                 ActivityId = updateStatusVM.Id  // activity ID
             };
             
-            myContext.Activities.Update(activity);
             myContext.ActivityHistories.Add(actHistory);
+            
             return myContext.SaveChanges();
-
         }
     }
 }
