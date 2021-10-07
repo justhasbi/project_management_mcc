@@ -21,10 +21,10 @@ namespace Client.Controllers
             this.repository = repository;
         }
 
-        [HttpPost("Login/")]
-        public async Task<ActionResult> Login(LoginVM loginVM)
+        [HttpPost("Auth/")]
+        public async Task<ActionResult> Auth(LoginVM loginVM)
         {
-            var jwtToken = await repository.Login(loginVM);
+            var jwtToken = await repository.Auth(loginVM);
             var token = jwtToken.Token;
 
             if(token == null)

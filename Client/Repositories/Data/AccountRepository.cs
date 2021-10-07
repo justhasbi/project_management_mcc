@@ -35,7 +35,7 @@ namespace Client.Repositories.Data
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", contextAccessor.HttpContext.Session.GetString("JWToken"));
         }
 
-        public async Task<JwtTokenVM> Login(LoginVM loginVM)
+        public async Task<JwtTokenVM> Auth(LoginVM loginVM)
         {
             JwtTokenVM token = null;
 
