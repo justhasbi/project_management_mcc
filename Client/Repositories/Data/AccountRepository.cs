@@ -48,5 +48,20 @@ namespace Client.Repositories.Data
 
             return token;
         }
+
+        public string Register(RegisterVM registerVM)
+        {
+            StringContent content = new StringContent(JsonConvert.SerializeObject(registerVM), Encoding.UTF8, "application/json");
+            var response = httpClient.PostAsync(request + "Register", content).Result.Content.ReadAsStringAsync().Result;
+            return response;
+        }
+
+        public string ForgotPassword(ForgotPasswordVM forgotPasswordVM)
+        {
+            StringContent content = new StringContent(JsonConvert.SerializeObject(forgotPasswordVM), Encoding.UTF8, "application/json");
+            var result = httpClient.PutAsync(request + "ForgotPassword", content).Result.Content.ReadAsStringAsync().Result;
+            return result;
+
+        }
     }
 }
