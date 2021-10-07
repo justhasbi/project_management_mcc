@@ -49,8 +49,9 @@ namespace project_management_mcc.Repositories.Data
                 Update_date = DateTime.Now,  // update date
                 ActivityId = updateStatusVM.Id  // activity ID
             };
-
+            
             myContext.Activities.Update(activity);
+            myContext.ActivityHistories.Add(actHistory);
             return myContext.SaveChanges();
 
         }
