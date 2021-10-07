@@ -50,6 +50,12 @@ namespace Client.Controllers
             var result = repository.ForgotPassword(forgotPasswordVM);
             return Json(result);
         }
+        [HttpPut]
+        public JsonResult ChangePassword(ChangePasswordVM changePasswordVM)
+        {
+            var result = repository.ChangePassword(changePasswordVM);
+            return Json(result);
+        }
 
         // view handler
         public IActionResult Index()
@@ -64,6 +70,10 @@ namespace Client.Controllers
         }
 
         public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        public IActionResult ChangePassword()
         {
             return View();
         }
