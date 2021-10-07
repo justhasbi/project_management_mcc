@@ -37,6 +37,20 @@ namespace Client.Controllers
             return RedirectToAction("index", "Home");
         }
 
+        [HttpPost]
+        public JsonResult Register(RegisterVM registerVM)
+        {
+            var result = repository.Register(registerVM);
+            return Json(result);
+        }
+
+        [HttpPut]
+        public JsonResult ForgotPassword(ForgotPasswordVM forgotPasswordVM)
+        {
+            var result = repository.ForgotPassword(forgotPasswordVM);
+            return Json(result);
+        }
+
         // view handler
         public IActionResult Index()
         {
@@ -45,6 +59,11 @@ namespace Client.Controllers
 
         // sample
         public IActionResult RegisterViews()
+        {
+            return View();
+        }
+
+        public IActionResult ForgotPassword()
         {
             return View();
         }

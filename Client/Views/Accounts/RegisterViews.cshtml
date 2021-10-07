@@ -4,91 +4,90 @@
 }
 
 <body class="bg-gradient-primary">
-
     <div class="container">
-
         <div class="card o-hidden border-0 shadow-lg my-5" id="register">
             <div class="card-body p-0">
-                <!-- Nested Row within Card Body -->                    
-                        <div class="p-5">
-                            <div class="text-center">
-                                <h1 class="h2 text-gray-900 mb-4">Create an Account!</h1>
+                <!-- Nested Row within Card Body -->
+                <div class="p-5">
+                    <div class="text-center">
+                        <h1 class="h2 text-gray-900 mb-4">Create an Account!</h1>
+                    </div>
+                    <form class="needs-validation register-form" novalidate>
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <label for="first">First Name</label>
+                                <input type="text" class="form-control form-control-user" id="first"
+                                       placeholder="First Name" value="mail" required>
+                                <div class="invalid-feedback">Fild Cannot Empety</div>
                             </div>
-                            <form class="needs-validation register-form" novalidate>
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <label for="first">First Name</label>
-                                        <input type="text" class="form-control form-control-user" id="first"
-                                               placeholder="First Name" required>
-                                        <div class="invalid-feedback">Fild Cannot Empety</div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label for="last">Last Name</label>
-                                        <input type="text" class="form-control form-control-user" id="last"
-                                               placeholder="Last Name" required>
-                                        <div class="invalid-feedback">Fild Cannot Empety</div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="phone">Phone Number</label>
-                                    <input type="number" class="form-control form-control-user" id="phone"
-                                           placeholder="Phone">
-                                    <div class="invalid-feedback">Field Cannot be Empty</div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="gender">Gender</label>
-                                    <select class="form-control form-control-user" id="gender" required>
-                                        <option value="0">Male</option>
-                                        <option value="1">Female</option>
-                                    </select>
-                                    <div class="invalid-feedback">Field Cannot be Empty</div>
-                                    <div class="form-group">
-                                        <label for="email">Email Address</label>
-                                        <input type="email" class="form-control form-control-user" id="email"
-                                               placeholder="Email Address">
-                                        <div class="invalid-feedback">Field Cannot be Empty</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="password">Password</label>
-                                        <input type="password" class="form-control form-control-user" id="pass"
-                                               placeholder="Password">
-                                        <div class="invalid-feedback">Field Cannot be Empty</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="departmen">Departmen</label>
-                                        <input type="number" class="form-control form-control-user" id="departmen"
-                                               placeholder="DepartemenId">
-                                        <div class="invalid-feedback">Field Cannot be Empty</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="job">Job</label>
-                                        <input type="number" class="form-control form-control-user" id="job"
-                                               placeholder="JobId">
-                                        <div class="invalid-feedback">Field Cannot be Empty</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="role">Role</label>
-                                        <input type="number" class="form-control form-control-user" id="role"
-                                               placeholder="RoleId">
-                                        <div class="invalid-feedback">Field Cannot be Empty</div>
-                                    </div>
-                                </div>
-                                <a href="login.html" class="btn btn-primary btn-user btn-block" id="submit">
-                                    Register Account
-                                </a>
-                                <hr>
-                            </form>
-                            <hr>
-                            <div class="text-center">
-                                <a class="small" href="forgot-password.html">Forgot Password?</a>
-                            </div>
-                            <div class="text-center">
-                                <a class="small" href="login.html">Already have an account? Login!</a>
+                            <div class="col-sm-6">
+                                <label for="last">Last Name</label>
+                                <input type="text" class="form-control form-control-user" id="last"
+                                       placeholder="Last Name" value="ismail" required>
+                                <div class="invalid-feedback">Fild Cannot Empety</div>
                             </div>
                         </div>
-               
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="number" class="form-control form-control-user" id="phone"
+                                   placeholder="Phone" value="089800897665" required>
+                            <div class="invalid-feedback">Field Cannot be Empty</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select class="form-control form-control-user" id="gender" required>
+                                <option value="0">Male</option>
+                                <option value="1">Female</option>
+                            </select>
+                            <div class="invalid-feedback">Field Cannot be Empty</div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" class="form-control form-control-user" id="email"
+                                       placeholder="Email Address" value="mail@gmail.com" required>
+                                <div class="invalid-feedback">Field Cannot be Empty</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control form-control-user" id="pass"
+                                       placeholder="Password" value="coba123456" required>
+                                <div class="invalid-feedback">Field Cannot be Empty</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="departmen">Departmen</label>
+                                <input type="number" class="form-control form-control-user" id="departmen"
+                                       placeholder="DepartemenId" value="1" required>
+                                <div class="invalid-feedback">Field Cannot be Empty</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="job">Job</label>
+                                <input type="number" class="form-control form-control-user" id="job"
+                                       placeholder="JobId" value="1" required>
+                                <div class="invalid-feedback">Field Cannot be Empty</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="role">Role</label>
+                                <input type="number" class="form-control form-control-user" id="role"
+                                       placeholder="RoleId" value="1" required>
+                                <div class="invalid-feedback">Field Cannot be Empty</div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-user btn-block" id="submit">
+                            Register Account
+                        </button>
+                        <hr>
+                    </form>
+                    <div class="text-center">
+                        <a class="small" asp-controller="Accounts" asp-action="ForgotPassword">Forgot Password?</a>
+                    </div>
+                    <div class="text-center">
+                        <a class="small" asp-controller="Accounts" asp-action="Index">Already have an account? Login!</a>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
 </body>
+
+@section Scripts {
+    <script src="~/js/Account.js"></script>
+}
