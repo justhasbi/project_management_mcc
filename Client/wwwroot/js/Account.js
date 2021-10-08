@@ -1,5 +1,4 @@
-﻿
-//$('.user').submit((e) => {
+﻿//$('.user').submit((e) => {
 //    e.preventDefault();
 
 //    let loginObj = {
@@ -34,11 +33,13 @@ $('.register-form').submit((e) => {
     data.Gender = parseInt($('#gender').val());
     data.Email = $('#email').val();
     data.Password = $('#pass').val();
-    data.DepartmentId = parseInt($('#departmen').val());
+    data.DepartmentId = parseInt($('#department').val());
     data.JobId = parseInt($('#job').val());
     data.RoleId = parseInt($('#role').val());
 
     console.log(JSON.stringify(data))
+
+    
 
     $.ajax({
         url: 'register/',
@@ -48,13 +49,58 @@ $('.register-form').submit((e) => {
         contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         data: data,
         success: function (data) {
-            console.log("success")
+            swal({
+                title: "Success Create Account",
+                icon: "success"
+            }).then(() => {
+                window.location = '/Accounts'
+            })
         },
         error: function () {
-            console.log("Error")
+            swal({
+                title: "Success Create Account",
+                icon: "success"
+            }).then(() => window.location.reload());
+            
         }
     });
 });
+
+// job Select Box
+$.ajax({
+    url: 'https://localhost:44315/api/jobs',
+    method: 'get'
+}).done(res => {
+    console.log(res.data)
+    let selectItem = '';
+    $.each(res.data, (key, val) => {
+        selectItem += `<option value="${val.id}" data-department="${val.DepartmentId}">${val.name}</option>`
+    });
+    $('#job').html(selectItem);
+}).fail(res => {
+    console.log(res);
+});
+
+    let jobVal = $('#job').val();
+    console.log(jobVal)
+
+// Department Select Box
+$.ajax({
+    url: 'https://localhost:44315/api/departments',
+    method: 'get'
+}).done(res => {
+    console.log(res.data)
+    let selectItem = '';
+    $.each(res.data, (key, val) => {
+        selectItem += `<option value="${val.id}">${val.name}</option>`
+    });
+    $('#department').html(selectItem);
+}).fail(res => {
+    console.log(res);
+});
+
+
+// --------------------
 
 
 $('.forgot-password').submit(e => {
