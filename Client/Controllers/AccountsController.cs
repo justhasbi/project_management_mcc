@@ -3,6 +3,7 @@ using Client.Repositories.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using project_management_mcc.Models;
 using project_management_mcc.ViewModels;
 using System.IdentityModel.Tokens.Jwt;
@@ -110,12 +111,14 @@ namespace Client.Controllers
         public IActionResult ChangePasswordViews()
         {
             var userIdentity = User.Identity.IsAuthenticated;
-
+            
             if (!userIdentity)
             {
                 return RedirectToAction("Index");
             }
-
+            var payload = HttpContext.Session.GetString("Payload");
+            var jsonPayload = JsonConvert.DeserializeObject(payload);
+            ViewBag.Payload = jsonPayload;
             return View();
 
         }
