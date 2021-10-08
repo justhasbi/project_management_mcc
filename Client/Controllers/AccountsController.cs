@@ -1,12 +1,11 @@
 ﻿using Client.Base.Controllers;
 using Client.Repositories.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using project_management_mcc.Models;
 using project_management_mcc.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
 namespace Client.Controllers
@@ -27,12 +26,18 @@ namespace Client.Controllers
             var jwtToken = await repository.Auth(loginVM);
             var token = jwtToken.Token;
 
-            if(token == null)
+            if (token == null)
             {
                 return RedirectToAction("index");
             }
 
             HttpContext.Session.SetString("JWToken", token);
+
+            var handler = new JwtSecurityTokenHandler();
+            var tokenDecode = handler.ReadJwtToken(token);
+            var jwtPayloadDecode = tokenDecode.Payload.SerializeToJson();
+
+            HttpContext.Session.SetString("Payload", jwtPayloadDecode);
 
             return RedirectToAction("index", "Home");
         }
@@ -57,25 +62,62 @@ namespace Client.Controllers
             return Json(result);
         }
 
+        [Authorize]
+        [HttpGet("Logout/")]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index");
+        }
+
         // view handler
         public IActionResult Index()
         {
+            var userIdentity = User.Identity.IsAuthenticated;
+
+            if (userIdentity)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
         // sample
         public IActionResult RegisterViews()
         {
+            var userIdentity = User.Identity.IsAuthenticated;
+
+            if (userIdentity)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
-        public IActionResult ForgotPassword()
+        public IActionResult ForgotPasswordViews()
         {
+            var userIdentity = User.Identity.IsAuthenticated;
+            
+            if (userIdentity)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
-        public IActionResult ChangePassword()
+
+        public IActionResult ChangePasswordViews()
         {
+            var userIdentity = User.Identity.IsAuthenticated;
+
+            if (!userIdentity)
+            {
+                return RedirectToAction("Index");
+            }
+
             return View();
+
         }
     }
 }

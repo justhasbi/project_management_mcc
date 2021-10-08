@@ -45,7 +45,7 @@ namespace Client.Repositories.Data
 
             string apiResponse = await result.Content.ReadAsStringAsync();
             token = JsonConvert.DeserializeObject<JwtTokenVM>(apiResponse);
-
+            
             return token;
         }
 
