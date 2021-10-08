@@ -1,6 +1,8 @@
 ﻿using Client.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,7 +22,19 @@ namespace Client.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var userIdentity = User.Identity.IsAuthenticated;
+            if (userIdentity)
+            {
+                var payload = HttpContext.Session.GetString("Payload");
+
+                var jsonPayload = JsonConvert.DeserializeObject(payload);
+
+                ViewBag.Payload = jsonPayload;
+                
+                return View();
+            }
+
+            return RedirectToAction("Index", "Accounts");
         }
 
         public IActionResult Privacy()
