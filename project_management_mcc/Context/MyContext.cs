@@ -56,7 +56,8 @@ namespace project_management_mcc.Context
 
             modelBuilder.Entity<Job>()
                 .HasOne(x => x.Department)
-                .WithMany(x => x.Jobs);
+                .WithMany(x => x.Jobs)
+                .HasForeignKey(x => x.DepartmentId);
 
             // one to one employee with account
             modelBuilder.Entity<Employee>()

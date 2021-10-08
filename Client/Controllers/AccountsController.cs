@@ -116,9 +116,11 @@ namespace Client.Controllers
             {
                 return RedirectToAction("Index");
             }
+            
             var payload = HttpContext.Session.GetString("Payload");
             var jsonPayload = JsonConvert.DeserializeObject(payload);
             ViewBag.Payload = jsonPayload;
+
             return View();
 
         }

@@ -18,10 +18,12 @@ namespace project_management_mcc.Models
         [DataType(DataType.Text)]
         [StringLength(50, ErrorMessage = "Name must be between 5 and 50 characters", MinimumLength = 5)]
         public string Name { get; set; }
-        [JsonIgnore]
+
         public int DepartmentId { get; set; }
+        
         [JsonIgnore]
         public virtual Department Department { get; set; }
+        
         [JsonIgnore]
         public virtual ICollection<Employee> Employees { get; set; }
     }

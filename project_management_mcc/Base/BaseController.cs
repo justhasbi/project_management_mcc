@@ -77,12 +77,13 @@ namespace project_management_mcc.Base
                     message = "Success Insert Data"
                 });
             }
-            catch
+            catch (Exception e)
             {
                 return BadRequest(new
                 {
                     data = entity,
-                    message = "Error Insert Data"
+                    message = e
+                    // message = "Error Insert Data"
                 });
             }
         }
