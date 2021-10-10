@@ -1,0 +1,288 @@
+﻿
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Project Detail";
+}
+
+<h1 class="h3 text-primary text-uppercase mb-4 font-weight-bold col">POS Toko Kita Adiwerna</h1>
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between flex-sm-wrap">
+                <h5 class="m-0 font-weight-bold text-primary">Project Activities</h5>
+                <button class="btn float-right btn-primary"
+                        type="button"
+                        data-toggle="modal"
+                        data-target="#activityForm">
+                    Add Activity<i class="fas fa-plus ml-2"></i>
+                </button>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="row px-4">
+
+                    <div class="col-xl-4 col-md-6 col-sm-12">
+                        <h6 class="m-0 mb-4 font-weight-bold text-primary">Not Started</h6>
+                        <div class="border rounded mb-3">
+                            <div class="d-flex flex-row justify-content-between align-items-center flex-sm-wrap p-3">
+                                <div class="title-text">
+                                    <span class="font-weight-bold">System Business Analysis</span><br />
+                                    <span class="text-black-50 small">3-10-2021</span>
+                                </div>
+                                <div class="btn-container">
+                                    <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#activityDetail">Detail <i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 col-sm-12">
+                        <h6 class="m-0 mb-4 font-weight-bold text-primary">Started</h6>
+                        <div class="border rounded mb-3">
+                            <div class="d-flex flex-row justify-content-between align-items-center flex-sm-wrap p-3">
+                                <div class="title-text">
+                                    <span class="font-weight-bold">System Business Analysis</span><br />
+                                    <span class="text-black-50 small">3-10-2021</span>
+                                </div>
+                                <div class="btn-container">
+                                    <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#activityDetail">Detail <i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 col-sm-12">
+                        <h6 class="m-0 mb-4 font-weight-bold text-primary">Completed</h6>
+                        <div class="border rounded mb-3">
+                            <div class="d-flex flex-row justify-content-between align-items-center flex-sm-wrap p-3">
+                                <div class="title-text">
+                                    <span class="font-weight-bold">System Business Analysis</span><br />
+                                    <span class="text-black-50 small">3-10-2021</span>
+                                </div>
+                                <div class="btn-container">
+                                    <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#activityDetail">Detail <i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-dark float-right" disabled>Close Project</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Activity form Modal  -->
+<div class="modal fade" id="activityForm" tabindex="-1" role="dialog" aria-labelledby="activityForm" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="activityForm"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="activity-form" method="post" novalidate>
+                    <div class="form-group">
+                        <label for="activity-name">Activity Name</label>
+                        <input type="text" class="form-control" id="activity-name" name="name" required>
+                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="start-date">Start Date</label>
+                        <input type="date" name="startdate" class="form-control" id="start-date" required>
+                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="end-date">End Date</label>
+                        <input type="date" name="enddate" class="form-control" id="end-date" required>
+                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select class="form-control" id="status" disabled>
+                            <option value="0">Unstarted</option>
+                            <option value="1">Started</option>
+                            <option value="2">Completed</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-3" id="btnSubmit">Submit</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Activity detail Modal  -->
+<div class="modal fade" id="activityDetail" tabindex="-1" role="dialog" aria-labelledby="activityDetail" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="activityDetail">Activity Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3 class="text-primary font-weight-bold mt-3">System Business Analysis</h3>
+                <table class="table mt-3">
+                    <tr>
+                        <th>Start Date:</th>
+                        <td>17-10-2021</td>
+                    </tr>
+                    <tr>
+                        <th>End Date:</th>
+                        <td>25-10-2021</td>
+                    </tr>
+                    <tr>
+                        <th>Status:</th>
+                        <td>
+                            <select class="form-control" id="status" disabled>
+                                <option value="0">Unstarted</option>
+                                <option value="1">Started</option>
+                                <option value="2">Completed</option>
+                            </select>
+                            <button type="button" class="btn btn-sm btn-success mt-2">Update <i class="fas fa-edit"></i></button>
+                        </td>
+                    </tr>
+                </table>
+
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    Show Employee Assign <i class="fas fa-chevron-down"></i>
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                <button class="btn btn-sm float-right btn-primary mb-3" type="button">
+                                    Assign Employee <i class="fas fa-plus ml-2"></i>
+                                </button>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <td>No</td>
+                                            <td>Name</td>
+                                            <td>Job</td>
+                                            <td>Department</td>
+                                            <td>Action</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Hasbi Shuhada</td>
+                                            <td>Backend Engineer</td>
+                                            <td>Application Development Department</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Pernandes</td>
+                                            <td>Frontend Engineer</td>
+                                            <td>Application Development Department</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Linggom</td>
+                                            <td>System Analys</td>
+                                            <td>Application Development Department</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-dismiss="modal" data-target="#activityUpdate">Update <i class="fas fa-edit"></i></button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Activity Update Modal  -->
+<div class="modal fade" id="activityUpdate" tabindex="-1" role="dialog" aria-labelledby="activityUpdate" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="activityUpdate"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="activity-update-form" method="post" novalidate>
+                    <div class="form-group">
+                        <label for="activity-name">Activity Name</label>
+                        <input type="text" class="form-control" id="activity-name" name="name" required>
+                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="start-date">Start Date</label>
+                        <input type="date" name="startdate" class="form-control" id="start-date" required>
+                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="end-date">End Date</label>
+                        <input type="date" name="enddate" class="form-control" id="end-date" required>
+                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select class="form-control" id="status">
+                            <option value="0">Unstarted</option>
+                            <option value="1">Started</option>
+                            <option value="2">Completed</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-3" id="btnSubmit">Submit</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save <i class="fas fa-save"></i></button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Project.js"></script>
+}

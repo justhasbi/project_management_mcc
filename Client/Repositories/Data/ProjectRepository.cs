@@ -21,7 +21,8 @@ namespace Client.Repositories.Data
         private readonly string request;
 
         private readonly IHttpContextAccessor contextAccessor;
-        public ProjectRepository(Address address, string request = "Project/") : base(address, request)
+        
+        public ProjectRepository(Address address, string request = "Projects/") : base(address, request)
         {
             this.address = address;
             this.request = request;

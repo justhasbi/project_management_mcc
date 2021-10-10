@@ -1,0 +1,90 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Project";
+    ViewBag.Title = "Data Manager";
+    var data = ViewBag.Payload;
+}
+
+<div class="row mb-2">
+    <h1 class="h3 text-primary text-uppercase mb-4 font-weight-bold col">Project</h1>
+    <div class="col">
+        <button class="btn float-right btn-primary" 
+                type="button" 
+                data-toggle="modal" 
+                data-target="#projectForm">Create Project <i class="fas fa-plus ml-2"></i>
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mt-4">
+        <a href="/Projects/ProjectDetail" style="text-decoration:none;">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">
+                                Point of Sales Toko Kita Adiwerna
+                            </div>
+                            <div class="h5 mb-0 text-md font-weight-bold text-gray-800 mt-2">3 Activity</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="projectForm" tabindex="-1" role="dialog" aria-labelledby="projectForm" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="projectForm"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="project-form" method="post" novalidate>
+                    <div class="form-group">
+                        <label for="project-name">Project Name</label>
+                        <input type="text" class="form-control" id="project-name" name="name" required>
+                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea name="description" class="form-control" id="description" required></textarea>
+                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" 
+                               class="form-control" 
+                               id="managerId" 
+                               name="managerId" 
+                               value="@data.Id" disabled hidden  required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Project.js"></script>
+}

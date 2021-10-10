@@ -81,9 +81,6 @@ $.ajax({
     console.log(res);
 });
 
-    let jobVal = $('#job').val();
-    console.log(jobVal)
-
 // Department Select Box
 $.ajax({
     url: 'https://localhost:44315/api/departments',
