@@ -21,13 +21,21 @@ namespace Client.Controllers
             this.repository = repository;
         }
 
+        
+
         public IActionResult Index()
         {
-            var payload = HttpContext.Session.GetString("Payload");
-            var jsonPayload = JsonConvert.DeserializeObject(payload);
-            ViewBag.Payload = jsonPayload;
+            var userIdentity = User.Identity.IsAuthenticated;
 
-            return View();
+            if (userIdentity)
+            {
+                var payload = HttpContext.Session.GetString("Payload");
+                var jsonPayload = JsonConvert.DeserializeObject(payload);
+                ViewBag.Payload = jsonPayload;
+                return View();
+            }
+
+            return RedirectToAction("Index", "Accounts");
         }
 
         public IActionResult ProjectDetail()
