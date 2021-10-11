@@ -25,7 +25,7 @@ namespace project_management_mcc.Controllers
             this.activityRepository = activityRepository;
         }
         
-        [Authorize(Roles = "Managers, HR")]
+        [Authorize(Roles = "Manager, Human Resource")]
         [HttpPost("CreateMultipleActivity")]
         public ActionResult InsertMultipleActivity(CreateListActivityVM createListActivityVM)
         {
@@ -68,6 +68,21 @@ namespace project_management_mcc.Controllers
                     status = HttpStatusCode.BadRequest,
                     Message = e
                 });
+            }
+        }
+
+        
+        [HttpGet("GetByProject/{id}")]
+        public ActionResult GetByProject(int id)
+        {
+            try
+            {
+                var data = activityRepository.GetByProject(id);
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                return NotFound(e);
             }
         }
     }

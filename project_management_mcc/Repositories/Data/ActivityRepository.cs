@@ -57,5 +57,18 @@ namespace project_management_mcc.Repositories.Data
             
             return myContext.SaveChanges();
         }
+
+        // get Activity by manager id
+        public IEnumerable<Activity> GetByProject(int id)
+        {
+            var data = myContext.Activities.Where(x => x.ProjectId == id);
+
+            if(data.Count() == 0)
+            {
+                return null;
+            }
+
+            return data.ToList();
+        }
     }
 }
