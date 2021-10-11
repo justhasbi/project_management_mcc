@@ -86,5 +86,22 @@ namespace project_management_mcc.Repositories.Data
             myContext.Projects.Update(closeProject);
             return myContext.SaveChanges();
         }
+        public IEnumerable<Project> GetCreateProjectVMs(int Id)
+        {
+            var getcreateprojectId = myContext.Projects.Where(x => x.ManagerId == Id);
+            //var getCreateProjectId = (from e in myContext.Employees
+            //                          join p in myContext.Projects on e.ManagerId equals p.Id
+            //                          select new CreateProjectVM
+            //                          {
+            //                              ManagerId = (int)e.ManagerId,
+            //                              ProjectName = p.Name,
+            //                              Description = p.Description
+            //                          }).ToList();
+            if (getcreateprojectId == null)
+            {
+                return null;
+            }
+            return getcreateprojectId;
+        }
     }
 }
