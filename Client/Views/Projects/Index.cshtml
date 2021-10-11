@@ -9,6 +9,7 @@
 
 <div class="row mb-2">
     <h1 class="h3 text-primary text-uppercase mb-4 font-weight-bold col">Project</h1>
+    <span class="text-secondary mId" hidden>@data.Id</span>
     <div class="col">
         <button class="btn float-right btn-primary" 
                 type="button" 
@@ -19,7 +20,6 @@
 </div>
 
 <div class="row project-wrapper">
-    
 
 </div>
 
@@ -66,6 +66,9 @@
 </div>
 
 
+<script type="text/javascript">
+    sessionStorage.clear();
+</script>
 
 @section Scripts {
     <script src="~/js/Project.js"></script>
