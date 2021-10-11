@@ -8,8 +8,10 @@ $('.project-form').submit(e => {
     data.Description = $('#description').val()
     data.Status = 0
 
+    console.log(data)
+
     $.ajax({
-        url: 'Projects/',
+        url: 'Projects/post',
         type: 'post',
         dataType: 'json',
         //contentType: 'application/json; charset=utf-8',
@@ -24,7 +26,7 @@ $('.project-form').submit(e => {
         error: function () {
             swal({
                 title: "Failed Create Project",
-                icon: "success"
+                icon: "error"
             })
 
         }
@@ -33,7 +35,6 @@ $('.project-form').submit(e => {
 
 
 $('document').ready(() => {
-
     var managerId = $('.mId').text()
     $.ajax({
         url: "https://localhost:44314/projects/getmanagerid/" + managerId,
@@ -52,7 +53,7 @@ $('document').ready(() => {
 
             htmlItem += `
                 <div class="col-xl-3 col-md-6 mt-4">
-                    <a onClick="redirectPage('projects/projectdetail', ${item.id})" style="text-decoration:none; cursor:pointer;">
+                    <a onClick="redirectPage('projects/projectdetail', '${item.id}', '${item.name}')" style="text-decoration:none; cursor:pointer;">
                         <div class="card border-left-primary shadow h-100 py-2">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
@@ -60,7 +61,7 @@ $('document').ready(() => {
                                         <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">
                                             ${item.name}
                                         </div>
-                                        <div class="text-secondary h5 mb-0 text-md  mt-2">${item.status}</div>
+                                        <div class="badge badge-secondary h5 mb-0 text-md mt-2">${item.status}</div>
                                     </div>
                                     <div class="col-auto">
                                     <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -69,8 +70,7 @@ $('document').ready(() => {
                             </div>
                         </div>
                     </a>
-                </div>
-                `
+                </div>`
         });
 
         $('.project-wrapper').html(htmlItem);
@@ -79,26 +79,31 @@ $('document').ready(() => {
 })
 
 
-const redirectPage = (url, projectId) => {
+const redirectPage = (url, projectId, projectName) => {
     // save data to browser session storage
     sessionStorage.setItem("project_id", projectId);
+    sessionStorage.setItem("project_name", projectName);
+
     window.location = url
-
-
 }
 
 var projectId = sessionStorage.getItem("project_id")
+var projectName = sessionStorage.getItem("project_name")
 
+$('.project-name').html(projectName)
 
 $.ajax({
     url: "https://localhost:44314/Activities/GetByProjectId/" + projectId,
     type: "GET"
 }).done(res => {
-    let htmlItem = ''
+    let notStarted = ''
+    let started = ''
+    let completed = ''
 
     $.each(res, (key, val) => {
         console.log(val)
-        htmlItem += `<div class="border rounded mb-3">
+        if (val.status === 0) {
+            notStarted += `<div class="border rounded mb-3">
                         <div class="d-flex flex-row justify-content-between align-items-center flex-sm-wrap p-3">
                             <div class="title-text">
                                 <span class="font-weight-bold">${val.name}</span><br />
@@ -110,15 +115,39 @@ $.ajax({
                             </div>
                         </div>
                     </div>`
-
-        if (val.status === 0) {
-            $('.notstarted').html(htmlItem);
         }
         else if (val.status === 1) {
-            $('.started').html(htmlItem);
+            started += `<div class="border rounded mb-3">
+                        <div class="d-flex flex-row justify-content-between align-items-center flex-sm-wrap p-3">
+                            <div class="title-text">
+                                <span class="font-weight-bold">${val.name}</span><br />
+                                <span class="text-black-50 small">${val.startDate}</span>
+                            </div>
+                            <div class="btn-container">
+                                <button onClick="console.log('${val.id}')" class="btn btn-sm btn-info" data-toggle="modal" data-target="#activityDetail">Detail <i class="fas fa-eye"></i></button>
+                                <button onClick="console.log('delete ${val.id}')" class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>`
         }
         else {
-            $('.completed').html(htmlItem);
+            completed += `<div class="border rounded mb-3">
+                        <div class="d-flex flex-row justify-content-between align-items-center flex-sm-wrap p-3">
+                            <div class="title-text">
+                                <span class="font-weight-bold">${val.name}</span><br />
+                                <span class="text-black-50 small">${val.startDate}</span>
+                            </div>
+                            <div class="btn-container">
+                                <button onClick="console.log('${val.id}')" class="btn btn-sm btn-info" data-toggle="modal" data-target="#activityDetail">Detail <i class="fas fa-eye"></i></button>
+                                <button onClick="console.log('delete ${val.id}')" class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>`
         }
+        $('.notstarted').html(notStarted);
+        $('.started').html(started);
+        $('.completed').html(completed);
     });
-})
+});
+
+// add activity

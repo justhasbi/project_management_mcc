@@ -48,7 +48,7 @@ namespace project_management_mcc.Controllers
             }
         }
 
-        [Authorize(Roles = "Users")]
+        [Authorize]
         [HttpPut("UpdateActivityStatus")]
         public ActionResult UpdateActivityStatus(UpdateStatusVM updateStatusVM)
         {
