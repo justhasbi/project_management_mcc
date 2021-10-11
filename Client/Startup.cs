@@ -48,6 +48,7 @@ namespace Client
 
             services.AddControllersWithViews();
             // add scope here
+            services.AddScoped<ActivityRepository>();
             services.AddScoped<ProjectRepository>();
             services.AddScoped<AccountRepository>();
             services.AddScoped<Address>();

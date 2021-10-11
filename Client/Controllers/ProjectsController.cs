@@ -21,7 +21,13 @@ namespace Client.Controllers
             this.repository = repository;
         }
 
-        
+        // get project by manager ID
+        [HttpGet]
+        public async Task<JsonResult> GetManagerId(int id)
+        {
+            var result = await repository.GetManagerId(id);
+            return Json(result);
+        }
 
         public IActionResult Index()
         {

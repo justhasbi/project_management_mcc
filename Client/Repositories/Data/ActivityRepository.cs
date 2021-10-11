@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using project_management_mcc.Models;
-using project_management_mcc.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +11,18 @@ using System.Threading.Tasks;
 
 namespace Client.Repositories.Data
 {
-    public class ProjectRepository : GeneralRepository<Project, int>
+    public class ActivityRepository : GeneralRepository<Activity, int>
     {
+
         private readonly Address address;
 
         private readonly HttpClient httpClient;
-        
+
         private readonly string request;
 
         private readonly IHttpContextAccessor contextAccessor;
-        
-        public ProjectRepository(Address address, string request = "Projects/") : base(address, request)
+
+        public ActivityRepository(Address address, string request = "Activities/") : base(address, request)
         {
             this.address = address;
             this.request = request;
@@ -34,15 +34,14 @@ namespace Client.Repositories.Data
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", contextAccessor.HttpContext.Session.GetString("JWToken"));
         }
 
-        // get project by manager id
-        public async Task<List<Project>> GetManagerId(int id)
+        public async Task<List<Activity>> GetByProjectId(int id)
         {
-            List<Project> entities = new List<Project>();
+            List<Activity> entities = new List<Activity>();
 
-            using (var response = await httpClient.GetAsync(request + "GetManagerId/" + id))
+            using (var response = await httpClient.GetAsync(request + "GetByProject/" + id))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
-                entities = JsonConvert.DeserializeObject<List<Project>>(apiResponse);
+                entities = JsonConvert.DeserializeObject<List<Activity>>(apiResponse);
             }
             return entities;
         }

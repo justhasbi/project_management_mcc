@@ -62,17 +62,13 @@ namespace project_management_mcc.Controllers
                 });
             }
         }
-        [HttpGet("GetManagerId/{ManagerId}")]
-        public ActionResult GetManagerId(int ManagerId)
+        [HttpGet("GetManagerId/{id}")]
+        public ActionResult GetManagerId(int id)
         {
             try
             {
-                var manager = projectRepository.GetCreateProjectVMs(ManagerId);
-                return Ok(new
-                {
-                    data = manager,
-                    message = "Succes"
-                });
+                var manager = projectRepository.GetCreateProjectVMs(id);
+                return Ok(manager);
             }
             catch
             {
