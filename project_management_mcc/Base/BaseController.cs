@@ -33,16 +33,10 @@ namespace project_management_mcc.Base
             var data = repository.Get();
             if (data == null)
             {
-                return NotFound(new {
-                    data,
-                    message = "Data Not Found",
-                });
+                return NotFound(data);
             }
 
-            return Ok(new {
-                data,
-                message = "Success",
-            });
+            return Ok(data);
         }
         
         [HttpGet("{key}")]
@@ -70,20 +64,13 @@ namespace project_management_mcc.Base
         {
             try
             {
-                repository.Insert(entity);
-                return Ok(new
-                {
-                    data = entity,
-                    message = "Success Insert Data"
-                });
+                var response = repository.Insert(entity);
+                return Ok("Success Insert Data");
             }
             catch (Exception e)
             {
-                return BadRequest(new
-                {
-                    data = entity,
-                    message = e
-                    // message = "Error Insert Data"
+                return BadRequest(new { 
+                    message = e,
                 });
             }
         }

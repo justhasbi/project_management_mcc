@@ -4,7 +4,6 @@
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = "Project";
-    ViewBag.Title = "Data Manager";
     var data = ViewBag.Payload;
 }
 
@@ -19,27 +18,8 @@
     </div>
 </div>
 
-<div class="row">
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mt-4">
-        <a href="/Projects/ProjectDetail" style="text-decoration:none;">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">
-                                Point of Sales Toko Kita Adiwerna
-                            </div>
-                            <div class="h5 mb-0 text-md font-weight-bold text-gray-800 mt-2">3 Activity</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </a>
-    </div>
+<div class="row project-wrapper">
+    
 
 </div>
 
@@ -49,12 +29,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="projectForm"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="project-form" method="post" novalidate>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+             </div>
+             <div class="modal-body">
+                 <form class="project-form" method="post" novalidate>
                     <div class="form-group">
                         <label for="project-name">Project Name</label>
                         <input type="text" class="form-control" id="project-name" name="name" required>
@@ -72,7 +52,7 @@
                                class="form-control" 
                                id="managerId" 
                                name="managerId" 
-                               value="@data.Id" disabled hidden  required>
+                               value="@data.Id" disabled hidden required>
                     </div>
 
                     <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
@@ -84,6 +64,8 @@
         </div>
     </div>
 </div>
+
+
 
 @section Scripts {
     <script src="~/js/Project.js"></script>

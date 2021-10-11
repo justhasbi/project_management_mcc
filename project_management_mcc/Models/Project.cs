@@ -33,8 +33,7 @@ namespace project_management_mcc.Models
         public Status status { get; set; }
 
         // Manager ID
-        [JsonIgnore]
-        public virtual int ManagerId { get; set; }
+        public int ManagerId { get; set; }
         [JsonIgnore]
         public virtual Employee Employee { get; set; }
         [JsonIgnore]

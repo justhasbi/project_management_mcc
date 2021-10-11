@@ -71,9 +71,9 @@ $.ajax({
     url: 'https://localhost:44315/api/jobs',
     method: 'get'
 }).done(res => {
-    console.log(res.data)
+    console.log(res)
     let selectItem = '';
-    $.each(res.data, (key, val) => {
+    $.each(res, (key, val) => {
         selectItem += `<option value="${val.id}" data-department="${val.DepartmentId}">${val.name}</option>`
     });
     $('#job').html(selectItem);
@@ -86,9 +86,9 @@ $.ajax({
     url: 'https://localhost:44315/api/departments',
     method: 'get'
 }).done(res => {
-    console.log(res.data)
+    console.log(res)
     let selectItem = '';
-    $.each(res.data, (key, val) => {
+    $.each(res, (key, val) => {
         selectItem += `<option value="${val.id}">${val.name}</option>`
     });
     $('#department').html(selectItem);

@@ -110,8 +110,7 @@ namespace project_management_mcc.Context
             modelBuilder
                 .Entity<Project>()
                 .HasOne(x => x.Employee)
-                .WithMany(x => x.Projects)
-                .HasForeignKey(x => x.ManagerId);
+                .WithMany(x => x.Projects);
 
 
             // example
