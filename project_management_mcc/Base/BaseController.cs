@@ -45,18 +45,9 @@ namespace project_management_mcc.Base
             var data = repository.GetById(key);
             if (data == null)
             {
-                return NotFound(new
-                {
-                    data,
-                    message = "Data Not Found",
-                });
+                return NotFound(new { mewssage = "Data Not Found" });
             }
-
-            return Ok(new
-            {
-                data,
-                message = "Success",
-            });
+            return Ok(data);
         }
 
         [HttpPost]
@@ -89,7 +80,7 @@ namespace project_management_mcc.Base
             }
         }
 
-        [HttpDelete]
+        [HttpDelete("{key}")]
         public ActionResult Delete(K key)
         {
             try

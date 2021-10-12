@@ -114,8 +114,8 @@ $.ajax({
                                 <span class="text-black-50 small">${val.startDate}</span>
                             </div>
                             <div class="btn-container">
-                                <button onClick="console.log('${val.id}')" class="btn btn-sm btn-info" data-toggle="modal" data-target="#activityDetail">Detail <i class="fas fa-eye"></i></button>
-                                <button onClick="console.log('delete ${val.id}')" class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
+                                <button onClick="activityDetail('${val.id}')" class="btn btn-sm btn-info" data-toggle="modal" data-target="#activityDetail">Detail <i class="fas fa-eye"></i></button>
+                                <button onClick="deleteActivity('${val.id}')" class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
                             </div>
                         </div>
                     </div>`
@@ -128,7 +128,7 @@ $.ajax({
                                 <span class="text-black-50 small">${val.startDate}</span>
                             </div>
                             <div class="btn-container">
-                                <button onClick="console.log('${val.id}')" class="btn btn-sm btn-info" data-toggle="modal" data-target="#activityDetail">Detail <i class="fas fa-eye"></i></button>
+                                <button onClick="activityDetail('${val.id}')" class="btn btn-sm btn-info" data-toggle="modal" data-target="#activityDetail">Detail <i class="fas fa-eye"></i></button>
                                 <button onClick="deleteActivity('${val.id}')" class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
                             </div>
                         </div>
@@ -142,8 +142,8 @@ $.ajax({
                                 <span class="text-black-50 small">${val.startDate}</span>
                             </div>
                             <div class="btn-container">
-                                <button onClick="console.log('${val.id}')" class="btn btn-sm btn-info" data-toggle="modal" data-target="#activityDetail">Detail <i class="fas fa-eye"></i></button>
-                                <button onClick="console.log('delete ${val.id}')" class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
+                                <button onClick="activityDetail('${val.id}')" class="btn btn-sm btn-info" data-toggle="modal" data-target="#activityDetail">Detail <i class="fas fa-eye"></i></button>
+                                <button onClick="deleteActivity('${val.id}')" class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
                             </div>
                         </div>
                     </div>`
@@ -198,16 +198,103 @@ $('.activity-form').submit(e => {
     });
 });
 
+
 // delete Activity
-const deleteActivity = (activityId) => {
-    $.ajax({
-        url: "https://localhost:44314/Activities/Delete/" + activityId,
-        method: "DELETE",
-        success: () => {
-            console.log("success")
-        },
-        error: () => {
-            console.log("failed")
-        },
-    })
+const deleteActivity = (id) => {
+    swal({
+        title: 'Apakah anda yakin menghapus Activity ?',
+        icon: 'warning',
+        buttons: ['Cancel', 'Yes!']
+    }).then(result => {
+        if (result) {
+            $.ajax({
+                url: "/Activities/Delete/" + id,
+                method: "DELETE",
+                success: function (data) {
+                    swal({
+                        title: "Success Delete Activity",
+                        icon: "success"
+                    }).then(val => {
+                        window.location.reload();
+                    });
+                },
+                error: () => {
+                    swal({
+                        title: "Failed Delete Activity",
+                        icon: "error"
+                    }).then(val => {
+                        window.location.reload();
+                    });
+                }
+            });
+        }
+    });
 }
+
+// activity detail
+const activityDetail = (id) => {
+    $.ajax({
+        url: '/Activities/Get/' + id,
+        method: 'GET'
+    }).done(res => {
+        console.log(res)
+        let htmlItem = `
+                <h3 class="text-primary font-weight-bold mt-3">${res.name}</h3>
+                <table class="table mt-3">
+                    <tr>
+                        <th>Start Date:</th>
+                        <td>${res.startDate}</td>
+                    </tr>
+                    <tr>
+                        <th>End Date:</th>
+                        <td>${res.endDate}</td>
+                    </tr>
+                    <tr>
+                        <th>Status:</th>
+                        <td>
+                            <select class="form-control" id="activityStatus" disabled>
+                                <option value="0">Unstarted</option>
+                                <option value="1">Started</option>
+                                <option value="2">Completed</option>
+                            </select>
+                            <div class="button-container">
+                                <button type="button" onClick="updateActivityStatus('${res.id}')"
+                                        class="btn btn-sm btn-success mt-2 btn-update">Update <i class="fas fa-edit"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>`;
+
+        $('.activityDetail').html(htmlItem);
+        $(`#activityStatus option[value='${res.status}']`).attr('selected', 'selected')
+    });
+}
+
+// update activity status
+const updateActivityStatus = (activityId) => {
+    console.log('Select box enabled')
+    //$('#activityStatus').removeAttr("disabled")
+    document.querySelector('#activityStatus').toggleAttribute("disabled");
+    //$('.button-container').html()
+
+    let saveButton = `<button type="button" onClick="saveStatus('${activityId}')" class="btn btn-sm btn-primary mt-2 btn-save ml-2">Save <i class="fas fa-edit"></i></button>`;
+    $(saveButton).insertAfter('.btn-update');
+}
+
+// save status
+const saveStatus = (activityId) => {
+    console.log("data saved")
+}
+
+// show employee 
+$.ajax({
+    url: '/EmployeeActivities/GetEmployeeActivity/2', // + activity_id
+    method: "GET"
+}).done(res => {
+    let htmlItem = '';
+
+    $.each(res, (key, val) => {
+        console.log(val)
+    });
+});
+

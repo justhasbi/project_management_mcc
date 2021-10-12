@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace project_management_mcc.Controllers
 {
-    //[Authorize(Roles = "Managers, HR")]
+    //[Authorize(Roles = "Manager, Human Resource")]
     [Route("api/[controller]")]
     [ApiController]
     public class RolesController : BaseController<Role, RoleRepository, int>

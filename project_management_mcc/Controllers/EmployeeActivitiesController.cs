@@ -23,7 +23,7 @@ namespace project_management_mcc.Controllers
         {
             this.employeeActivityRepository = repository;
         }
-        [Authorize(Roles = "Managers, HR")]
+        [Authorize(Roles = "Manager, Human Resource")]
         [HttpPost("AssignMultipleEmployee")]
         public ActionResult AssignMultipleEmployee(CreateListAssignEmployeeVM createListAssignEmployeeVM)
         {
@@ -43,6 +43,20 @@ namespace project_management_mcc.Controllers
                     status = HttpStatusCode.BadRequest,
                     Message = "Failed"
                 });
+            }
+        }
+
+        [HttpGet("GetEmployeeActivity/{id}")]
+        public ActionResult GetEmployeeActivity(int id) 
+        {
+            try
+            {
+                var data = employeeActivityRepository.GetEmployeeActivity(id);
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
             }
         }
     }

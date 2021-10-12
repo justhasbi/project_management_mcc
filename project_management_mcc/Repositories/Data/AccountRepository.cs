@@ -74,7 +74,8 @@ namespace project_management_mcc.Repositories.Data
             }
             else
             {
-                var passwordCheck = myContext.Accounts.Where(x => emailCheck.Id.Equals(x.Id)).FirstOrDefault(); // error
+                var passwordCheck = myContext.Accounts.Where(x => emailCheck.Id.Equals(x.Id)).FirstOrDefault();
+                var getUserName = myContext.Employees.Where(x => passwordCheck.Id.Equals(x.Id)).FirstOrDefault();
                 var validatePassword = HashGenerator.ValidatePassword(loginVM.Password, passwordCheck.Password);
                 if (emailCheck != null)
                 {
@@ -101,11 +102,12 @@ namespace project_management_mcc.Repositories.Data
                         var claims = new List<Claim>
                         {
                             new Claim("Id", passwordCheck.Id.ToString()),
-                            new Claim("Email", emailCheck.Email)
+                            new Claim(ClaimTypes.Email, emailCheck.Email),
+                            new Claim(ClaimTypes.Name, $"{getUserName.FirstName} {getUserName.LastName}")
                         };
                         foreach (var item in getRole)
                         {
-                            claims.Add(new Claim("roles", item.RoleName));
+                            claims.Add(new Claim(ClaimTypes.Role, item.RoleName));
                         }
                         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
                         var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

@@ -7,12 +7,19 @@ using System.Threading.Tasks;
 
 namespace Client.Base.Controllers
 {
-    public class BaseController<TEntity, TRepository, XKey> : Controller
-        where TEntity : class
-        where TRepository : IRepository<TEntity, XKey>
+
+    /**
+     * E = Entity
+     * R = Repository
+     * K = id
+     */
+    public class BaseController<E, R, K> : Controller
+        where E : class
+        where R : IRepository<E, K>
     {
-        private readonly TRepository repository;
-        public BaseController(TRepository repository)
+        private readonly R repository;
+
+        public BaseController(R repository)
         {
             this.repository = repository;
         }
@@ -25,30 +32,30 @@ namespace Client.Base.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> Get(XKey key)
+        public async Task<JsonResult> Get(K id)
         {
-            var result = await repository.Get(key);
+            var result = await repository.Get(id);
             return Json(result);
         }
 
         [HttpPost]
-        public JsonResult Post(TEntity entity)
+        public JsonResult Post(E entity)
         {
             var result = repository.Post(entity);
             return Json(result);
         }
 
         [HttpPut]
-        public JsonResult Put(XKey key, TEntity entity)
+        public JsonResult Put(K id, E entity)
         {
-            var result = repository.Put(key, entity);
+            var result = repository.Put(id, entity);
             return Json(result);
         }
 
         [HttpDelete]
-        public JsonResult Delete(XKey key)
+        public JsonResult Delete(K id)
         {
-            var result = repository.Delete(key);
+            var result = repository.Delete(id);
             return Json(result);
         }
     }
