@@ -13,8 +13,8 @@ using System.Threading.Tasks;
 
 namespace Client.Repositories
 {
-    public class GeneralRepository<TEntity, XKey> : IRepository<TEntity, XKey>
-        where TEntity : class
+    public class GeneralRepository<E, K> : IRepository<E, K>
+        where E : class
     {
         private readonly Address address;
         private readonly string request;
@@ -33,44 +33,44 @@ namespace Client.Repositories
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", _contextAccessor.HttpContext.Session.GetString("JWToken"));
         }
 
-        public HttpStatusCode Delete(XKey key)
+        public HttpStatusCode Delete(K id)
         {
-            var result = httpClient.DeleteAsync(request + key).Result;
+            var result = httpClient.DeleteAsync(request + id).Result;
             return result.StatusCode;
         }
 
-        public async Task<List<TEntity>> Get()
+        public async Task<List<E>> Get()
         {
-            List<TEntity> entities = new List<TEntity>();
+            List<E> entities = new List<E>();
 
             using (var response = await httpClient.GetAsync(request))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
-                entities = JsonConvert.DeserializeObject<List<TEntity>>(apiResponse);
+                entities = JsonConvert.DeserializeObject<List<E>>(apiResponse);
             }
             return entities;
         }
 
-        public async Task<TEntity> Get(XKey key)
+        public async Task<E> Get(K id)
         {
-            TEntity entity = null;
+            E entity = null;
 
-            using (var response = await httpClient.GetAsync(request + key))
+            using (var response = await httpClient.GetAsync(request + id))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
-                entity = JsonConvert.DeserializeObject<TEntity>(apiResponse);
+                entity = JsonConvert.DeserializeObject<E>(apiResponse);
             }
             return entity;
         }
 
-        public HttpStatusCode Put(XKey key, TEntity entity)
+        public HttpStatusCode Put(K id, E entity)
         {
             StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
-            var result = httpClient.PutAsync(request + key, content).Result;
+            var result = httpClient.PutAsync(request + id, content).Result;
             return result.StatusCode;
         }
 
-        public HttpStatusCode Post(TEntity entity)
+        public HttpStatusCode Post(E entity)
         {
             StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
             var result = httpClient.PostAsync(address.link + request, content).Result;

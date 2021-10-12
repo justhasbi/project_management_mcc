@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 
 namespace Client.Repositories.Interface
 {
-    public interface IRepository<T, X>
-        where T : class
+    /**
+     * E = Entity
+     * K = id
+     */
+    public interface IRepository<E, K>
+        where E : class
     {
-        Task<List<T>> Get();
-        Task<T> Get(X key);
-        HttpStatusCode Post(T entity);
-        HttpStatusCode Put(X key, T entity);
-        HttpStatusCode Delete(X key);
+        Task<List<E>> Get();
+        Task<E> Get(K id);
+        HttpStatusCode Post(E entity);
+        HttpStatusCode Put(K id, E entity);
+        HttpStatusCode Delete(K id);
     }
 }

@@ -1,4 +1,5 @@
 using Client.Base.URL;
+using Client.Repositories;
 using Client.Repositories.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -48,6 +49,7 @@ namespace Client
 
             services.AddControllersWithViews();
             // add scope here
+            services.AddScoped<EmployeeActivityRepository>();
             services.AddScoped<ActivityRepository>();
             services.AddScoped<ProjectRepository>();
             services.AddScoped<AccountRepository>();
