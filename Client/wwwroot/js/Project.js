@@ -21,7 +21,7 @@ $('.project-form').submit(e => {
             swal({
                 title: "Success Create Project",
                 icon: "success"
-            })
+            }).then(res => location.reload())
         },
         error: function () {
             swal({
@@ -96,7 +96,6 @@ $('.project-name').html(projectName);
 // activity data
 
 // get activity
-let activityData = []
 $.ajax({
     url: "https://localhost:44314/Activities/GetByProjectId/" + projectId,
     type: "GET"
@@ -105,7 +104,6 @@ $.ajax({
     let started = '';
     let completed = '';
     $.each(res, (key, val) => {
-        activityData.push(val)
         if (val.status === 0) {
             notStarted += `<div class="border rounded mb-3">
                         <div class="d-flex flex-row justify-content-between align-items-center flex-sm-wrap p-3">
@@ -155,10 +153,6 @@ $.ajax({
 });
 
 // add activity
-activityData.forEach(item => {
-    console.log(item)
-})
-
 
 $('.activity-form').submit(e => {
     e.preventDefault();
@@ -185,6 +179,7 @@ $('.activity-form').submit(e => {
                 icon: "success"
             }).then(val => {
                 $("#activityForm").modal("hide");
+                location.reload();
             });
         },
         error: () => {
@@ -237,7 +232,6 @@ const activityDetail = (id) => {
         url: '/Activities/Get/' + id,
         method: 'GET'
     }).done(res => {
-        console.log(res)
         let htmlItem = `
                 <h3 class="text-primary font-weight-bold mt-3">${res.name}</h3>
                 <table class="table mt-3">
@@ -270,6 +264,8 @@ const activityDetail = (id) => {
     });
 }
 
+
+
 // update activity status
 const updateActivityStatus = (activityId) => {
     console.log('Select box enabled')
@@ -288,13 +284,24 @@ const saveStatus = (activityId) => {
 
 // show employee 
 $.ajax({
-    url: '/EmployeeActivities/GetEmployeeActivity/2', // + activity_id
-    method: "GET"
+    url: '/EmployeeActivities/GetEmployeeActivity/' + 2, // + activity_id
+    method: "GET",
 }).done(res => {
-    let htmlItem = '';
-
+    let empList = ''
     $.each(res, (key, val) => {
         console.log(val)
-    });
-});
+        empList += `
+            <tr>
+                <td>${key+1}</td>
+                <td>${val.fullname}</td>
+                <td>${val.jobName}</td>
+                <td>${val.departmentName}</td>
+                <td>
+                    <button class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
+                </td>
+            </tr>
+        `
+    $('.employeeTable').html(empList)
+    })
+})
 

@@ -131,6 +131,7 @@
                                 <button class="btn btn-sm float-right btn-primary mb-3" type="button">
                                     Assign Employee <i class="fas fa-plus ml-2"></i>
                                 </button>
+
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -141,34 +142,8 @@
                                             <td>Action</td>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Hasbi Shuhada</td>
-                                            <td>Backend Engineer</td>
-                                            <td>Application Development Department</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Pernandes</td>
-                                            <td>Frontend Engineer</td>
-                                            <td>Application Development Department</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Linggom</td>
-                                            <td>System Analys</td>
-                                            <td>Application Development Department</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
-                                            </td>
-                                        </tr>
+                                    <tbody class="employeeTable">
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -180,7 +155,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-toggle="modal" data-dismiss="modal" data-target="#activityUpdate">Update <i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick="sessionStorage.removeItem('activityId')">Close</button>
             </div>
         </div>
     </div>
