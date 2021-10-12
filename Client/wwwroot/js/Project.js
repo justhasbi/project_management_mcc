@@ -1,4 +1,4 @@
-﻿
+﻿// create project
 $('.project-form').submit(e => {
     e.preventDefault();
 
@@ -28,7 +28,6 @@ $('.project-form').submit(e => {
                 title: "Failed Create Project",
                 icon: "error"
             })
-
         }
     });
 });
@@ -84,24 +83,29 @@ const redirectPage = (url, projectId, projectName) => {
     sessionStorage.setItem("project_id", projectId);
     sessionStorage.setItem("project_name", projectName);
 
-    window.location = url
+    window.location = url;
 }
 
-var projectId = sessionStorage.getItem("project_id")
-var projectName = sessionStorage.getItem("project_name")
+// get item from session
+let projectId = sessionStorage.getItem("project_id");
+let projectName = sessionStorage.getItem("project_name");
 
-$('.project-name').html(projectName)
+// set project name
+$('.project-name').html(projectName);
 
+// activity data
+
+// get activity
+let activityData = []
 $.ajax({
     url: "https://localhost:44314/Activities/GetByProjectId/" + projectId,
     type: "GET"
 }).done(res => {
-    let notStarted = ''
-    let started = ''
-    let completed = ''
-
+    let notStarted = '';
+    let started = '';
+    let completed = '';
     $.each(res, (key, val) => {
-        console.log(val)
+        activityData.push(val)
         if (val.status === 0) {
             notStarted += `<div class="border rounded mb-3">
                         <div class="d-flex flex-row justify-content-between align-items-center flex-sm-wrap p-3">
@@ -125,7 +129,7 @@ $.ajax({
                             </div>
                             <div class="btn-container">
                                 <button onClick="console.log('${val.id}')" class="btn btn-sm btn-info" data-toggle="modal" data-target="#activityDetail">Detail <i class="fas fa-eye"></i></button>
-                                <button onClick="console.log('delete ${val.id}')" class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
+                                <button onClick="deleteActivity('${val.id}')" class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
                             </div>
                         </div>
                     </div>`
@@ -151,3 +155,59 @@ $.ajax({
 });
 
 // add activity
+activityData.forEach(item => {
+    console.log(item)
+})
+
+
+$('.activity-form').submit(e => {
+    e.preventDefault();
+
+    var activityObj = {
+        Name: $('#activity-name').val(),
+        StartDate: $('#start-date').val(),
+        EndDate: $('#end-date').val(),
+        status: parseInt($('#status').val()),
+        ProjectId: parseInt(projectId)
+    };
+
+    console.log(JSON.stringify(activityObj));
+
+    $.ajax({
+        url: 'https://localhost:44314/Activities/Post/',
+        method: 'POST',
+        data: activityObj,
+        dataType: 'JSON',
+        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+        success: function (data) {
+            swal({
+                title: "Success Create Activity",
+                icon: "success"
+            }).then(val => {
+                $("#activityForm").modal("hide");
+            });
+        },
+        error: () => {
+            swal({
+                title: "Failed Create Project",
+                icon: "error"
+            }).then(val => {
+                $("#activityForm").modal("hide");
+            });
+        }
+    });
+});
+
+// delete Activity
+const deleteActivity = (activityId) => {
+    $.ajax({
+        url: "https://localhost:44314/Activities/Delete/" + activityId,
+        method: "DELETE",
+        success: () => {
+            console.log("success")
+        },
+        error: () => {
+            console.log("failed")
+        },
+    })
+}
