@@ -44,9 +44,12 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer">
-                <button class="btn btn-dark float-right close-project" disabled>Close Project</button>
-            </div>
+            @if(User.IsInRole("Human Resource"))
+            {
+                <div class="card-footer">
+                    <button class="btn btn-dark float-right close-project" disabled>Close Project</button>
+                </div>
+            }
         </div>
     </div>
 </div>

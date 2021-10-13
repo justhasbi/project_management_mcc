@@ -93,13 +93,12 @@ let projectName = sessionStorage.getItem("project_name");
 // set project name
 $('.project-name').html(projectName);
 
-// activity data
-
 // get activity
 $.ajax({
     url: "https://localhost:44314/Activities/GetByProjectId/" + projectId,
     type: "GET"
 }).done(res => {
+    console.log(res)
     let notStarted = '';
     let started = '';
     let completed = '';
@@ -150,6 +149,12 @@ $.ajax({
         $('.started').html(started);
         $('.completed').html(completed);
     });
+    //console.log(res)
+    //const activityData = res.filter(item => item.status === 0 || item.status === 1);
+
+    //if (activityData.length === 0) {
+    //    $('.close-project').removeAttr('disabled');
+    //}
 });
 
 // add activity
@@ -192,6 +197,7 @@ $('.activity-form').submit(e => {
         }
     });
 });
+
 
 
 // delete Activity
@@ -262,6 +268,30 @@ const activityDetail = (id) => {
         $('.activityDetail').html(htmlItem);
         $(`#activityStatus option[value='${res.status}']`).attr('selected', 'selected')
     });
+
+    $.ajax({
+        url: '/EmployeeActivities/GetEmployeeActivity/' + id, // + activity_id
+        method: "GET",
+    }).done(res => {
+        let empList = ''
+        $.each(res, (key, val) => {
+            console.log(val)
+            empList += `
+            <tr>
+                <td>${key + 1}</td>
+                <td>${val.fullname}</td>
+                <td>${val.jobName}</td>
+                <td>${val.departmentName}</td>
+                <td>
+                    <button class="btn btn-sm btn-danger" onClick="deleteEmpActivity()">Delete <i class="fas fa-trash-alt"></i></button>
+                </td>
+            </tr>
+        `
+            $('.employeeTable').html(empList)
+        })
+    })
+
+
 }
 
 
@@ -282,26 +312,7 @@ const saveStatus = (activityId) => {
     console.log("data saved")
 }
 
-// show employee 
-$.ajax({
-    url: '/EmployeeActivities/GetEmployeeActivity/' + 2, // + activity_id
-    method: "GET",
-}).done(res => {
-    let empList = ''
-    $.each(res, (key, val) => {
-        console.log(val)
-        empList += `
-            <tr>
-                <td>${key+1}</td>
-                <td>${val.fullname}</td>
-                <td>${val.jobName}</td>
-                <td>${val.departmentName}</td>
-                <td>
-                    <button class="btn btn-sm btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
-                </td>
-            </tr>
-        `
-    $('.employeeTable').html(empList)
-    })
-})
 
+const deleteEmpActivity = () => {
+    console.log("deleted")
+}

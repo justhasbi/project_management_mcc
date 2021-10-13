@@ -46,7 +46,14 @@ namespace Client.Controllers
 
         public IActionResult ProjectDetail()
         {
-            return View();
+            var userIdentity = User.Identity.IsAuthenticated;
+
+            if (userIdentity)
+            {
+                return View();
+            }
+
+            return RedirectToAction("Index", "Accounts");
         }
     }
 }
