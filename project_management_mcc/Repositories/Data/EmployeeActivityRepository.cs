@@ -45,6 +45,7 @@ namespace project_management_mcc.Repositories.Data
                         join j in myContext.Jobs on e.JobId equals j.Id
                         join d in myContext.Departments on j.DepartmentId equals d.Id
                         select new EmployeeActivityVM {
+                            EmployeeId = e.Id,
                             ActivityId = a.Id,
                             Fullname = $"{e.FirstName} {e.LastName}",
                             JobName = j.Name,

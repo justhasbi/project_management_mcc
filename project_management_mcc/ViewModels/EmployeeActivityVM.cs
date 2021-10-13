@@ -7,6 +7,8 @@ namespace project_management_mcc.ViewModels
 {
     public class EmployeeActivityVM
     {
+        public int EmployeeId { get; set; }
+
         public int ActivityId { get; set; }
 
         public string Fullname { get; set; }
