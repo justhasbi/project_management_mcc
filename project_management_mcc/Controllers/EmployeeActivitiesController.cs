@@ -59,5 +59,19 @@ namespace project_management_mcc.Controllers
                 return BadRequest(e);
             }
         }
+
+        [HttpPost("DeleteEmployeeAssignment")]
+        public ActionResult DeleteEmployeeAssignment(EmployeeActivityVM employeeActivityVM)
+        {
+            try
+            {
+                var data = employeeActivityRepository.DeleteEmployeeAssignment(employeeActivityVM);
+                return Ok("Success Delete Employee Assignment");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
     }
 }
