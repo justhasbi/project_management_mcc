@@ -108,7 +108,7 @@ $.ajax({
                         <div class="d-flex flex-row justify-content-between align-items-center flex-sm-wrap p-3">
                             <div class="title-text">
                                 <span class="font-weight-bold">${val.name}</span><br />
-                                <span class="text-black-50 small">${val.startDate}</span>
+                                <span class="text-black-50 small">${(val.startDate).split("T")[0]}</span>
                             </div>
                             <div class="btn-container">
                                 <button onClick="activityDetail('${val.id}')" class="btn btn-sm btn-info" data-toggle="modal" data-target="#activityDetail">Detail <i class="fas fa-eye"></i></button>
@@ -122,7 +122,7 @@ $.ajax({
                         <div class="d-flex flex-row justify-content-between align-items-center flex-sm-wrap p-3">
                             <div class="title-text">
                                 <span class="font-weight-bold">${val.name}</span><br />
-                                <span class="text-black-50 small">${val.startDate}</span>
+                                <span class="text-black-50 small">${(val.startDate).split("T")[0]}</span>
                             </div>
                             <div class="btn-container">
                                 <button onClick="activityDetail('${val.id}')" class="btn btn-sm btn-info" data-toggle="modal" data-target="#activityDetail">Detail <i class="fas fa-eye"></i></button>
@@ -136,7 +136,7 @@ $.ajax({
                         <div class="d-flex flex-row justify-content-between align-items-center flex-sm-wrap p-3">
                             <div class="title-text">
                                 <span class="font-weight-bold">${val.name}</span><br />
-                                <span class="text-black-50 small">${val.startDate}</span>
+                                <span class="text-black-50 small">${(val.startDate).split("T")[0]}</span>
                             </div>
                             <div class="btn-container">
                                 <button onClick="activityDetail('${val.id}')" class="btn btn-sm btn-info" data-toggle="modal" data-target="#activityDetail">Detail <i class="fas fa-eye"></i></button>
@@ -159,7 +159,7 @@ $.ajax({
 
 // add activity
 
-$('.activity-form').submit(e => {
+$('#btnActivity').click(e => {
     e.preventDefault();
 
     var activityObj = {
@@ -238,16 +238,43 @@ const activityDetail = (id) => {
         url: '/Activities/Get/' + id,
         method: 'GET'
     }).done(res => {
+        //let htmlItem = `
+        //        <h3 class="text-primary font-weight-bold mt-3">${res.name}</h3>
+        //        <table class="table mt-3">
+        //            <tr>
+        //                <th>Start Date:</th>
+        //                <td>${(res.startDate).split("T")[0]}</td>
+        //            </tr>
+        //            <tr>
+        //                <th>End Date:</th>
+        //                <td>${(res.endDate).split("T")[0]}</td>
+        //            </tr>
+        //            <tr>
+        //                <th>Status:</th>
+        //                <td>
+        //                    <select class="form-control" id="activityStatus" disabled>
+        //                        <option value="0">Unstarted</option>
+        //                        <option value="1">Started</option>
+        //                        <option value="2">Completed</option>
+        //                    </select>
+        //                    <div class="button-container">
+                                
+        //                        <button type="button" onClick="updateActivityStatus('${res.id}')"
+        //                        class="btn btn-sm btn-success mt-2 btn-update">Update <i class="fas fa-edit"></i></button>
+        //                    </div>
+        //                </td>
+        //            </tr>
+        //        </table>`;
         let htmlItem = `
                 <h3 class="text-primary font-weight-bold mt-3">${res.name}</h3>
                 <table class="table mt-3">
                     <tr>
                         <th>Start Date:</th>
-                        <td>${res.startDate}</td>
+                        <td><input type="date" class="form-control" name="startdate" id="startdate" value="${(res.startDate).split("T")[0]}" disabled></td>
                     </tr>
                     <tr>
                         <th>End Date:</th>
-                        <td>${res.endDate}</td>
+                        <td><input type="date" class="form-control" name="enddate" id="enddate" value="${(res.endDate).split("T")[0]}" disabled></td>
                     </tr>
                     <tr>
                         <th>Status:</th>
@@ -258,13 +285,13 @@ const activityDetail = (id) => {
                                 <option value="2">Completed</option>
                             </select>
                             <div class="button-container">
+                                
                                 <button type="button" onClick="updateActivityStatus('${res.id}')"
-                                        class="btn btn-sm btn-success mt-2 btn-update">Update <i class="fas fa-edit"></i></button>
+                                class="btn btn-sm btn-success mt-2 btn-update">Update <i class="fas fa-edit"></i></button>
                             </div>
                         </td>
                     </tr>
                 </table>`;
-
         $('.activityDetail').html(htmlItem);
         $(`#activityStatus option[value='${res.status}']`).attr('selected', 'selected')
     });
