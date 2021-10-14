@@ -40,33 +40,37 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="/Roles">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Role</span>
-                </a>
-            </li>
+            @if (User.IsInRole("Human Resource") || User.IsInRole("Manager") || User.IsInRole("Supervisor"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="/Roles">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Role</span>
+                    </a>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="/Employees">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Employee</span>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Employees">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Employee</span>
+                    </a>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="/Departments">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Department</span>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Departments">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Department</span>
+                    </a>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="/Jobs">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Job</span>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Jobs">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Job</span>
+                    </a>
+                </li>
+            }
+
 
 
             <!-- Divider -->
@@ -247,8 +251,9 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
     <script src="~/Template/js/sb-admin-2.min.js"></script>
     <script src="~/Template/vendor/sweetallert/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/js/Account.js"></script>
-
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>

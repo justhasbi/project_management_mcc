@@ -58,5 +58,12 @@ namespace Client.Repositories
             var result = httpClient.PostAsync(request + "DeleteEmployeeAssignment/", content).Result;
             return result.StatusCode;
         }
+
+        public HttpStatusCode AssignMultipleEmployee(CreateListAssignEmployeeVM createListAssignEmployeeVM)
+        {
+            StringContent content = new StringContent(JsonConvert.SerializeObject(createListAssignEmployeeVM), Encoding.UTF8, "application/json");
+            var result = httpClient.PostAsync(request + "AssignMultipleEmployee/", content).Result;
+            return result.StatusCode;
+        }
     }
 }

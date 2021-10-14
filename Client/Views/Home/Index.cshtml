@@ -1,17 +1,35 @@
 ﻿@{
     Layout = "_AdminLayout";
-    ViewData["Title"] = "Home Page";
-}
+    ViewData["Title"] = "Dashboard";
 
-@{
-    ViewBag.Title = "Jwt Payload";
     var data = ViewBag.Payload;
 }
 
-
-<h2>@data</h2>
-
+<h1>@data</h1>
 <div class="text-center">
     <h1 class="display-4">Chart Here</h1>
-    <p>@data.Email</p>
+    <div class="card">
+        <div class="card-header d-flex flex-row justify-content-between">
+            <h4 class="font-weight-bold text-primary float-left">Aplikasi Kasir Toko X</h4>
+            <div class="select-container d-flex w-25 float-left">
+                <button class="btn btn-primary mr-2" onclick="handleSelectChange()">Select</button>
+                <select class="form-control" id="project-select">
+                    <option value="0">Select Project</option>
+                </select>
+            </div>
+        </div>
+        <div class="card-body">
+            <div id="chart">
+
+            </div>
+        </div>
+    </div>
 </div>
+
+<script type="text/javascript">
+    let mID = '@data.Id'
+</script>
+
+@section Scripts {
+    <script src="/js/Chart.js"></script>
+}

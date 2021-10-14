@@ -39,11 +39,12 @@ $('document').ready(() => {
         url: "https://localhost:44314/projects/getmanagerid/" + managerId,
         method: "GET",
     }).done(res => {
+        console.log(res)
         var htmlItem = ""
         
         res.forEach(item => {
             if (item.status === 0) {
-                item.status = "Unstarted"
+                item.status = "Not started"
             } else if (item.status === 1) {
                 item.status = "Started"
             } else {
@@ -52,7 +53,7 @@ $('document').ready(() => {
 
             htmlItem += `
                 <div class="col-xl-3 col-md-6 mt-4">
-                    <a onClick="redirectPage('projects/projectdetail', '${item.id}', '${item.name}', '${item.description}')" style="text-decoration:none; cursor:pointer;">
+                    <a onClick="redirectPage('projects/projectdetail', '${item.id}', '${item.name}', '${item.description}', '${item.status}')" style="text-decoration:none; cursor:pointer;">
                         <div class="card border-left-primary shadow h-100 py-2">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
@@ -78,19 +79,24 @@ $('document').ready(() => {
 })
 
 
-const redirectPage = (url, projectId, projectName, description) => {
+const redirectPage = (url, projectId, projectName, description, status) => {
     // save data to browser session storage
     sessionStorage.setItem("project_id", projectId);
     sessionStorage.setItem("project_name", projectName);
     sessionStorage.setItem("description", description);
-
+    sessionStorage.setItem("projectStatus", status)
     window.location = url;
+
 }
 
 // get item from session
 let projectId = sessionStorage.getItem("project_id");
 let projectName = sessionStorage.getItem("project_name");
 
+if (sessionStorage.getItem("projectStatus") === "Completed") {
+    document.querySelector('.close-project-tag').removeAttribute("hidden")
+    //document.querySelector('.close-project').setAttribute("disabled")
+}
 // set project name
 $('.project-name').html(projectName);
 
@@ -99,7 +105,12 @@ $.ajax({
     url: "https://localhost:44314/Activities/GetByProjectId/" + projectId,
     type: "GET"
 }).done(res => {
-    console.log(res)
+    if (res !== null) {
+        let checkStatus = res.find(item => item.status === 0 || item.status === 1)
+        if (!checkStatus) {
+            $('.close-project').removeAttr("disabled");
+        }
+    }
     let notStarted = '';
     let started = '';
     let completed = '';
@@ -270,6 +281,11 @@ const activityDetail = (id) => {
         $(`#activityStatus option[value='${res.status}']`).attr('selected', 'selected')
     });
 
+    displayEmployeeAssign(id)
+    
+}
+
+const displayEmployeeAssign = (id) => {
     $.ajax({
         url: '/EmployeeActivities/GetEmployeeActivity/' + id, // + activity_id
         method: "GET",
@@ -288,10 +304,11 @@ const activityDetail = (id) => {
             </tr>`
             $('.employeeTable').html(empList)
         })
-        if (roles) {
+
+        if (!roles) {
             $('.delete-emp-act').remove();
         }
-    })
+    });
 }
 
 // update activity status
@@ -428,6 +445,144 @@ const saveActivityUpdate = () => {
                 error: () => {
                     swal({
                         title: "Failed Update Activity",
+                        icon: "error"
+                    }).then(val => {
+                        window.location.reload();
+                    });
+                }
+            });
+        }
+    });
+}
+
+// employee assignment
+$.ajax({
+    url: "/employees/GetEmployeeJobs",
+    method: "GET"
+}).done(res => {
+    let htmlItem = '';
+    $.each(res, (key, value) => {
+        if(value.roleId === 1) {
+            htmlItem += `
+                <div class="border rounded mb-2">
+                    <div class="d-flex flex-row justify-content-between align-items-center flex-sm-wrap p-1">
+                        <div class="title-text">
+                            <span class="font-weight-bold">${value.fullname}</span><br />
+                            <span class="text-black-50 small mt-0">${value.jobName} - ${value.departmentName}</span>
+                        </div>
+                        <div class="btn-container">
+                            <button onClick="appendSelected('${JSON.stringify(value).replace(/"/g, "&quot;")}')" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>`
+        }
+        $(".select-employee-container").html(htmlItem);
+    })
+})
+
+// employee cart
+let employeeCart = []
+
+const appendSelected = (empDataObj) => {
+
+    var empJson = JSON.parse(empDataObj)
+
+    var data = {
+        ActivityId: parseInt(sessionStorage.getItem("activityId")),
+        Email: empJson.email,
+        EmployeeId: empJson.employeeId
+    }
+
+    const findDupEmp = employeeCart.find(item => item.employeeId === empJson.employeeId)
+
+    if (findDupEmp) {
+        console.log("you have selected that employee")
+    } else {
+        let selectedEmp = `
+        <div class="border rounded mb-2">
+            <div class="d-flex flex-row justify-content-between align-items-center flex-sm-wrap p-1">
+                <div class="title-text">
+                    <span class="font-weight-bold">${empJson.fullname}</span><br />
+                    <span class="text-black-50 small mt-0">${empJson.jobName} - ${empJson.departmentName}</span>
+                </div>
+                <div class="btn-container">
+                    <button  class="btn btn-sm btn-danger deleteAssign" onClick=""><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+        </div>`;
+
+        employeeCart.push(data);
+
+        console.log(employeeCart)
+        document.querySelector('.selected-employee-container').innerHTML += selectedEmp
+    }    
+}
+
+$(".deleteAssign").click(e => {
+    console.log("clicked")
+})
+
+$('.saveEmp').click(e => {
+    let data = {
+        CreateAssignEmployeeVMs: employeeCart
+    }
+    $.ajax({
+        url: "/EmployeeActivities/AssignMultipleEmployee",
+        method: "POST",
+        dataType: 'JSON',
+        contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+        //contentType: "application/json; charset=utf8",
+        data: data,
+        success: function (data) {
+            swal({
+                title: "Success Assign Employee",
+                icon: "success"
+            }).then(val => {
+                window.location.reload();
+            });
+        },
+        error: () => {
+            swal({
+                title: "Failed Assign Employee",
+                icon: "error"
+            }).then(val => {
+                window.location.reload();
+            });
+        }
+    });
+});
+
+
+const closeProject = () => {
+
+    var data = {
+        id: parseInt(sessionStorage.getItem("project_id")),
+        status: "Completed"
+    }
+
+    swal({
+        title: 'Apakah anda yakin Close Project?',
+        icon: 'warning',
+        buttons: ['Cancel', 'Yes!']
+    }).then(result => {
+        if (result) {
+            $.ajax({
+                url: "/projects/CloseProject",
+                method: "PUT",
+                dataType: 'JSON',
+                contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                data: data,
+                success: function (data) {
+                    swal({
+                        title: "Success Close Project",
+                        icon: "success"
+                    }).then(val => {
+                        window.location.reload();
+                    });
+                },
+                error: () => {
+                    swal({
+                        title: "Failed Close Project",
                         icon: "error"
                     }).then(val => {
                         window.location.reload();

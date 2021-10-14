@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Client.Repositories.Data
@@ -45,6 +46,13 @@ namespace Client.Repositories.Data
                 entities = JsonConvert.DeserializeObject<List<Project>>(apiResponse);
             }
             return entities;
+        }
+
+        public string CloseProject(UpdateStatusVM updateStatusVM)
+        {
+            StringContent content = new StringContent(JsonConvert.SerializeObject(updateStatusVM), Encoding.UTF8, "application/json");
+            var result = httpClient.PutAsync(request + "CloseProject", content).Result.Content.ReadAsStringAsync().Result;
+            return result;
         }
     }
 }
