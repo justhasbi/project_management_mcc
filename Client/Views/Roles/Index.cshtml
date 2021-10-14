@@ -1,0 +1,32 @@
+﻿@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Roles";
+}
+<div class="card shadow">
+    <div class="card-header">
+        <div class="row">
+            <p class="h1 col-8 text-primary">Data Roles</p>
+            <div class="col-4"></div>
+        </div>
+    </div>
+    <!-- Table -->
+ <div class="card-body">
+        <table class="table table-striped table-bordered table-hover table-responsive-md table-responsive-sm table-responsive-lg" id="dataTable">
+            <thead>
+                <tr>
+                    <td>No</td>
+                    <td>Employee Id</td>
+                    <td>Full Name</td>
+                    <td>Role Id</td>
+                    <td>Role Name</td>
+                    @*<td>Action</td>*@
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/Role.js"></script>
+}

@@ -13,9 +13,23 @@ namespace project_management_mcc.Controllers
     [ApiController]
     public class JobsController : BaseController<Job, JobRepository, int>
     {
+        private readonly JobRepository repository;
         public JobsController(JobRepository repository) : base(repository)
         {
-
+            this.repository = repository;
+        }
+        [HttpGet("GetJobs")]
+        public ActionResult GetJobs()
+        {
+            try
+            {
+                var data = repository.GetJobs();
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
     }
 }

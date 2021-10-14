@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="/Template/css/sb-admin-2.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
     <link href="~/Template/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -40,28 +41,28 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/Roles">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Role</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/Employees">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Employee</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/Departments">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Department</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/Jobs">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Job</span>
                 </a>
@@ -243,10 +244,11 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
     <script src="~/Template/js/sb-admin-2.min.js"></script>
     <script src="~/Template/vendor/sweetallert/sweetalert.min.js"></script>
     <script src="~/js/Account.js"></script>
-    
+
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
