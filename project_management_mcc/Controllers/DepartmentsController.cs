@@ -13,9 +13,23 @@ namespace project_management_mcc.Controllers
     [ApiController]
     public class DepartmentsController : BaseController<Department, DepartmentRepository, int>
     {
+        private readonly DepartmentRepository repository;
         public DepartmentsController(DepartmentRepository repository) : base(repository)
         {
-
+            this.repository = repository;
+        }
+        [HttpGet("GetDepartmen")]
+        public ActionResult GetDepartmens()
+        {
+            try
+            {
+                var data = repository.GetDepartmens();
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
     }
 }
