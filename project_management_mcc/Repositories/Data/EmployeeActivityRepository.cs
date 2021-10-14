@@ -81,5 +81,7 @@ namespace project_management_mcc.Repositories.Data
             myContext.EmployeeActivities.Remove(data);
             return myContext.SaveChanges();
         }
+
+        
     }
 }
