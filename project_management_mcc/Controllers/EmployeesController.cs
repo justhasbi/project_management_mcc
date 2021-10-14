@@ -25,7 +25,7 @@ namespace project_management_mcc.Controllers
        
         
         [HttpGet("GetEmployeeJobs")]
-        public ActionResult GetEmployees()
+        public ActionResult GetEmployeesJobs()
         {
             try
             {
