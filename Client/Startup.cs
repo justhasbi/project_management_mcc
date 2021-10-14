@@ -53,6 +53,10 @@ namespace Client
             services.AddScoped<ActivityRepository>();
             services.AddScoped<ProjectRepository>();
             services.AddScoped<AccountRepository>();
+            services.AddScoped<EmployeeRepository>();
+            services.AddScoped<RoleRepository>();
+            services.AddScoped<DepartmentRepository>();
+            services.AddScoped<JobRepository>();
             services.AddScoped<Address>();
         }
 

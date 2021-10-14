@@ -15,9 +15,23 @@ namespace project_management_mcc.Controllers
     [ApiController]
     public class RolesController : BaseController<Role, RoleRepository, int>
     {
+        private readonly RoleRepository roleRepository;
         public RolesController(RoleRepository repository) : base(repository)
         {
-
+            this.roleRepository = repository;
+        }
+        [HttpGet("GetRoles")]
+        public ActionResult GetRoles()
+        {
+            try
+            {
+                var data = roleRepository.GetRoles();
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
     }
 }
