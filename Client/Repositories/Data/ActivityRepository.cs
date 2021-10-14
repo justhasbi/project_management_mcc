@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using project_management_mcc.Models;
+using project_management_mcc.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Client.Repositories.Data
@@ -44,6 +46,20 @@ namespace Client.Repositories.Data
                 entities = JsonConvert.DeserializeObject<List<Activity>>(apiResponse);
             }
             return entities;
+        }
+
+        public string UpdateActivityStatus(UpdateStatusVM updateStatusVM)
+        {
+            StringContent content = new StringContent(JsonConvert.SerializeObject(updateStatusVM), Encoding.UTF8, "application/json");
+            var result = httpClient.PutAsync(request + "UpdateActivityStatus", content).Result.Content.ReadAsStringAsync().Result;
+            return result;
+        }
+
+        public string UpdateActivity(Activity activity)
+        {
+            StringContent content = new StringContent(JsonConvert.SerializeObject(activity), Encoding.UTF8, "application/json");
+            var result = httpClient.PutAsync(request, content).Result.Content.ReadAsStringAsync().Result;
+            return result;
         }
     }
 }

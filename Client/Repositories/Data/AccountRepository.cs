@@ -63,6 +63,7 @@ namespace Client.Repositories.Data
             return result;
 
         }
+
         public string ChangePassword(ChangePasswordVM changePasswordVM)
         {
             StringContent content = new StringContent(JsonConvert.SerializeObject(changePasswordVM), Encoding.UTF8, "application/json");

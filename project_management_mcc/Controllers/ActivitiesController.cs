@@ -25,7 +25,6 @@ namespace project_management_mcc.Controllers
             this.activityRepository = activityRepository;
         }
         
-        [Authorize(Roles = "Manager, Human Resource")]
         [HttpPost("CreateMultipleActivity")]
         public ActionResult InsertMultipleActivity(CreateListActivityVM createListActivityVM)
         {
@@ -48,7 +47,7 @@ namespace project_management_mcc.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "Users, Human Resource, Manager")]
         [HttpPut("UpdateActivityStatus")]
         public ActionResult UpdateActivityStatus(UpdateStatusVM updateStatusVM)
         {

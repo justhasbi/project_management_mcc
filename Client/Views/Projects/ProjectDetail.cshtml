@@ -105,7 +105,7 @@
 
 <!-- Activity detail Modal  -->
 <div class="modal fade" id="activityDetail" tabindex="-1" role="dialog" aria-labelledby="activityDetail" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="activityDetail">Activity Detail</h5>
@@ -130,9 +130,12 @@
 
                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                             <div class="card-body">
-                                <button class="btn btn-sm float-right btn-primary mb-3" type="button">
-                                    Assign Employee <i class="fas fa-plus ml-2"></i>
-                                </button>
+                                @if (User.IsInRole("Human Resource"))
+                                { 
+                                    <button class="btn btn-sm float-right btn-primary mb-3" data-dismiss="modal" type="button" data-toggle="modal" data-target="#EmployeeAssignment">
+                                        Assign Employee <i class="fas fa-plus ml-2"></i>
+                                    </button>
+                                }
 
                                 <table class="table">
                                     <thead>
@@ -141,7 +144,10 @@
                                             <td>Name</td>
                                             <td>Job</td>
                                             <td>Department</td>
-                                            <td>Action</td>
+                                            @if(User.IsInRole("Human Resource"))
+                                            {
+                                                <td>Action</td>
+                                            }
                                         </tr>
                                     </thead>
                                     <tbody class="employeeTable">
@@ -158,56 +164,70 @@
             <div class="modal-footer">
                 @if (User.IsInRole("Human Resource"))
                 {
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-dismiss="modal" data-target="#activityUpdate">Update <i class="fas fa-edit"></i></button>
+                    <button type="button" class="btn btn-success" onclick="activityUpdate()">Update <i class="fas fa-edit"></i></button>
+                    <button type="button" class="btn btn-primary save-update-activity" onclick="saveActivityUpdate()" hidden disabled>save <i class="fas fa-edit"></i></button>
                 }
-                @*<button type="button" class="btn btn-success" data-toggle="modal" data-dismiss="modal" data-target="#activityUpdate">Update <i class="fas fa-edit"></i></button>*@
+                @*<button type="button" class="btn btn-success" data-toggle="modal" data-dismiss="modal" data-target="#EmployeeAssignment">Update <i class="fas fa-edit"></i></button>*@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick="sessionStorage.removeItem('activityId')">Close</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Activity Update Modal  -->
-<!--<div class="modal fade" id="activityUpdate" tabindex="-1" role="dialog" aria-labelledby="activityUpdate" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<!-- Employe Assignment Modal  -->
+<div class="modal fade" id="EmployeeAssignment" tabindex="-1" role="dialog" aria-labelledby="EmployeeAssignment" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-full-height" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="activityUpdate"></h5>
+                <h5 class="modal-title" id="EmployeeAssignment"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form class="activity-update-form" method="post" novalidate>
-                    <div class="form-group">
-                        <label for="activity-name">Activity Name</label>
-                        <input type="text" class="form-control" id="activity-name" name="name" required>
-                        <div class="invalid-feedback">Field Cannot be Empty</div>
-                    </div>
+            <div class="modal-body" style="max-height: calc(95vh - 150px)">
+                <div class="row">
+                    <div class="col">
+                        <div class="title">
+                            <span class="h4 font-weight-bold text-primary">Selected Employee</span>
+                        </div>
+                        <div class="selected-employee-container overflow-auto mt-4 overflow-auto" style="max-height:70vh">
+                            
+                            <div class="border rounded mb-2">
+                                <div class="d-flex flex-row justify-content-between align-items-center flex-sm-wrap p-1">
+                                    <div class="title-text">
+                                        <span class="font-weight-bold">Hasbi Shuhada</span><br />
+                                        <span class="text-black-50 small mt-0">Backend Engineer - Applicaton Developer</span>
+                                    </div>
+                                    <div class="btn-container">
+                                        <button onClick="" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
 
-                    <div class="form-group">
-                        <label for="start-date">Start Date</label>
-                        <input type="date" name="startdate" class="form-control" id="start-date" required>
-                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="end-date">End Date</label>
-                        <input type="date" name="enddate" class="form-control" id="end-date" required>
-                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    <div class="col">
+                        <div class="title">
+                            <span class="h4 font-weight-bold text-primary" >Select Employee</span>
+                        </div>
+                        <div class="selected-employee-container mt-4 overflow-auto" style="max-height:70vh">
+                            
+                            <div class="border rounded mb-2">
+                                <div class="d-flex flex-row justify-content-between align-items-center flex-sm-wrap p-1">
+                                    <div class="title-text">
+                                        <span class="font-weight-bold">Hasbi Shuhada</span><br />
+                                        <span class="text-black-50 small mt-0">Backend Engineer - Applicaton Developer</span>
+                                    </div>
+                                    <div class="btn-container">
+                                        <button onClick="" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                          
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="status">Status</label>
-                        <select class="form-control" id="status">
-                            <option value="0">Unstarted</option>
-                            <option value="1">Started</option>
-                            <option value="2">Completed</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary mt-3" id="btnSubmit">Submit</button>
-                </form>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary">Save <i class="fas fa-save"></i></button>
@@ -215,7 +235,7 @@
             </div>
         </div>
     </div>
-</div>-->
+</div>
 
 <script type="text/javascript">
     var roles = '@User.IsInRole("Human Resource")';

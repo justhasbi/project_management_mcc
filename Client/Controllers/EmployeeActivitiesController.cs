@@ -27,6 +27,13 @@ namespace Client.Controllers
             return Json(result);
         }
 
+        [HttpPost]
+        public JsonResult DeleteEmployeeAssignment([FromBody]EmployeeActivityVM employeeActivityVM)
+        {
+            var result = repository.DeleteEmployeeAssignment(employeeActivityVM);
+            return Json(result);
+        }
+
         public IActionResult Index()
         {
             return View();

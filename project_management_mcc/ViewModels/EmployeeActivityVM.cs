@@ -9,8 +9,6 @@ namespace project_management_mcc.ViewModels
     {
         public int EmployeeId { get; set; }
 
-
-
         public string Fullname { get; set; }
 
         public string DepartmentName { get; set; }
