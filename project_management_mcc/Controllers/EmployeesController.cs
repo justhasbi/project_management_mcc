@@ -14,6 +14,7 @@ namespace project_management_mcc.Controllers
     public class EmployeesController : BaseController<Employee, EmployeeRepository, int>
     {
 
+
         private readonly EmployeeRepository repository;
 
         public EmployeesController(EmployeeRepository repository) : base(repository)
@@ -21,17 +22,34 @@ namespace project_management_mcc.Controllers
             this.repository = repository;
         }
 
-        [HttpGet("GetEmployees")]
+       
+        
+        [HttpGet("GetEmployeeJobs")]
         public ActionResult GetEmployees()
         {
             try
             {
-                var data = repository.GetEmployee();
+                var data = repository.GetEmployeeJob();
                 return Ok(data);
             }
             catch (Exception e)
             {
                 return NotFound(e);
+            }
+        
+        }
+        
+        [HttpGet("GetEmployee")]
+        public ActionResult GetEmployees()
+        {
+            try
+            {
+                var data = repository.GetEmployees();
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
             }
         }
     }
