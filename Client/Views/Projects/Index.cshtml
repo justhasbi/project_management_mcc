@@ -12,11 +12,16 @@
     <h1 class="h3 text-primary text-uppercase mb-4 font-weight-bold col">Project</h1>
     <span class="text-secondary mId" hidden>@data.Id</span>
     <div class="col">
-        <button class="btn float-right btn-primary" 
-                type="button" 
-                data-toggle="modal" 
-                data-target="#projectForm">Create Project <i class="fas fa-plus ml-2"></i>
-        </button>
+        @if(User.IsInRole("Human Resource"))
+            {
+                <button class="btn float-right btn-primary"
+                        type="button"
+                        data-toggle="modal"
+                        data-target="#projectForm">
+                    Create Project <i class="fas fa-plus ml-2"></i>
+                </button>
+            }
+        
     </div>
 </div>
 

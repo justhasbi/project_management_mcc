@@ -52,7 +52,7 @@ $('document').ready(() => {
 
             htmlItem += `
                 <div class="col-xl-3 col-md-6 mt-4">
-                    <a onClick="redirectPage('projects/projectdetail', '${item.id}', '${item.name}')" style="text-decoration:none; cursor:pointer;">
+                    <a onClick="redirectPage('projects/projectdetail', '${item.id}', '${item.name}', '${item.description}')" style="text-decoration:none; cursor:pointer;">
                         <div class="card border-left-primary shadow h-100 py-2">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
@@ -78,10 +78,11 @@ $('document').ready(() => {
 })
 
 
-const redirectPage = (url, projectId, projectName) => {
+const redirectPage = (url, projectId, projectName, description) => {
     // save data to browser session storage
     sessionStorage.setItem("project_id", projectId);
     sessionStorage.setItem("project_name", projectName);
+    sessionStorage.setItem("description", description);
 
     window.location = url;
 }
@@ -149,16 +150,9 @@ $.ajax({
         $('.started').html(started);
         $('.completed').html(completed);
     });
-    //console.log(res)
-    //const activityData = res.filter(item => item.status === 0 || item.status === 1);
-
-    //if (activityData.length === 0) {
-    //    $('.close-project').removeAttr('disabled');
-    //}
 });
 
 // add activity
-
 $('#btnActivity').click(e => {
     e.preventDefault();
 
@@ -238,43 +232,23 @@ const activityDetail = (id) => {
         url: '/Activities/Get/' + id,
         method: 'GET'
     }).done(res => {
-        //let htmlItem = `
-        //        <h3 class="text-primary font-weight-bold mt-3">${res.name}</h3>
-        //        <table class="table mt-3">
-        //            <tr>
-        //                <th>Start Date:</th>
-        //                <td>${(res.startDate).split("T")[0]}</td>
-        //            </tr>
-        //            <tr>
-        //                <th>End Date:</th>
-        //                <td>${(res.endDate).split("T")[0]}</td>
-        //            </tr>
-        //            <tr>
-        //                <th>Status:</th>
-        //                <td>
-        //                    <select class="form-control" id="activityStatus" disabled>
-        //                        <option value="0">Unstarted</option>
-        //                        <option value="1">Started</option>
-        //                        <option value="2">Completed</option>
-        //                    </select>
-        //                    <div class="button-container">
-                                
-        //                        <button type="button" onClick="updateActivityStatus('${res.id}')"
-        //                        class="btn btn-sm btn-success mt-2 btn-update">Update <i class="fas fa-edit"></i></button>
-        //                    </div>
-        //                </td>
-        //            </tr>
-        //        </table>`;
+        console.log(res)
+        sessionStorage.setItem("activityId", res.id)
         let htmlItem = `
-                <h3 class="text-primary font-weight-bold mt-3">${res.name}</h3>
+                <input type="text"
+                    class="form-control form-control-lg font-weight-bold text-primary "
+                    name="name"
+                    id="ActivityTitle"
+                    value="${res.name}"
+                    style="background-color:transparent; border:none; font-size: 2em;" disabled>
                 <table class="table mt-3">
                     <tr>
                         <th>Start Date:</th>
-                        <td><input type="date" class="form-control" name="startdate" id="startdate" value="${(res.startDate).split("T")[0]}" disabled></td>
+                        <td><input type="date" class="form-control" name="startdate" id="detailStartDate" value="${(res.startDate).split("T")[0]}" disabled></td>
                     </tr>
                     <tr>
                         <th>End Date:</th>
-                        <td><input type="date" class="form-control" name="enddate" id="enddate" value="${(res.endDate).split("T")[0]}" disabled></td>
+                        <td><input type="date" class="form-control" name="enddate" id="detailEndDate" value="${(res.endDate).split("T")[0]}" disabled></td>
                     </tr>
                     <tr>
                         <th>Status:</th>
@@ -285,9 +259,9 @@ const activityDetail = (id) => {
                                 <option value="2">Completed</option>
                             </select>
                             <div class="button-container">
-                                
                                 <button type="button" onClick="updateActivityStatus('${res.id}')"
-                                class="btn btn-sm btn-success mt-2 btn-update">Update <i class="fas fa-edit"></i></button>
+                                    class="btn btn-sm btn-success mt-2 btn-update">Update <i class="fas fa-edit"></i></button>
+                                <button type="button" onClick="saveStatus('${res.id}', '${res.status}')" class="btn btn-sm btn-primary mt-2 btn-save ml-2" hidden disabled>Save <i class="fas fa-edit"></i></button>
                             </div>
                         </td>
                     </tr>
@@ -302,26 +276,23 @@ const activityDetail = (id) => {
     }).done(res => {
         let empList = ''
         $.each(res, (key, val) => {
-            console.log(val)
             empList += `
             <tr>
                 <td>${key + 1}</td>
                 <td>${val.fullname}</td>
                 <td>${val.jobName}</td>
                 <td>${val.departmentName}</td>
-                <td>
-                    <button class="btn btn-sm btn-danger" onClick="deleteEmpActivity()">Delete <i class="fas fa-trash-alt"></i></button>
+                <td class="delete-emp-act">
+                    <button class="btn btn-sm btn-danger" onClick="deleteEmpActivity('${JSON.stringify(val).replace(/"/g, "&quot;")}')">Delete <i class="fas fa-trash-alt"></i></button>
                 </td>
-            </tr>
-        `
+            </tr>`
             $('.employeeTable').html(empList)
         })
+        if (roles) {
+            $('.delete-emp-act').remove();
+        }
     })
-
-
 }
-
-
 
 // update activity status
 const updateActivityStatus = (activityId) => {
@@ -329,17 +300,140 @@ const updateActivityStatus = (activityId) => {
     //$('#activityStatus').removeAttr("disabled")
     document.querySelector('#activityStatus').toggleAttribute("disabled");
     //$('.button-container').html()
-
-    let saveButton = `<button type="button" onClick="saveStatus('${activityId}')" class="btn btn-sm btn-primary mt-2 btn-save ml-2">Save <i class="fas fa-edit"></i></button>`;
-    $(saveButton).insertAfter('.btn-update');
+    document.querySelector('.btn-save').toggleAttribute('hidden')
+    document.querySelector('.btn-save').toggleAttribute('disabled')
 }
 
 // save status
-const saveStatus = (activityId) => {
-    console.log("data saved")
+const saveStatus = (activityId, status) => {
+    console.log([activityId, status])
+
+    if (parseInt($('#activityStatus').val()) !== parseInt(status)) {
+        var data = {
+            id: activityId,
+            status: parseInt($('#activityStatus').val())
+        };
+
+        $.ajax({
+            url: '/Activities/UpdateActivityStatus',
+            type: 'put',
+            dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+            data: data,
+            success: function (data) {
+                swal({
+                    title: "Success Update Status",
+                    icon: "success"
+                }).then(val => {
+                    window.location.reload();
+                });
+            },
+            error: () => {
+                swal({
+                    title: "Failed Update Status",
+                    icon: "error"
+                }).then(val => {
+                    window.location.reload();
+                });
+            }
+        })
+    } else {
+        swal({
+            title: "Failed Update Status",
+            icon: "error"
+        });
+    }
 }
 
 
-const deleteEmpActivity = () => {
-    console.log("deleted")
+const deleteEmpActivity = (empData) => {
+
+    const dataJson = JSON.parse(empData)
+
+    swal({
+        title: 'Apakah anda yakin menghapus Employee ?',
+        icon: 'warning',
+        buttons: ['Cancel', 'Yes!']
+    }).then(result => {
+        if (result) {
+            $.ajax({
+                url: "/EmployeeActivities/DeleteEmployeeAssignment/",
+                method: "POST",
+                dataType: 'JSON',
+                contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                data: dataJson,
+                success: function (data) {
+                    swal({
+                        title: "Success Delete Employee",
+                        icon: "success"
+                    }).then(val => {
+                        window.location.reload();
+                    });
+                },
+                error: () => {
+                    swal({
+                        title: "Failed Delete Employee",
+                        icon: "error"
+                    }).then(val => {
+                        window.location.reload();
+                    });
+                }
+            });
+        }
+    });
+}
+
+const activityUpdate = () => {
+    document.querySelector('#detailStartDate').toggleAttribute("disabled");
+    document.querySelector('#detailEndDate').toggleAttribute("disabled");
+    document.querySelector('#activityStatus').toggleAttribute("disabled");
+    document.querySelector('.save-update-activity').toggleAttribute("hidden");
+    document.querySelector('.save-update-activity').toggleAttribute("disabled");
+    $('#ActivityTitle').removeAttr("disabled");
+    document.querySelector('.btn-update').toggleAttribute("disabled")
+    document.querySelector('.btn-update').toggleAttribute("hidden")
+};
+
+const saveActivityUpdate = () => {
+    let updateObj = {
+        id: parseInt(sessionStorage.getItem("activityId")),
+        name: $('#ActivityTitle').val(),
+        startDate: $('#detailStartDate').val(),
+        endDate: $('#detailEndDate').val(),
+        status: parseInt($('#activityStatus').val()),
+        projectId: parseInt(projectId)
+    }
+    console.log(updateObj)
+
+    swal({
+        title: 'Apakah anda yakin Mengubah Activity ?',
+        icon: 'warning',
+        buttons: ['Cancel', 'Yes!']
+    }).then(result => {
+        if (result) {
+            $.ajax({
+                url: "/Activities/UpdateActivity",
+                method: "PUT",
+                dataType: 'JSON',
+                contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                data: updateObj,
+                success: function (data) {
+                    swal({
+                        title: "Success Update Activity",
+                        icon: "success"
+                    }).then(val => {
+                        window.location.reload();
+                    });
+                },
+                error: () => {
+                    swal({
+                        title: "Failed Update Activity",
+                        icon: "error"
+                    }).then(val => {
+                        window.location.reload();
+                    });
+                }
+            });
+        }
+    });
 }

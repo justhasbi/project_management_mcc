@@ -6,8 +6,10 @@ using project_management_mcc.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Client.Repositories
@@ -48,6 +50,13 @@ namespace Client.Repositories
                 entities = JsonConvert.DeserializeObject<List<EmployeeActivityVM>>(apiResponse);
             }
             return entities;
+        }
+
+        public HttpStatusCode DeleteEmployeeAssignment(EmployeeActivityVM employeeActivityVM)
+        {
+            StringContent content = new StringContent(JsonConvert.SerializeObject(employeeActivityVM), Encoding.UTF8, "application/json");
+            var result = httpClient.PostAsync(request + "DeleteEmployeeAssignment/", content).Result;
+            return result.StatusCode;
         }
     }
 }
