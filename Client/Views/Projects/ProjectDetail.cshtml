@@ -4,7 +4,17 @@
     ViewData["Title"] = "Project Detail";
 }
 
-<h1 class="h3 text-primary text-uppercase mb-4 font-weight-bold project-name">POS Toko Kita Adiwerna</h1>
+<h1 class="h3 text-primary text-uppercase mb-4 font-weight-bold project-name"></h1>
+
+@*<div class="card">
+    <div class="card-body bg-success">
+        <span class="font-weight-bold text-light">
+            this project is closed
+        </span>
+    </div>
+</div>*@
+
+<div class="p-3 mb-2 bg-success text-light rounded close-project-tag" hidden>This project is closed</div>
 
 <div class="row">
     <div class="col-xl-12 col-lg-12">
@@ -47,7 +57,7 @@
             @if(User.IsInRole("Human Resource"))
             {
                 <div class="card-footer">
-                    <button class="btn btn-dark float-right close-project" disabled>Close Project</button>
+                    <button class="btn btn-dark float-right close-project" onclick="closeProject()" disabled>Close Project</button>
                 </div>
             }
         </div>
@@ -191,46 +201,21 @@
                             <span class="h4 font-weight-bold text-primary">Selected Employee</span>
                         </div>
                         <div class="selected-employee-container overflow-auto mt-4 overflow-auto" style="max-height:70vh">
-                            
-                            <div class="border rounded mb-2">
-                                <div class="d-flex flex-row justify-content-between align-items-center flex-sm-wrap p-1">
-                                    <div class="title-text">
-                                        <span class="font-weight-bold">Hasbi Shuhada</span><br />
-                                        <span class="text-black-50 small mt-0">Backend Engineer - Applicaton Developer</span>
-                                    </div>
-                                    <div class="btn-container">
-                                        <button onClick="" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-
+                            @*content here*@
                         </div>
                     </div>
                     <div class="col">
                         <div class="title">
                             <span class="h4 font-weight-bold text-primary" >Select Employee</span>
                         </div>
-                        <div class="selected-employee-container mt-4 overflow-auto" style="max-height:70vh">
-                            
-                            <div class="border rounded mb-2">
-                                <div class="d-flex flex-row justify-content-between align-items-center flex-sm-wrap p-1">
-                                    <div class="title-text">
-                                        <span class="font-weight-bold">Hasbi Shuhada</span><br />
-                                        <span class="text-black-50 small mt-0">Backend Engineer - Applicaton Developer</span>
-                                    </div>
-                                    <div class="btn-container">
-                                        <button onClick="" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                          
+                        <div class="select-employee-container mt-4 overflow-auto" style="max-height:70vh">
+                            @*content here*@
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save <i class="fas fa-save"></i></button>
+                <button type="button" class="btn btn-primary saveEmp">Save <i class="fas fa-save"></i></button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>

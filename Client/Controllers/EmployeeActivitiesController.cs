@@ -34,6 +34,13 @@ namespace Client.Controllers
             return Json(result);
         }
 
+        [HttpPost]
+        public JsonResult AssignMultipleEmployee(CreateListAssignEmployeeVM createListAssignEmployeeVM)
+        {
+            var result = repository.AssignMultipleEmployee(createListAssignEmployeeVM);
+            return Json(result);
+        }
+
         public IActionResult Index()
         {
             return View();

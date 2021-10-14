@@ -17,12 +17,21 @@ namespace Client.Controllers
         {
             this.repository = repository;
         }
-        [HttpGet("GetEmployees")]
+        
+        [HttpGet]
         public async Task<JsonResult> GetEmployees()
         {
             var result = await repository.GetEmployees();
             return Json(result);
         }
+
+        [HttpGet]
+        public async Task<JsonResult> GetEmployeeJobs()
+        {
+            var result = await repository.GetEmployeeJobs();
+            return Json(result);
+        }
+
         public IActionResult Index()
         {
             return View();

@@ -21,8 +21,6 @@ namespace project_management_mcc.Controllers
         {
             this.repository = repository;
         }
-
-       
         
         [HttpGet("GetEmployeeJobs")]
         public ActionResult GetEmployeesJobs()
@@ -39,7 +37,7 @@ namespace project_management_mcc.Controllers
         
         }
         
-        [HttpGet("GetEmployee")]
+        [HttpGet("GetEmployees")]
         public ActionResult GetEmployees()
         {
             try

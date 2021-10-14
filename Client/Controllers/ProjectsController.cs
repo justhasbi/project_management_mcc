@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using project_management_mcc.Models;
+using project_management_mcc.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,13 @@ namespace Client.Controllers
         public async Task<JsonResult> GetManagerId(int id)
         {
             var result = await repository.GetManagerId(id);
+            return Json(result);
+        }
+
+        [HttpPut]
+        public JsonResult CloseProject(UpdateStatusVM updateStatusVM)
+        {
+            var result = repository.CloseProject(updateStatusVM);
             return Json(result);
         }
 

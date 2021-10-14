@@ -19,7 +19,6 @@ namespace project_management_mcc.Repositories.Data
 
         public int AssignMultipleEmployee(CreateListAssignEmployeeVM createListAssignEmployeeVM)
         {
-
             var stringHtmlMessage = "<h1>Notification Activity Assignment</h1>";
 
             foreach (var item in createListAssignEmployeeVM.CreateAssignEmployeeVMs)
@@ -39,18 +38,7 @@ namespace project_management_mcc.Repositories.Data
         // get employee assign by activity id
         public IEnumerable<EmployeeActivityVM> GetEmployeeActivity(int id) // activity id
         {
-            //var data = (from a in myContext.Activities
-            //            join ea in myContext.EmployeeActivities on a.Id equals ea.ActivityId
-            //            join e in myContext.Employees on ea.EmployeeId equals e.Id
-            //            join j in myContext.Jobs on e.JobId equals j.Id
-            //            join d in myContext.Departments on j.DepartmentId equals d.Id
-            //            select new EmployeeActivityVM {
-            //                EmployeeId = e.Id,
-            //                ActivityId = a.Id,
-            //                Fullname = $"{e.FirstName} {e.LastName}",
-            //                JobName = j.Name,
-            //                DepartmentName = d.Name
-            //            }).ToList();
+
             var data = (from a in myContext.Activities
                         join ea in myContext.EmployeeActivities on a.Id equals ea.ActivityId
                         join e in myContext.Employees on ea.EmployeeId equals e.Id

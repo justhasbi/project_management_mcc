@@ -1,17 +1,23 @@
 ﻿@{
     Layout = "_AdminLayout";
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Dashboard";
 }
 
-@{
-    ViewBag.Title = "Jwt Payload";
-    var data = ViewBag.Payload;
-}
-
-
-<h2>@data</h2>
 
 <div class="text-center">
     <h1 class="display-4">Chart Here</h1>
-    <p>@data.Email</p>
+    <div class="card">
+        <div class="card-header">
+            <h4 class="font-weight-bold text-primary float-left">Aplikasi Kasir Toko X</h4>
+        </div>
+        <div class="card-body">
+            <div id="chart">
+
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    <script src="/js/Chart.js"></script>
+}

@@ -36,12 +36,12 @@ namespace project_management_mcc.Controllers
                     Message = "Success"
                 });
             }
-            catch
+            catch (Exception e)
             {
                 return BadRequest(new
                 {
                     status = HttpStatusCode.BadRequest,
-                    Message = "Failed"
+                    Message = e
                 });
             }
         }

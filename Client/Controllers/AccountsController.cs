@@ -56,6 +56,7 @@ namespace Client.Controllers
             var result = repository.ForgotPassword(forgotPasswordVM);
             return Json(result);
         }
+
         [HttpPut]
         public JsonResult ChangePassword(ChangePasswordVM changePasswordVM)
         {

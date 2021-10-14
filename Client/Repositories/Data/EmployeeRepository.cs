@@ -32,13 +32,27 @@ namespace Client.Repositories.Data
             };
             httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", contextAccessor.HttpContext.Session.GetString("JWToken"));
         }
+        
         public async Task<List<EmployeeVM>> GetEmployees()
         {
             List<EmployeeVM> employees = new List<EmployeeVM>();
+
             using (var respone = await httpClient.GetAsync(request + "GetEmployees"))
             {
                 string apiRespone = await respone.Content.ReadAsStringAsync();
                 employees = JsonConvert.DeserializeObject<List<EmployeeVM>>(apiRespone);
+            }
+
+            return employees;
+        }
+
+        public async Task<List<GetEmployeeVM>> GetEmployeeJobs()
+        {
+            List<GetEmployeeVM> employees = new List<GetEmployeeVM>();
+            using (var respone = await httpClient.GetAsync(request + "GetEmployeeJobs"))
+            {
+                string apiRespone = await respone.Content.ReadAsStringAsync();
+                employees = JsonConvert.DeserializeObject<List<GetEmployeeVM>>(apiRespone);
             }
             return employees;
         }
