@@ -31,7 +31,7 @@
                 "autoWidth": true
             },
             {
-                "data": "gender", render: function (resutl) {
+                "data": "gender", render: function (result) {
                     console.log(result)
                     var gender;
                     if (result === 0) {

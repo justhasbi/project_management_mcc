@@ -18,7 +18,9 @@ namespace project_management_mcc.Repositories.Data
         public IEnumerable<RoleVM> GetRoles()
         {
             var data = (from e in myContext.Employees
-                        join r in myContext.Roles on e.Id equals r.Id
+                        join a in myContext.Accounts on e.Id equals a.Id
+                        join ac in myContext.AccountRoles on a.Id equals ac.AccountId
+                        join r in myContext.Roles on ac.RoleId equals r.Id
                         select new RoleVM
                         {
                             EmployeeId = e.Id,
