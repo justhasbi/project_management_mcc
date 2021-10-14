@@ -13,17 +13,38 @@ namespace project_management_mcc.Controllers
     [ApiController]
     public class EmployeesController : BaseController<Employee, EmployeeRepository, int>
     {
-        private readonly EmployeeRepository employeeRepository;
+
+
+        private readonly EmployeeRepository repository;
+
         public EmployeesController(EmployeeRepository repository) : base(repository)
         {
-            this.employeeRepository = repository;
+            this.repository = repository;
         }
+
+       
+        
+        [HttpGet("GetEmployeeJobs")]
+        public ActionResult GetEmployees()
+        {
+            try
+            {
+                var data = repository.GetEmployeeJob();
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                return NotFound(e);
+            }
+        
+        }
+        
         [HttpGet("GetEmployee")]
         public ActionResult GetEmployees()
         {
             try
             {
-                var data = employeeRepository.GetEmployees();
+                var data = repository.GetEmployees();
                 return Ok(data);
             }
             catch (Exception e)
