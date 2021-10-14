@@ -1,55 +1,5 @@
-﻿$.ajax({
-    url: "https://localhost:44314/Activities/GetByProjectId/" + projectId,
-    type: "GET"
-})
-
-var options = {
-    series: [
-        {
-            data: [
-                {
-                    x: 'Analysis',
-                    y: [
-                        new Date('2019-02-27').getTime(),
-                        new Date('2019-03-04').getTime()
-                    ],
-                    fillColor: '#008FFB'
-                },
-                {
-                    x: 'Design',
-                    y: [
-                        new Date('2019-03-04').getTime(),
-                        new Date('2019-03-08').getTime()
-                    ],
-                    fillColor: '#00E396'
-                },
-                {
-                    x: 'Coding',
-                    y: [
-                        new Date('2019-03-07').getTime(),
-                        new Date('2019-03-10').getTime()
-                    ],
-                    fillColor: '#775DD0'
-                },
-                {
-                    x: 'Testing',
-                    y: [
-                        new Date('2019-03-08').getTime(),
-                        new Date('2019-03-12').getTime()
-                    ],
-                    fillColor: '#FEB019'
-                },
-                {
-                    x: 'Deployment',
-                    y: [
-                        new Date('2019-03-12').getTime(),
-                        new Date('2019-03-17').getTime()
-                    ],
-                    fillColor: '#FF4560'
-                }
-            ]
-        }
-    ],
+﻿var options = {
+    series: [],
     chart: {
         height: 350,
         type: 'rangeBar'
@@ -92,3 +42,50 @@ var options = {
 
 var chart = new ApexCharts(document.querySelector("#chart"), options);
 chart.render();
+
+$.ajax({
+    url: 'https://localhost:44314/projects/getmanagerid/' + mID,
+    method: 'GET'
+}).done(res => {
+    let itemHtml = "";
+
+    $.each(res, (key, val) => {
+        itemHtml += `
+            <option value="${val.id}">${val.name}</option>
+        `;
+        $('#project-select').html(itemHtml)
+    })
+})
+
+let data = {
+    data: []
+}
+
+const handleSelectChange = () => {
+    let selectElem = $('#project-select').val()
+    //sessionStorage.setItem("projectId", selectElem)
+    data.data.splice(0, data.data.length)
+    $.ajax({
+        url: 'https://localhost:44314/Activities/GetByProjectId/' + selectElem, //sessionStorage.getItem("projectId"),
+        type: "GET"
+    }).done(res => {
+        console.log(res)
+        $.each(res, (key, val) => {
+            let obj = {
+                x: val.name,
+                y: [
+                    new Date(val.startDate).getTime(),
+                    new Date(val.endDate).getTime(),
+                ]
+            }
+            data.data.push(obj)
+        })
+        chart.updateOptions({
+            series: [
+                data
+            ]
+        })
+    })
+}
+
+
