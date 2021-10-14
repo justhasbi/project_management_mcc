@@ -19,6 +19,30 @@ namespace project_management_mcc.Repository.Data
         {
             this.myContext = myContext;
         }
+        
+        public IEnumerable<GetEmployeeVM> GetEmployeeJob()
+        {
+            var data = (
+                from e in myContext.Employees
+                join a in myContext.Accounts on e.Id equals a.Id
+                join ar in myContext.AccountRoles on a.Id equals ar.AccountId
+                join r in myContext.Roles on ar.RoleId equals r.Id
+                join j in myContext.Jobs on e.JobId equals j.Id
+                join d in myContext.Departments on j.DepartmentId equals d.Id
+                select new GetEmployeeVM
+                {
+                    EmployeeId = e.Id,
+                    Fullname = $"{e.FirstName} {e.LastName}",
+                    DepartmentName = d.Name,
+                    JobName = j.Name,
+                    Email = a.Email,
+                    RoleId = r.Id,
+                    RoleName = r.Name
+                }).ToList();
+                
+            return data;
+        }
+        
         public IEnumerable<EmployeeVM> GetEmployees()
         {
             var data = (from e in myContext.Employees
