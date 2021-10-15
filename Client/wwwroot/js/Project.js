@@ -1,4 +1,9 @@
-﻿// create project
+﻿// reset modal when closed
+$('body').on('hidden.bs.modal', '.modal', function () {
+    $(this).removeData('bs.modal');
+});
+
+// create project
 $('.project-form').submit(e => {
     e.preventDefault();
 
@@ -281,29 +286,34 @@ const activityDetail = (id) => {
         $(`#activityStatus option[value='${res.status}']`).attr('selected', 'selected')
     });
 
+    
     displayEmployeeAssign(id)
     
 }
 
 const displayEmployeeAssign = (id) => {
+    
     $.ajax({
         url: '/EmployeeActivities/GetEmployeeActivity/' + id, // + activity_id
         method: "GET",
     }).done(res => {
         let empList = ''
+        //if (res.length > 0) {
+
+        //}
         $.each(res, (key, val) => {
             empList += `
-            <tr>
-                <td>${key + 1}</td>
-                <td>${val.fullname}</td>
-                <td>${val.jobName}</td>
-                <td>${val.departmentName}</td>
-                <td class="delete-emp-act">
-                    <button class="btn btn-sm btn-danger" onClick="deleteEmpActivity('${JSON.stringify(val).replace(/"/g, "&quot;")}')">Delete <i class="fas fa-trash-alt"></i></button>
-                </td>
-            </tr>`
-            $('.employeeTable').html(empList)
+                <tr class="emp-item">
+                    <td>${key + 1}</td>
+                    <td>${val.fullname}</td>
+                    <td>${val.jobName}</td>
+                    <td>${val.departmentName}</td>
+                    <td class="delete-emp-act">
+                        <button class="btn btn-sm btn-danger" onClick="deleteEmpActivity('${JSON.stringify(val).replace(/"/g, "&quot;")}')">Delete <i class="fas fa-trash-alt"></i></button>
+                    </td>
+                </tr>`
         })
+        $('.employeeTable').html(empList)
 
         if (!roles) {
             $('.delete-emp-act').remove();
@@ -485,19 +495,18 @@ let employeeCart = []
 
 const appendSelected = (empDataObj) => {
 
-    var empJson = JSON.parse(empDataObj)
+    var empJson = JSON.parse(empDataObj);
 
     var data = {
         ActivityId: parseInt(sessionStorage.getItem("activityId")),
         Email: empJson.email,
         EmployeeId: empJson.employeeId
-    }
+    };
 
-    const findDupEmp = employeeCart.find(item => item.employeeId === empJson.employeeId)
+    const findDupEmp = employeeCart.find(item => item.EmployeeId === empJson.employeeId);
+    console.log(findDupEmp);
 
-    if (findDupEmp) {
-        console.log("you have selected that employee")
-    } else {
+    if (!findDupEmp) {
         let selectedEmp = `
         <div class="border rounded mb-2">
             <div class="d-flex flex-row justify-content-between align-items-center flex-sm-wrap p-1">
@@ -506,21 +515,25 @@ const appendSelected = (empDataObj) => {
                     <span class="text-black-50 small mt-0">${empJson.jobName} - ${empJson.departmentName}</span>
                 </div>
                 <div class="btn-container">
-                    <button  class="btn btn-sm btn-danger deleteAssign" onClick=""><i class="fas fa-times"></i></button>
+                    <button  class="btn btn-sm btn-danger" id="deleteAssign" onClick="deleteEmpCart(this)"><i class="fas fa-times"></i></button>
                 </div>
             </div>
         </div>`;
 
         employeeCart.push(data);
+        console.log(employeeCart);
+        document.querySelector('.selected-employee-container').innerHTML += selectedEmp;
 
-        console.log(employeeCart)
-        document.querySelector('.selected-employee-container').innerHTML += selectedEmp
-    }    
+    } else {
+        console.log("you have already selected that employee");
+    }
 }
 
-$(".deleteAssign").click(e => {
-    console.log("clicked")
-})
+function deleteEmpCart(event) {
+    employeeCart.pop();
+    event.parentNode.parentNode.parentNode.remove()
+}
+
 
 $('.saveEmp').click(e => {
     let data = {
@@ -554,7 +567,6 @@ $('.saveEmp').click(e => {
 
 
 const closeProject = () => {
-
     var data = {
         id: parseInt(sessionStorage.getItem("project_id")),
         status: "Completed"
