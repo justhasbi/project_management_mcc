@@ -1,4 +1,5 @@
 using Client.Base.URL;
+using Client.Middleware;
 using Client.Repositories;
 using Client.Repositories.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -63,6 +64,7 @@ namespace Client
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -98,6 +100,8 @@ namespace Client
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            //app.UseMiddleware<EncryptionMiddleware>();
         }
     }
 }
