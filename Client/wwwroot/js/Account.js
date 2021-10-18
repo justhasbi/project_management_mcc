@@ -25,6 +25,14 @@ $('.register-form').submit((e) => {
 
     e.preventDefault();
 
+    if ($('#first').val() === "" || $('#last').val() === "" || $('#phone').val() === "" || $('#email').val() === "" || $('#pass').val() === "") {
+        swal({
+            title: "Failed Create Account",
+            text: "Please fill the empty registration form",
+            icon: "error"
+        })
+    }
+
     let data = new Object();
 
     data.FirstName = $('#first').val();
@@ -38,8 +46,6 @@ $('.register-form').submit((e) => {
     data.RoleId = parseInt($('#role').val());
 
     console.log(JSON.stringify(data))
-
-    
 
     $.ajax({
         url: 'register/',
@@ -58,10 +64,9 @@ $('.register-form').submit((e) => {
         },
         error: function () {
             swal({
-                title: "Success Create Account",
-                icon: "success"
+                title: "Failed Create Account",
+                icon: "error"
             }).then(() => window.location.reload());
-            
         }
     });
 });
@@ -115,14 +120,26 @@ $('.forgot-password').submit(e => {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         data: data,
-        success: (data) => {
-            console.log("success")
+        success: function (data) {
+            swal({
+                title: "Success Reset Password",
+                icon: "success",
+                text: "please check email for temporary password"
+            }).then(() => {
+                window.location = '/Accounts'
+            })
         },
-        error: () => {
-            console.log("error")
+        error: function () {
+            swal({
+                title: "Failed reset password",
+                text: "Please enter a valid email address",
+                icon: "error"
+            });
         }
     })
 });
+
+
 $('.change-password').submit(e => {
     e.preventDefault();
     let data = new Object();
@@ -138,11 +155,19 @@ $('.change-password').submit(e => {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded; charset=utf-8',
         data: data,
-        success: (data) => {
-            console.log("success")
+        success: function (data) {
+            swal({
+                title: "Success Change Password",
+                icon: "success",
+            }).then(() => {
+                window.location = '/Accounts'
+            })
         },
-        error: () => {
-            console.log("error")
+        error: function () {
+            swal({
+                title: "Failed Change password",
+                icon: "error"
+            });
         }
     })
 })
