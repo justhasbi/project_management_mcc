@@ -2,17 +2,19 @@
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = "Project Detail";
+
+    var data = ViewBag.Payload;
 }
 
 <h1 class="h3 text-primary text-uppercase mb-4 font-weight-bold project-name"></h1>
 
 @*<div class="card">
-    <div class="card-body bg-success">
-        <span class="font-weight-bold text-light">
-            this project is closed
-        </span>
-    </div>
-</div>*@
+        <div class="card-body bg-success">
+            <span class="font-weight-bold text-light">
+                this project is closed
+            </span>
+        </div>
+    </div>*@
 
 <div class="p-3 mb-2 bg-success text-light rounded close-project-tag" hidden>This project is closed</div>
 
@@ -22,12 +24,16 @@
             <!-- Card Header-->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between flex-sm-wrap">
                 <h5 class="m-0 font-weight-bold text-primary">Project Activities</h5>
-                <button class="btn float-right btn-primary"
-                        type="button"
-                        data-toggle="modal"
-                        data-target="#activityForm">
-                    Add Activity<i class="fas fa-plus ml-2"></i>
-                </button>
+                @if (User.IsInRole("Manager"))
+                {
+                    <button class="btn float-right btn-primary"
+                            type="button"
+                            data-toggle="modal"
+                            data-target="#activityForm">
+                        Add Activity<i class="fas fa-plus ml-2"></i>
+                    </button>
+                }
+
             </div>
             <!-- Card Body -->
             <div class="card-body">
@@ -54,12 +60,66 @@
                     </div>
                 </div>
             </div>
-            @if(User.IsInRole("Human Resource"))
+            @if (User.IsInRole("Manager"))
             {
                 <div class="card-footer">
                     <button class="btn btn-dark float-right close-project" onclick="closeProject()" disabled>Close Project</button>
+                    <button class="btn btn-success float-right update-project mr-3" 
+                            data-toggle="modal"
+                            data-target="#projectUpdate" 
+                            onclick="projectUpdate(sessionStorage.getItem('project_id'))">Update Project</button>
                 </div>
             }
+        </div>
+    </div>
+</div>
+
+<!-- Project Update Modal  -->
+<div class="modal fade" id="projectUpdate" tabindex="-1" role="dialog" aria-labelledby="projectUpdate" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="projectUpdate"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="update-project-form" method="post" novalidate>
+                    <div class="form-group">
+                        <label for="project-name">Project Name</label>
+                        <input type="text" class="form-control" id="project-name" name="name" required>
+                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea name="description" class="form-control" id="description" required></textarea>
+                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select class="form-control" id="status" name="status" disabled>
+                            <option value="0">Not Started</option>
+                            <option value="1">Started</option>
+                            <option value="2">Completed</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text"
+                               class="form-control"
+                               id="managerId"
+                               name="managerId"
+                               value="@data.Id" disabled hidden required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="projectUpdateSave()">Save <i class="fas fa-save"></i></button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
 </div>
@@ -98,7 +158,7 @@
                     <div class="form-group">
                         <label for="status">Status</label>
                         <select class="form-control" id="status" name="status">
-                            <option value="0">Unstarted</option>
+                            <option value="0">Not Started</option>
                             <option value="1">Started</option>
                             <option value="2">Completed</option>
                         </select>
@@ -127,7 +187,7 @@
                 <div class="activityDetail">
 
                 </div>
-                
+
                 <div id="accordion">
                     <div class="card">
                         <div class="card-header" id="headingOne">
@@ -140,8 +200,8 @@
 
                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                             <div class="card-body">
-                                @if (User.IsInRole("Human Resource"))
-                                { 
+                                @if (User.IsInRole("Manager"))
+                                {
                                     <button class="btn btn-sm float-right btn-primary mb-3" data-dismiss="modal" type="button" data-toggle="modal" data-target="#EmployeeAssignment">
                                         Assign Employee <i class="fas fa-plus ml-2"></i>
                                     </button>
@@ -154,14 +214,13 @@
                                             <td>Name</td>
                                             <td>Job</td>
                                             <td>Department</td>
-                                            @if(User.IsInRole("Human Resource"))
+                                            @if (User.IsInRole("Manager"))
                                             {
                                                 <td>Action</td>
                                             }
                                         </tr>
                                     </thead>
                                     <tbody class="employeeTable">
-                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -172,7 +231,7 @@
 
             </div>
             <div class="modal-footer">
-                @if (User.IsInRole("Human Resource"))
+                @if (User.IsInRole("Manager"))
                 {
                     <button type="button" class="btn btn-success" onclick="activityUpdate()">Update <i class="fas fa-edit"></i></button>
                     <button type="button" class="btn btn-primary save-update-activity" onclick="saveActivityUpdate()" hidden disabled>save <i class="fas fa-edit"></i></button>
@@ -206,7 +265,7 @@
                     </div>
                     <div class="col">
                         <div class="title">
-                            <span class="h4 font-weight-bold text-primary" >Select Employee</span>
+                            <span class="h4 font-weight-bold text-primary">Select Employee</span>
                         </div>
                         <div class="select-employee-container mt-4 overflow-auto" style="max-height:70vh">
                             @*content here*@
@@ -223,8 +282,9 @@
 </div>
 
 <script type="text/javascript">
-    var roles = '@User.IsInRole("Human Resource")';
-    console.log(roles)
+    let UserRoles = '@User.IsInRole("Users")';
+    var roles = '@User.IsInRole("Manager")';
+    let mId = '@data.Id'
 </script>
 
 @section Scripts {

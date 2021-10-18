@@ -22,6 +22,13 @@ namespace Client.Controllers
             this.repository = repository;
         }
 
+        [HttpGet]
+        public async Task<JsonResult> GetProjectEmployee(int id) // employee id
+        {
+            var result = await repository.GetProjectByEmployeeActivity(id);
+            return Json(result);
+        }
+
         // get project by manager ID
         [HttpGet]
         public async Task<JsonResult> GetManagerId(int id)
@@ -34,6 +41,13 @@ namespace Client.Controllers
         public JsonResult CloseProject(UpdateStatusVM updateStatusVM)
         {
             var result = repository.CloseProject(updateStatusVM);
+            return Json(result);
+        }
+
+        [HttpPut]
+        public JsonResult ProjectUpdate(Project project)
+        {
+            var result = repository.ProjectUpdate(project);
             return Json(result);
         }
 
@@ -58,6 +72,9 @@ namespace Client.Controllers
 
             if (userIdentity)
             {
+                var payload = HttpContext.Session.GetString("Payload");
+                var jsonPayload = JsonConvert.DeserializeObject(payload);
+                ViewBag.Payload = jsonPayload;
                 return View();
             }
 

@@ -81,5 +81,18 @@ namespace project_management_mcc.Controllers
         }
 
 
+        [HttpGet("GetProjectEmployee/{id}")]
+        public ActionResult GetProjectByEmployeeActivity(int id)
+        {
+            try
+            {
+                var request = projectRepository.GetProjectByEmployeeActivity(id);
+                return Ok(request);
+            }
+            catch (Exception)
+            {
+                return BadRequest(new { message = "Data Not Found" });
+            }
+        }
     }
 }

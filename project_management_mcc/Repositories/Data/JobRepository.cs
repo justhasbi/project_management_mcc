@@ -15,6 +15,7 @@ namespace project_management_mcc.Repositories.Data
         {
             this.myContext = myContext;
         }
+
         public IEnumerable<EmployeeVM> GetJobs()
         {
             var data = (from e in myContext.Employees
