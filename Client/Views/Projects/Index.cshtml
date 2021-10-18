@@ -4,23 +4,23 @@
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = "Project";
-    
+
     var data = ViewBag.Payload;
 }
 
 <div class="row mb-2">
     <h1 class="h3 text-primary text-uppercase mb-4 font-weight-bold col">Project</h1>
     <div class="col">
-        @if(User.IsInRole("Manager"))
-            {
-                <button class="btn float-right btn-primary"
-                        type="button"
-                        data-toggle="modal"
-                        data-target="#projectForm">
-                    Create Project <i class="fas fa-plus ml-2"></i>
-                </button>
-            }
-        
+        @if (User.IsInRole("Manager"))
+        {
+            <button class="btn float-right btn-primary"
+                    type="button"
+                    data-toggle="modal"
+                    data-target="#projectForm">
+                Create Project <i class="fas fa-plus ml-2"></i>
+            </button>
+        }
+
     </div>
 </div>
 
@@ -34,12 +34,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="projectForm"></h5>
-                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                 </button>
-             </div>
-             <div class="modal-body">
-                 <form class="project-form" method="post" novalidate>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="project-form" method="post">
                     <div class="form-group">
                         <label for="project-name">Project Name</label>
                         <input type="text" class="form-control" id="project-name" name="name" required>
@@ -53,17 +53,17 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="text" 
-                               class="form-control" 
-                               id="managerId" 
-                               name="managerId" 
+                        <input type="text"
+                               class="form-control"
+                               id="managerId"
+                               name="managerId"
                                value="@data.Id" disabled hidden required>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
                 </form>
             </div>
             <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -71,13 +71,15 @@
 </div>
 
 
+
 <script type="text/javascript">
     sessionStorage.clear();
     let UserRoles = '@User.IsInRole("Users")';
-    let mId = @data.Id 
+    let mId = @data.Id
     console.log(UserRoles)
 </script>
 
 @section Scripts {
+    <script src="~/js/FormValidation.js"></script>
     <script src="~/js/Project.js"></script>
 }

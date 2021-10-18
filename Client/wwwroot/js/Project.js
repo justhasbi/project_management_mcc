@@ -1,6 +1,6 @@
 ﻿
 // create project
-$('.project-form').submit(e => {
+$('#btnSubmit').click(e => {
     e.preventDefault();
 
     var data = new Object();
@@ -385,7 +385,7 @@ const activityDetail = (id) => {
                     <tr>
                         <th>Status:</th>
                         <td>
-                            <select class="form-control" id="activityStatus" disabled>
+                            <select class="form-control" id="activityStatus" disabled required>
                                 <option value="0">Unstarted</option>
                                 <option value="1">Started</option>
                                 <option value="2">Completed</option>

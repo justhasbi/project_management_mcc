@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using project_management_mcc.Context;
+using project_management_mcc.Middleware;
 using project_management_mcc.Repositories.Data;
 using project_management_mcc.Repository.Data;
 using System.Text;
@@ -78,6 +79,7 @@ namespace project_management_mcc
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -93,6 +95,8 @@ namespace project_management_mcc
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            
+            //app.UseMiddleware<EncryptionMiddleware>();
 
             app.UseCors("AllowOrigin");
 
@@ -104,6 +108,8 @@ namespace project_management_mcc
             {
                 endpoints.MapControllers();
             });
+
+
         }
     }
 }
