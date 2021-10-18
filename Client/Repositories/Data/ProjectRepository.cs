@@ -54,5 +54,24 @@ namespace Client.Repositories.Data
             var result = httpClient.PutAsync(request + "CloseProject", content).Result.Content.ReadAsStringAsync().Result;
             return result;
         }
+
+        public string ProjectUpdate(Project project)
+        {
+            StringContent content = new StringContent(JsonConvert.SerializeObject(project), Encoding.UTF8, "application/json");
+            var result = httpClient.PutAsync(request, content).Result.Content.ReadAsStringAsync().Result;
+            return result;
+        }
+
+        public async Task<List<GetProjectByEmployeeActVM>> GetProjectByEmployeeActivity(int id)
+        {
+            List<GetProjectByEmployeeActVM> entities = new List<GetProjectByEmployeeActVM>();
+
+            using (var response = await httpClient.GetAsync(request + "GetProjectEmployee/" + id))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entities = JsonConvert.DeserializeObject<List<GetProjectByEmployeeActVM>>(apiResponse);
+            }
+            return entities;
+        }
     }
 }

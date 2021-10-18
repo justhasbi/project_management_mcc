@@ -87,7 +87,6 @@ namespace project_management_mcc.Repositories.Data
             return myContext.SaveChanges();
         }
 
-
         public IEnumerable<Project> GetCreateProjectVMs(int Id)
         {
             var getcreateprojectId = myContext.Projects.Where(x => x.ManagerId == Id);
@@ -97,6 +96,24 @@ namespace project_management_mcc.Repositories.Data
                 return null;
             }
             return getcreateprojectId;
+        }
+
+        // get project by employee activity
+        public IEnumerable<GetProjectByEmployeeActVM> GetProjectByEmployeeActivity(int id)
+        {
+            var data = (from p in myContext.Projects
+                        join act in myContext.Activities on p.Id equals act.ProjectId
+                        join ea in myContext.EmployeeActivities on act.Id equals ea.ActivityId
+                        join e in myContext.Employees on ea.EmployeeId equals e.Id
+                        select new GetProjectByEmployeeActVM
+                        {
+                            Id = p.Id,
+                            EmployeeId = ea.EmployeeId,
+                            Name = p.Name,
+                            Description = p.Description,
+                            status = (GetProjectByEmployeeActVM.Status)p.status
+                        });
+            return data.Where(x => x.EmployeeId.Equals(id)).Distinct();
         }
     }
 }

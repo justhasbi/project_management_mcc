@@ -28,7 +28,7 @@ namespace Client.Controllers
         }
 
         [HttpPost]
-        public JsonResult DeleteEmployeeAssignment([FromBody]EmployeeActivityVM employeeActivityVM)
+        public JsonResult DeleteEmployeeAssignment(EmployeeActivityVM employeeActivityVM)
         {
             var result = repository.DeleteEmployeeAssignment(employeeActivityVM);
             return Json(result);

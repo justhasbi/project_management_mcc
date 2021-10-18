@@ -1,8 +1,4 @@
-﻿// reset modal when closed
-$('body').on('hidden.bs.modal', '.modal', function () {
-    $(this).removeData('bs.modal');
-});
-
+﻿
 // create project
 $('.project-form').submit(e => {
     e.preventDefault();
@@ -39,21 +35,36 @@ $('.project-form').submit(e => {
 
 
 $('document').ready(() => {
-    var managerId = $('.mId').text()
+    var managerId = mId
+
+    if (UserRoles === "True") {
+        renderProjectByEmpActivity(managerId)
+    } else {
+        renderProjectByManagerId(managerId)
+    }
+
+})
+
+const renderProjectByManagerId = (id) => {
+    console.log("trigger manager")
     $.ajax({
-        url: "https://localhost:44314/projects/getmanagerid/" + managerId,
+        url: "/projects/getmanagerid/" + id,
         method: "GET",
     }).done(res => {
         console.log(res)
         var htmlItem = ""
-        
+        var badgeColor = ""
+
         res.forEach(item => {
             if (item.status === 0) {
                 item.status = "Not started"
+                badgeColor = "badge-secondary"
             } else if (item.status === 1) {
                 item.status = "Started"
+                badgeColor = "badge-primary"
             } else {
                 item.status = "Completed"
+                badgeColor = "badge-success"
             }
 
             htmlItem += `
@@ -66,7 +77,7 @@ $('document').ready(() => {
                                         <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">
                                             ${item.name}
                                         </div>
-                                        <div class="badge badge-secondary h5 mb-0 text-md mt-2">${item.status}</div>
+                                        <div class="badge ${badgeColor} h5 mb-0 text-md mt-2">${item.status}</div>
                                     </div>
                                     <div class="col-auto">
                                     <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -77,12 +88,55 @@ $('document').ready(() => {
                     </a>
                 </div>`
         });
-
         $('.project-wrapper').html(htmlItem);
     });
+}
 
-})
+const renderProjectByEmpActivity = (id) => {
+    console.log("trigger Employee")
+    $.ajax({
+        url: "/projects/GetProjectEmployee/" + id,
+        method: "GET",
+    }).done(res => {
+        console.log(res)
+        var htmlItem = ""
 
+        res.forEach(item => {
+            if (item.status === 0) {
+                item.status = "Not started"
+                badgeColor = "badge-secondary"
+            } else if (item.status === 1) {
+                item.status = "Started"
+                badgeColor = "badge-primary"
+            } else {
+                item.status = "Completed"
+                badgeColor = "badge-success"
+            }
+
+            htmlItem += `
+                <div class="col-xl-3 col-md-6 mt-4">
+                    <a onClick="redirectPage('projects/projectdetail', '${item.id}', '${item.name}', '${item.description}', '${item.status}')" style="text-decoration:none; cursor:pointer;">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">
+                                            ${item.name}
+                                        </div>
+                                        <div class="badge ${badgeColor} h5 mb-0 text-md mt-2">${item.status}</div>
+                                    </div>
+                                    <div class="col-auto">
+                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>`
+        });
+        $('.project-wrapper').html(htmlItem);
+    });
+}
 
 const redirectPage = (url, projectId, projectName, description, status) => {
     // save data to browser session storage
@@ -93,6 +147,69 @@ const redirectPage = (url, projectId, projectName, description, status) => {
     window.location = url;
 
 }
+
+const projectUpdate = (project_id) => {
+    $.ajax({
+        url: 'https://localhost:44314/projects/get/' + project_id
+    }).done(res => {
+        console.log(res)
+        document.querySelector('.update-project-form #project-name').value = res.name
+        document.querySelector('.update-project-form #description').value = res.description
+    })
+}
+
+const projectUpdateSave = () => {
+
+    const data = {
+        id: parseInt(projectId),
+        ManagerId: parseInt(document.querySelector('.update-project-form #managerId').value),
+        Name: document.querySelector('.update-project-form #project-name').value,
+        Status: parseInt(document.querySelector('.update-project-form #status').value),
+        Description: document.querySelector('.update-project-form #description').value
+    }
+    console.log(data)
+    //$.ajax({
+    //    url: "https://localhost:44314/projects/projectUpdate/",
+    //    method: "PUT",
+    //    dataType: 'json',
+    //    contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+    //    data: data,
+    //}).done(res => {
+    //    console.log("success")
+    //})
+    swal({
+        title: 'Are you sure update Project?',
+        icon: 'warning',
+        buttons: ['Cancel', 'Yes!']
+    }).then(result => {
+        if (result) {
+            $.ajax({
+                url: "/projects/projectUpdate/",
+                method: "PUT",
+                dataType: 'json',
+                contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                data: data,
+                success: function (data) {
+                    swal({
+                        title: "Success update Project",
+                        icon: "success"
+                    }).then(val => {
+                        window.location.reload();
+                    });
+                },
+                error: () => {
+                    swal({
+                        title: "Failed update Project",
+                        icon: "error"
+                    }).then(val => {
+                        window.location.reload();
+                    });
+                }
+            });
+        }
+    });
+}
+
 
 // get item from session
 let projectId = sessionStorage.getItem("project_id");
@@ -168,6 +285,38 @@ $.ajax({
     });
 });
 
+// delete Activity
+const deleteActivity = (id) => {
+    swal({
+        title: 'Apakah anda yakin menghapus Activity ?',
+        icon: 'warning',
+        buttons: ['Cancel', 'Yes!']
+    }).then(result => {
+        if (result) {
+            $.ajax({
+                url: "/Activities/Delete/" + id,
+                method: "DELETE",
+                success: function (data) {
+                    swal({
+                        title: "Success Delete Activity",
+                        icon: "success"
+                    }).then(val => {
+                        window.location.reload();
+                    });
+                },
+                error: () => {
+                    swal({
+                        title: "Failed Delete Activity",
+                        icon: "error"
+                    }).then(val => {
+                        window.location.reload();
+                    });
+                }
+            });
+        }
+    });
+}   
+
 // add activity
 $('#btnActivity').click(e => {
     e.preventDefault();
@@ -208,39 +357,6 @@ $('#btnActivity').click(e => {
     });
 });
 
-
-
-// delete Activity
-const deleteActivity = (id) => {
-    swal({
-        title: 'Apakah anda yakin menghapus Activity ?',
-        icon: 'warning',
-        buttons: ['Cancel', 'Yes!']
-    }).then(result => {
-        if (result) {
-            $.ajax({
-                url: "/Activities/Delete/" + id,
-                method: "DELETE",
-                success: function (data) {
-                    swal({
-                        title: "Success Delete Activity",
-                        icon: "success"
-                    }).then(val => {
-                        window.location.reload();
-                    });
-                },
-                error: () => {
-                    swal({
-                        title: "Failed Delete Activity",
-                        icon: "error"
-                    }).then(val => {
-                        window.location.reload();
-                    });
-                }
-            });
-        }
-    });
-}
 
 // activity detail
 const activityDetail = (id) => {
@@ -298,9 +414,6 @@ const displayEmployeeAssign = (id) => {
         method: "GET",
     }).done(res => {
         let empList = ''
-        //if (res.length > 0) {
-
-        //}
         $.each(res, (key, val) => {
             empList += `
                 <tr class="emp-item">
@@ -376,6 +489,7 @@ const saveStatus = (activityId, status) => {
 const deleteEmpActivity = (empData) => {
 
     const dataJson = JSON.parse(empData)
+    console.log(dataJson)
 
     swal({
         title: 'Apakah anda yakin menghapus Employee ?',
@@ -525,7 +639,10 @@ const appendSelected = (empDataObj) => {
         document.querySelector('.selected-employee-container').innerHTML += selectedEmp;
 
     } else {
-        console.log("you have already selected that employee");
+        swal({
+            title: "you have already selected that employee",
+            icon: "error"
+        })
     }
 }
 

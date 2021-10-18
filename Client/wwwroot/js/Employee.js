@@ -1,8 +1,14 @@
-﻿$(document).ready(function () {
+﻿$.ajax({
+    url: "https://localhost:44315/api/Employees/GetEmployeeJobs"
+}).done(res => {
+    console.log(res)
+})
+
+$(document).ready(function () {
     $('#dataTable').DataTable({
         "filter": true,
         "ajax": {
-            "url": "https://localhost:44315/api/Employees/GetEmployee",
+            "url": "https://localhost:44315/api/Employees/GetEmployeeJobs",
             "dataType": "json",
             "dataSrc": ""
         },
@@ -17,32 +23,32 @@
                 "data" : "employeeId"
             },
             {
-                "data": "fullName",
+                "data": "fullname",
                 "autoWidth": true
             },
             {
-                "data": "phone",
-                "render": function (data, type, row) {
-                    if (row['phone'].startsWith('0')) {
-                        return `+62${row['phone'].substr(1)}`
-                    }
-                    return `+62${row['phone']}`
-                },
+                "data": "departmentName",
                 "autoWidth": true
             },
             {
-                "data": "gender", render: function (result) {
-                    console.log(result)
-                    var gender;
-                    if (result === 0) {
-                        gender = "Male"
-                    } else {
-                        gender = "Female"
-                    }
-                    return gender;
-                },
-                "orderable": false
+                "data": "jobName",
+                "autoWidth": true
             },
+            //{
+            //    "data": "phone",
+            //    "render": function (data, type, row) {
+            //        if (row['phone'].startsWith('0')) {
+            //            return `+62${row['phone'].substr(1)}`
+            //        }
+            //        return `+62${row['phone']}`
+            //    },
+            //    "autoWidth": true
+            //},
+            {
+                "data": "roleName",
+                "autoWidth": true
+            },
+
             {
                 "data": "email",
                 "autoWidth": true

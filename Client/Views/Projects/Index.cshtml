@@ -10,9 +10,8 @@
 
 <div class="row mb-2">
     <h1 class="h3 text-primary text-uppercase mb-4 font-weight-bold col">Project</h1>
-    <span class="text-secondary mId" hidden>@data.Id</span>
     <div class="col">
-        @if(User.IsInRole("Human Resource"))
+        @if(User.IsInRole("Manager"))
             {
                 <button class="btn float-right btn-primary"
                         type="button"
@@ -74,6 +73,9 @@
 
 <script type="text/javascript">
     sessionStorage.clear();
+    let UserRoles = '@User.IsInRole("Users")';
+    let mId = @data.Id 
+    console.log(UserRoles)
 </script>
 
 @section Scripts {
