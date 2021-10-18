@@ -102,7 +102,7 @@ namespace project_management_mcc.Repositories.Data
                         var claims = new List<Claim>
                         {
                             new Claim("Id", passwordCheck.Id.ToString()),
-                            new Claim(ClaimTypes.Email, emailCheck.Email),
+                            new Claim("Email", emailCheck.Email),
                             new Claim(ClaimTypes.Name, $"{getUserName.FirstName} {getUserName.LastName}")
                         };
                         foreach (var item in getRole)

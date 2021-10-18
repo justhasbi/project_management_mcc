@@ -43,19 +43,23 @@
 var chart = new ApexCharts(document.querySelector("#chart"), options);
 chart.render();
 
-$.ajax({
-    url: 'https://localhost:44314/projects/getmanagerid/' + mID,
-    method: 'GET'
-}).done(res => {
-    let itemHtml = "";
 
-    $.each(res, (key, val) => {
-        itemHtml += `
+
+const renderEmployeeChart = (id) => {
+    $.ajax({
+        url: '/projects/GetProjectEmployee/' + id,
+        method: 'GET'
+    }).done(res => {
+        let itemHtml = "";
+
+        $.each(res, (key, val) => {
+            itemHtml += `
             <option value="${val.id}">${val.name}</option>
         `;
-        $('#project-select').html(itemHtml)
+            $('#project-select').html(itemHtml)
+        })
     })
-})
+}
 
 let data = {
     data: []
@@ -88,4 +92,25 @@ const handleSelectChange = () => {
     })
 }
 
+const renderManagerChart = (id) => {
+    $.ajax({
+        url: 'https://localhost:44314/projects/getmanagerid/' + id,
+        method: 'GET'
+    }).done(res => {
+        let itemHtml = "";
 
+        $.each(res, (key, val) => {
+            itemHtml += `
+            <option value="${val.id}">${val.name}</option>
+        `;
+            $('#project-select').html(itemHtml)
+        })
+    })
+}
+
+
+if (userRoles === "True") {
+    renderEmployeeChart(mID)
+} else {
+    renderManagerChart(mID)
+}

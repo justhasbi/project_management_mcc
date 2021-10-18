@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using project_management_mcc.Models;
 using project_management_mcc.ViewModels;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Client.Controllers
@@ -117,9 +118,11 @@ namespace Client.Controllers
             {
                 return RedirectToAction("Index");
             }
-            
+
             var payload = HttpContext.Session.GetString("Payload");
+
             var jsonPayload = JsonConvert.DeserializeObject(payload);
+
             ViewBag.Payload = jsonPayload;
 
             return View();

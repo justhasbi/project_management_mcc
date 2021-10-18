@@ -88,9 +88,9 @@ namespace project_management_mcc.Base
                 repository.Delete(key);
                 return Ok("Success Delete Data");
             }
-            catch
+            catch (Exception e)
             {
-                return BadRequest("Data Not Found");
+                return BadRequest(e);
             }
         }
     }

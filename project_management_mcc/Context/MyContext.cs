@@ -105,6 +105,7 @@ namespace project_management_mcc.Context
                 .Entity<Activity>()
                 .HasOne(x => x.Project)
                 .WithMany(x => x.Activities);
+                //.OnDelete(DeleteBehavior.Cascade);
 
             // one to many employee manager id with project
             modelBuilder
